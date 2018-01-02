@@ -1,0 +1,10 @@
+<section class="content-header">
+    <h1>
+        Dashboard
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{% url 'ops_cmdb:index' %}"><i class="fa fa-dashboard"></i> {{ h1 | default:'CMDB' }}</a></li>
+        <li class="active">{{ h2 | default:'Dashboard' }}</li>
+    </ol>
+</section>
