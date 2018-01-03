@@ -4,7 +4,14 @@
         <small>Control panel</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="{% url 'ops_cmdb:index' %}"><i class="fa fa-dashboard"></i> {{ h1 | default:'CMDB' }}</a></li>
-        <li class="active">{{ h2 | default:'Dashboard' }}</li>
+        <li><a href="/"><i class="fa fa-dashboard"></i> {{ h1 | default:'CMDB' }}</a></li>
+        {% if app %}
+            <li>{{ app }}</li>
+        {% endif %}
+
+        {% if action %}
+            <li class="active">{{ action }}</li>
+        {% endif %}
+
     </ol>
 </section>
