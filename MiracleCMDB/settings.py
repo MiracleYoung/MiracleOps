@@ -87,8 +87,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'MiracleCMDB',
-        'HOST': '127.0.0.1',
-        # 'HOST': '192.168.29.134',
+        # 'HOST': '127.0.0.1',
+        'HOST': '192.168.29.134',
         'PORT': 3306,
         'USER': 'root',
         'PASSWORD': '',
@@ -142,7 +142,7 @@ STATICFILES_DIRS = (
     ("plugins", os.path.join(STATIC_ROOT, 'plugins')),
 )
 
-AUTH_USER_MODEL = 'user.UserProfile'
+AUTH_USER_MODEL = 'user.User'
 
 # EMAIL_HOST = 'smtp.163.com'
 # EMAIL_PORT = 25

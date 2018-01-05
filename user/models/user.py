@@ -1,7 +1,13 @@
+#!/usr/bin/env python
+# encoding: utf-8
+# @Time    : 1/5/2018 4:57 PM
+# @Author  : Miracle Young
+# @File    : user.py
+
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
-class UserProfileManager(BaseUserManager):
+class UserManager(BaseUserManager):
     def create_user(self, email, username, wechat, password=None):
         if not email:
             raise ValueError('Users must have an email address')
@@ -30,7 +36,7 @@ class UserProfileManager(BaseUserManager):
         return user
 
 
-class UserProfile(AbstractBaseUser):
+class User(AbstractBaseUser):
     email = models.EmailField('email address', max_length=128, unique=True)
     username = models.CharField('user name', max_length=32)
     wechat = models.CharField('wechat account', max_length=32, blank=True)
@@ -42,9 +48,9 @@ class UserProfile(AbstractBaseUser):
         indexes = [
             models.Index(fields=['email', ], name = 'u_email_idx'),
         ]
-        db_table = 'user_profile'
+        db_table = 'user'
 
-    objects = UserProfileManager()
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

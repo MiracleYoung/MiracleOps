@@ -1,0 +1,48 @@
+{% extends 'layout/account_login_register.html' %}
+
+{% block form %}
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="#"><b>Ops Admin</b> Login</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Sign in to start your ops</p>
+
+
+            <div class="form-group has-feedback">
+                <input type="email" class="form-control" placeholder="Email" name="email" id="email">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="button" class="btn btn-primary btn-block btn-flat" id="btn-account-reset">Reset
+                    </button>
+                </div>
+                <div class="col-xs-4 col-xs-offset-4">
+                    <a href="{% url 'ops_account:login' %}"
+                       class="btn btn-danger btn-block btn-flat">Sign In</a>
+                </div>
+                <!-- /.col -->
+            </div>
+
+        </div>
+        <!-- /.login-box-body -->
+
+        <div class="alert alert-warning alert-dismissible hidden" id="notice">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i> Warning!</h4>
+            <p id="message"></p>
+        </div>
+
+    </div>
+    <!-- /.login-box -->
+
+{% endblock form %}
+
+{% load static %}
+{% block js %}
+    <script src="{% static 'js/ops_account/ops_account.js' %}"></script>
+{% endblock js %}

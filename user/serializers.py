@@ -5,10 +5,10 @@
 # @File    : serializers.py
 
 from rest_framework.serializers import ModelSerializer
-from .models import UserProfile
+from .models.user import User
 
 
-class UserProfileSerializer(ModelSerializer):
+class UserSerializer(ModelSerializer):
     class Meta:
-        model = UserProfile
+        model = User
         fields = '__all__'
