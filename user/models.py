@@ -17,7 +17,7 @@ class UserProfileManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, wechat, password=None):
+    def create_superuser(self, email, username, wechat=None, password=None):
         user = self.create_user(
             email = self.normalize_email(email),
             username = username,
@@ -33,7 +33,7 @@ class UserProfileManager(BaseUserManager):
 class UserProfile(AbstractBaseUser):
     email = models.EmailField('email address', max_length=128, unique=True)
     username = models.CharField('user name', max_length=32)
-    wechat = models.CharField('wechat account', max_length=32)
+    wechat = models.CharField('wechat account', max_length=32, blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=True)
@@ -66,10 +66,13 @@ class UserProfile(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+
     # @property
     # def is_staff(self):
     #     return self.is_staff
 
 
 
-
+# from django.contrib.auth.tokens import default_token_generator
+#
+# default_token_generator.make_token(user=u)
