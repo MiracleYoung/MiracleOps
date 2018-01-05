@@ -6,6 +6,7 @@ __pycache__/
 # pycharm
 .idea/
 migrations/
+sh.exe.stackdump
 
 # C extensions
 *.so
