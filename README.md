@@ -4,8 +4,8 @@
 
 ## Overview
 
-    This is a Miracle(magic) Ops by MiracleYoung.
-    You can use it as free, and if you have any idea or questions, please contact me.
+    This System's BLUEPRINT is to be a Magic Operation System.
+    CMDB, Auto-Deployment, Auto-Delivery, Monitor, etc.
 
 ## Release Notes
 
@@ -24,20 +24,17 @@
 - wechat bound.(notice by wechat)
 - Group management.
 
-## Contact Miracle
+## Author
 
-email: miracleyoung0723@gmail.com
+**Miracle.Young**
 
-## Reward
+Journey: DBA -> DevOps -> Prince Miracle
 
-<center>
-微信打赏:<br>
+Email: miracleyoung0723@gmail.com
 
-![微信打赏二维码](https://raw.githubusercontent.com/MiracleYoung/MiracleOps/master/static/images/wechat_reward.jpg)<br>
-</center>
-<br>
-<center>
-支付宝打赏:<br>
+## Q&A
 
-![支付宝打赏二维码](https://raw.githubusercontent.com/MiracleYoung/MiracleOps/master/static/images/zhifubao_reward.jpg)<br>
-</center>
+This is a Miracle(magic) Ops by MiracleYoung.
+
+You can use it as free, and if you have any idea or questions, please contact me.
+
