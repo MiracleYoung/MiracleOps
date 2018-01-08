@@ -13,14 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.conf.urls import url, include, static
 from django.contrib import admin
-
-from .views import IndexView
-from user import urls
+from django.conf import settings
+from .views import IndexView, TestLongUrlView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^user/', include('user.urls.views_urls', namespace='user')),
+
     url(r'^api/user/', include('user.urls.api_urls', namespace='api-user')),
-]
+
+    url(r'test/long/url/', TestLongUrlView.as_view(), name='test-long-url'),
+
+] + static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

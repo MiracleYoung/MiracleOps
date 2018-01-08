@@ -4,4 +4,5 @@
 # @Author  : Miracle Young
 # @File    : __init__.py.py
 
-from .user import User
+from .user import *
+from .auth import *

@@ -6,6 +6,9 @@
 
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.utils.translation import ugettext_lazy as _
+
+__all__ = ['User']
 
 class UserManager(BaseUserManager):
     def create_user(self, email, username, wechat, password=None):
@@ -37,12 +40,24 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    email = models.EmailField('email address', max_length=128, unique=True)
-    username = models.CharField('user name', max_length=32)
-    wechat = models.CharField('wechat account', max_length=32, blank=True)
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=True)
+    JOB_TITLE = (
+        ('DBA', 'Database Administrator'),
+        ('SA', 'System Administrator'),
+        ('NA', 'Network Administrator'),
+        ('IT', 'Help Desk/IT'),
+        ('Director', 'Director'),
+        ('Manager', 'Manager'),
+        ('TL', 'Tech Leader'),
+    )
+
+    email = models.EmailField(_('Email Address'), max_length=128, unique=True)
+    username = models.CharField(_('User Name'), max_length=32)
+    wechat = models.CharField(_('WeChat Account'), max_length=32, blank=True)
+    avatar = models.ImageField(_('Avatar'), upload_to='avatar', null=True, blank=True, default='avatar/default_avatar.jpeg')
+    job_title = models.CharField(_('Job Title'), max_length=32, choices=JOB_TITLE, default='', blank=True)
+    is_active = models.BooleanField(_('Is Active'), default=True)
+    is_admin = models.BooleanField(_('Is Admin'), default=False)
+    is_staff = models.BooleanField(_('Is Staff'), default=True)
 
     class Meta:
         indexes = [

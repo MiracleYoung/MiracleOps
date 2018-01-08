@@ -3,11 +3,21 @@
 {% block form %}
     <div class="login-box">
         <div class="login-logo">
-            <a href="#"><b>MiracleCMDB</b> Login</a>
+            <a href="#"><b>MiracleOps</b> Login</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Sign in to start your ops</p>
+
+            {% if message %}
+                <p class="text-danger">{{ message }}</p>
+            {% endif %}
+
+            {% if form.errors %}
+                {% for field, error in form.errors.items %}
+                    <p class="text-danger">{{ field }} : {{ error.0 }}</p>
+                {% endfor %}
+            {% endif %}
 
             <form action="{% url 'user:login' %}" method="post">
                 {% csrf_token %}
@@ -28,7 +38,7 @@
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                     </div>
                     <div class="col-xs-4 col-xs-offset-4">
-                        <a href="#"
+                        <a href="{% url 'user:register' %}"
                            class="btn btn-danger btn-block btn-flat">Register</a>
                     </div>
                     <!-- /.col -->
