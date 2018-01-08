@@ -1,5 +1,7 @@
 # MiracleOps
 
+[TOC]
+
 ## Overview
 
     This is a Miracle(magic) Ops by MiracleYoung.
@@ -11,14 +13,29 @@
 
 #### 2017.01.08
 
-Finish User module as below:
+1. Finish User module as below:
 - login
 - register
 - LoginRequiredMixin
 
-Official update Project name to MiracleOps.
+2. Official update Project name to MiracleOps.
 
-*TODO*
+**TODO**
 - wechat bound.(notice by wechat)
 - Group management.
 
+## Contact Miracle
+
+email: miracleyoung0723@gmail.com
+
+## Reward
+
+<center>
+微信打赏:<br>
+![微信打赏二维码](https://github.com/MiracleYoung/MiracleOps/tree/master/static/images/wechat_reward.jpg)<br>
+</center>
+<br>
+<center>
+支付宝打赏:<br>
+![支付宝打赏二维码](https://github.com/MiracleYoung/MiracleOps/tree/master/static/images/zhifubao_reward.jpg)<br>
+</center>
