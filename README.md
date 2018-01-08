@@ -32,10 +32,12 @@ email: miracleyoung0723@gmail.com
 
 <center>
 微信打赏:<br>
-![微信打赏二维码](https://github.com/MiracleYoung/MiracleOps/tree/master/static/images/wechat_reward.jpg)<br>
+
+![微信打赏二维码](https://raw.githubusercontent.com/MiracleYoung/MiracleOps/master/static/images/wechat_reward.jpg)<br>
 </center>
 <br>
 <center>
 支付宝打赏:<br>
-![支付宝打赏二维码](https://github.com/MiracleYoung/MiracleOps/tree/master/static/images/zhifubao_reward.jpg)<br>
+
+![支付宝打赏二维码](https://raw.githubusercontent.com/MiracleYoung/MiracleOps/master/static/images/zhifubao_reward.jpg)<br>
 </center>
