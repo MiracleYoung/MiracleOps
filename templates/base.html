@@ -1,20 +1,6 @@
-<!DOCTYPE html>
-<html>
+{% extends '_base.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>MiracleOps</title>
-
-    {% include "_head_css_js.html" %}
-
-    {% block css %}{% endblock css %}
-</head>
-
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+{% block body %}
 
     {% include '_header.html' %}
     <!-- Left side column. contains the logo and sidebar -->
@@ -41,14 +27,6 @@
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
+{#    <div class="control-sidebar-bg"></div>#}
 
-</div>
-<!-- ./wrapper -->
-
-{% include '_footer_js.html' %}
-
-{% block js %}{% endblock js %}
-</body>
-
-</html>
+{% endblock body %}

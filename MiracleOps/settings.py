@@ -137,15 +137,8 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
-    ("bower_components", os.path.join(STATIC_ROOT, 'bower_components')),
-    ("dist", os.path.join(STATIC_ROOT, 'dist')),
-    ("fonts", os.path.join(STATIC_ROOT, 'fonts')),
-    ("js", os.path.join(STATIC_ROOT, 'js')),
-    ("css", os.path.join(STATIC_ROOT, 'css')),
-    ("images", os.path.join(STATIC_ROOT, 'images')),
-    ("plugins", os.path.join(STATIC_ROOT, 'plugins')),
+    os.path.join(BASE_DIR, "static"),
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

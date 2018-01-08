@@ -1,9 +1,9 @@
 {% load static %}
 <!-- jQuery 3 -->
-<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/js.cookie.js' %}"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="{% static 'bower_components/jquery-ui/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
     $.widget.bridge('uibutton', $.ui.button);
@@ -24,7 +24,7 @@
 
 </script>
 <!-- Bootstrap 3.3.7 -->
-<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 {#<!-- Morris.js charts -->#}
 {#<script src="{% static 'bower_components/raphael/raphael.min.js' %}"></script>#}
 {#<script src="{% static 'bower_components/morris.js/morris.min.js' %}"></script>#}
@@ -37,9 +37,11 @@
 {#<script src="{% static 'bower_components/jquery-knob/dist/jquery.knob.min.js' %}"></script>#}
 {#<!-- daterangepicker -->#}
 {#<script src="{% static 'bower_components/moment/min/moment.min.js' %}"></script>#}
-<script src="{% static 'bower_components/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'js/plugins/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
 <!-- datepicker -->
-<script src="{% static 'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %}"></script>
+<script src="{% static 'js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js' %}"></script>
+<!-- datatable -->
+<script src="{% static 'js/plugins/bootstrap-table/bootstrap-table.min.js' %}"></script>
 {#<!-- Bootstrap WYSIHTML5 -->#}
 {#<script src="{% static 'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js' %}"></script>#}
 {#<!-- Slimscroll -->#}
@@ -47,4 +49,4 @@
 {#<!-- FastClick -->#}
 {#<script src="{% static 'bower_components/fastclick/lib/fastclick.js' %}"></script>#}
 <!-- AdminLTE App -->
-<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+<script src="{% static 'js/adminlte.min.js' %}"></script>

@@ -1,7 +1,13 @@
-{% extends '_account_login_register.html' %}
+{% extends '_base.html' %}
 {% load bootstrap3 %}
 
-{% block form %}
+{% block js %}
+    <script>
+        $('body').addClass('login-page');
+    </script>
+{% endblock %}
+
+{% block body %}
     <div class="register-box">
         <div class="register-logo">
             <a href="#"><b>MiracleOps</b> Register</a>
@@ -39,13 +45,14 @@
                     <span class="fa fa-upload form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control" placeholder="Password" name="{{ form.password.html_name }}">
+                    <input type="password" class="form-control" placeholder="Password"
+                           name="{{ form.password.html_name }}">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
-{#                <div class="form-group has-feedback">#}
-{#                    <input type="password" class="form-control" placeholder="Retype password" name="{{ form.username.html_name }}">#}
-{#                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>#}
-{#                </div>#}
+                {#                <div class="form-group has-feedback">#}
+                {#                    <input type="password" class="form-control" placeholder="Retype password" name="{{ form.username.html_name }}">#}
+                {#                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>#}
+                {#                </div>#}
 
                 <div class="row">
                     <!-- /.col -->
@@ -64,14 +71,14 @@
         <!-- /.form-box -->
 
         {% if error_message %}
-        <div class="alert alert-warning alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-warning"></i> Warning!</h4>
-            {{ error_message }}
-        </div>
+            <div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-warning"></i> Warning!</h4>
+                {{ error_message }}
+            </div>
         {% endif %}
 
     </div>
     <!-- /.register-box -->
-{% endblock form %}
+{% endblock body %}
 

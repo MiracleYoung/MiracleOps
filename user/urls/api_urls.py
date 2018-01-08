@@ -2,7 +2,7 @@
 # encoding: utf-8
 # @Time    : 2018/1/3 下午9:12
 # @Author  : MiracleYoung
-# @File    : urls.py
+# @File    : views_urls.py
 
 from django.conf.urls import url
 from user.authentication import UserRetrieveUpdateDestroyApi
