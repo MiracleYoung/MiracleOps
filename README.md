@@ -13,6 +13,19 @@
 
 ## Release Notes
 
+### version 0.2.2 (2017.01.09)
+
+1. Update IDC, Entity model.
+2. Add EntityCreateView, EntityListView, EntityForm, IDCForm.
+3. Update root url add `{'app': 'Asset'}`, include url add `{'path1': 'Create'}`
+4. Use Datatable to demonstrate ListView.
+5. Update Architecture.
+
+**TODO**
+
+1. EntityListView add detail url, action button(edit, delete).
+2. EntityDetailView.
+
 ### version 0.2.1 (2017.01.09)
 
 1. Add asset module.
@@ -28,8 +41,8 @@
 - LoginRequiredMixin
 
 2. Official update Project name to MiracleOps.
-
 **TODO**
+
 - wechat bound.(notice by wechat)
 - Group management.
 

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block main %}
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Entity Overview</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                        <a href="{% url 'asset:entity-create' %}" class="btn btn-primary margin-bottom">Create</a>
+
+                        <table id="table-entity-list" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>{% trans 'IDC' %}</th>
+                                <th>{% trans 'Owner' %}</th>
+                                <th>{% trans 'SN' %}</th>
+                                <th>{% trans 'CPU' %}</th>
+                                <th>{% trans 'Memory' %}</th>
+                                <th>{% trans 'Disk' %}</th>
+                                <th>{% trans 'OoB IP:Port' %}</th>
+                                <th>{% trans 'OoB Account' %}</th>
+                                <th>{% trans 'OoB Password' %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for entity in entity_list %}
+                                <tr>
+                                    <td>{{ entity.idc.name }}</td>
+                                    <td>{{ entity.owner.username }}</td>
+                                    <td>{{ entity.sn }}</td>
+                                    <td>{{ entity.cpu }}</td>
+                                    <td>{{ entity.memory }}</td>
+                                    <td>{{ entity.disk }}</td>
+                                    <td>{{ entity.oob_ip }}:{{ entity.oob_port }}</td>
+                                    <td>{{ entity.oob_admin }}</td>
+                                    <td>{{ entity.oob_password }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>{% trans 'IDC' %}</th>
+                                <th>{% trans 'Owner' %}</th>
+                                <th>{% trans 'SN' %}</th>
+                                <th>{% trans 'CPU' %}</th>
+                                <th>{% trans 'Memory' %}</th>
+                                <th>{% trans 'Disk' %}</th>
+                                <th>{% trans 'OoB IP:Port' %}</th>
+                                <th>{% trans 'OoB Account' %}</th>
+                                <th>{% trans 'OoB Password' %}</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+
+
+{% endblock main %}
+
+{% block js %}
+    <script>
+        $('#table-entity-list').DataTable();
+    </script>
+
+{% endblock js %}

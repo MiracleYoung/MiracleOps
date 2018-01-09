@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load i18n bootstrap3 static %}
+
+{% block main %}
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Entity Create</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                        <!-- form start -->
+                        <form class="form-horizontal" method="post" action="{% url 'asset:entity-create' %}">
+                            {% csrf_token %}
+
+                            {% bootstrap_field entity.idc layout="horizontal" %}
+                            {% bootstrap_field entity.cabinet layout="horizontal" %}
+                            {% bootstrap_field entity.detail_address layout="horizontal" %}
+                            {% bootstrap_field entity.sn layout="horizontal" %}
+                            {% bootstrap_field entity.interface1 layout="horizontal" %}
+                            {% bootstrap_field entity.interface2 layout="horizontal" %}
+                            {% bootstrap_field entity.owner layout="horizontal" %}
+                            {% bootstrap_field entity.oob_admin layout="horizontal" %}
+                            {% bootstrap_field entity.oob_ip layout="horizontal" %}
+                            {% bootstrap_field entity.oob_password layout="horizontal" %}
+                            {% bootstrap_field entity.oob_port layout="horizontal" %}
+                            {% bootstrap_field entity.cpu layout="horizontal" %}
+                            {% bootstrap_field entity.memory layout="horizontal" %}
+                            {% bootstrap_field entity.disk layout="horizontal" %}
+                            {% bootstrap_field entity.hardware_version layout="horizontal" %}
+                            {% bootstrap_field entity.create_time layout="horizontal" %}
+
+                            <!-- /.box-footer -->
+                        </form>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+
+
+{% endblock main %}

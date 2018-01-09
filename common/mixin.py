@@ -4,9 +4,8 @@
 # @Author  : MiracleYoung
 # @File    : mixin.py
 
-from django.shortcuts import redirect, reverse, HttpResponseRedirect
+from django.shortcuts import redirect, reverse
 from django.conf import settings
-# from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 from user.models.user import User
 
@@ -23,7 +22,7 @@ class LoginRequiredMixin:
                 u = User.objects.get(pk=request.session.get('uid'))
             except User.DoesNotExist:
                 raise self.form.add_error('user', 'User is incorrect.')
-            context =  self.get_context_data(**kwargs)
+            context =  self.get_context_data(**kwargs) or {}
             context['user'] = u
             kwargs.update(context)
             return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)

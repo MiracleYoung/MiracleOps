@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load i18n bootstrap3 static %}
+
+{% block main %}
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Entity Create</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                {% for field, error in form.errors.item %}
+                                    {{ field }}: {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <!-- form start -->
+                        <form class="form-horizontal" method="post" action="{% url 'asset:entity-create' %}">
+                            {% csrf_token %}
+
+                            {% bootstrap_field form.idc layout="horizontal" %}
+                            {% bootstrap_field form.cabinet layout="horizontal" %}
+                            {% bootstrap_field form.detail_address layout="horizontal" %}
+                            {% bootstrap_field form.sn layout="horizontal" %}
+                            {% bootstrap_field form.interface1 layout="horizontal" %}
+                            {% bootstrap_field form.interface2 layout="horizontal" %}
+                            {% bootstrap_field form.owner layout="horizontal" %}
+                            {% bootstrap_field form.oob_admin layout="horizontal" %}
+                            {% bootstrap_field form.oob_ip layout="horizontal" %}
+                            {% bootstrap_field form.oob_password layout="horizontal" %}
+                            {% bootstrap_field form.oob_port layout="horizontal" %}
+                            {% bootstrap_field form.cpu layout="horizontal" %}
+                            {% bootstrap_field form.memory layout="horizontal" %}
+                            {% bootstrap_field form.disk layout="horizontal" %}
+                            {% bootstrap_field form.hardware_version layout="horizontal" %}
+
+
+                            <div class="form-group">
+                                <div class="col-md-4 col-md-offset-4">
+                                    <button type="submit" class="btn btn-info">Create</button>
+                                    <button type="reset" class="btn btn-default">Cancel</button>
+                                </div>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+
+
+{% endblock main %}

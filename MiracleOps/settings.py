@@ -154,10 +154,13 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 # django bootstrap3 docs https://django-bootstrap3.readthedocs.io/en/latest/settings.html
 BOOTSTRAP3 = {
-    # 'jquery_url': STATIC_URL + 'bower_components/jquery/dist/jquery.min.js',
-
-    # The Bootstrap base URL
-    # 'base_url': STATIC_URL + 'bower_components/bootstrap/',
+    # Label class to use in horizontal forms
+    'horizontal_label_class': 'col-md-4',
+    # Field class to use in horizontal forms
+    'horizontal_field_class': 'col-md-8',
+    # Set placeholder attributes to label if no placeholder is provided.
+    # This also considers the 'label' option of {% bootstrap_field %} tags.
+    'set_placeholder': True,
 }
 
 # EMAIL_HOST = 'smtp.163.com'

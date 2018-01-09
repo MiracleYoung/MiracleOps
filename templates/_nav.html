@@ -1,17 +1,18 @@
 <section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> {{ h1 | default:'CMDB' }}</a></li>
-        {% if app %}
-            <li>{{ app }}</li>
+    <h1></h1>
+    <ol class="breadcrumb" style="top: 8px;right: unset;">
+        <li><a href="/"><i class="fa fa-dashboard"></i> {{ Dashboard }}</a></li>
+        {% if app and not path1 %}
+            <li class="active">{{ app }}</li>
         {% endif %}
 
-        {% if action %}
-            <li class="active">{{ action }}</li>
+        {% if path1 and not path2 %}
+            <li class="active">{{ path1 }}</li>
         {% endif %}
 
+        {% if path1 and path2 %}
+            <li>{{ path1 }}</li>
+            <li class="active">{{ path2 }}</li>
+        {% endif %}
     </ol>
 </section>
