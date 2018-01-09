@@ -241,7 +241,7 @@
 
                             <p class="text-black">
                                 {{ user.username }} - {{ user.job_title }}
-                                <small>Member since Jul. 2017</small>
+                                <small>{{ user.reg_time|date:"N j Y" }} joined</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -265,7 +265,7 @@
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="{% url 'user:logout' %}" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>

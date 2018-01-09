@@ -5,11 +5,12 @@
 # @File    : views.py
 
 from django.conf.urls import url
-from ..views.user import UserLoginView, UserCreateView
+from ..views.user import UserLoginView, UserCreateView, UserLogoutView
 
 app_name = 'user'
 
 urlpatterns = [
     url(r'^login/$', UserLoginView.as_view(), name='login'),
+    url(r'^logout/$', UserLogoutView.as_view(), name='logout'),
     url(r'^register/$', UserCreateView.as_view(), name='register'),
 ]

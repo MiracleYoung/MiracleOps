@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # 'rest_framework.authtoken',
     'user.apps.UserConfig',
     'common.apps.CommonConfig',
+    'asset.apps.AssetConfig',
 ]
 
 REST_FRAMEWORK = {
@@ -161,10 +162,6 @@ BOOTSTRAP3 = {
 
 # EMAIL_HOST = 'smtp.163.com'
 # EMAIL_PORT = 25
-# EMAIL_HOST_PASSWORD = 'rarevival654'
-# EMAIL_HOST_USER = 'rarevival@163.com'
-# EMAIL_FROM_EMAIL = 'rarevival@163.com'
-
-# PROJECT_NAME = '红色警戒：复兴'
-# PROJECT_DEV_DT = '2017.04.06'
-# DOMAIN_URL = 'http://www.rarevival.com' if not DEBUG else 'http://localhost:8000'
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_HOST_USER = ''
+# EMAIL_FROM_EMAIL = ''

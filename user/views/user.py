@@ -4,11 +4,12 @@
 # @Author  : MiracleYoung
 # @File    : user.py
 
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, reverse, render
 from django import forms
+from django.utils import timezone
 from user.forms import UserLoginForm, UserCreateForm
 from ..models.user import User
 from common.utils import gen_token
@@ -19,8 +20,6 @@ class UserLoginView(FormView):
     template_name = "user/login.html"
     form_class = UserLoginForm
     redirect_field_name = 'next'
-
-
 
     def form_valid(self, form):
         if form.is_valid():
@@ -35,8 +34,9 @@ class UserLoginView(FormView):
                     # add token, token_exp, uid to request.session
                     self.request.session['uid'] = u.id
                     self.request.session['token'] = gen_token(u)
-                    self.request.session['token_exp'] = (
-                        datetime.datetime.now() + datetime.timedelta(days=7)).timestamp()
+                    self.request.session['token_exp'] = (timezone.now() + datetime.timedelta(days=7)).timestamp()
+                    u.last_login = timezone.now()
+                    u.save()
                     return super(UserLoginView, self).form_valid(form)
                 else:
                     form.add_error('password', 'password is incorrect.')
@@ -61,3 +61,9 @@ class UserCreateView(FormView):
             except ObjectDoesNotExist:
                 form.save()
                 return render(self.request, 'user/login.html', {'message': 'Register successful, please login.'})
+
+
+class UserLogoutView(TemplateView):
+    def get(self, request, *args, **kwargs):
+        self.request.session.clear()
+        return redirect(reverse('user:login'))

@@ -7,6 +7,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
+from django.utils.timezone import now
 
 __all__ = ['User']
 
@@ -55,6 +56,7 @@ class User(AbstractBaseUser):
     wechat = models.CharField(_('WeChat Account'), max_length=32, blank=True)
     avatar = models.ImageField(_('Avatar'), upload_to='avatar', null=True, blank=True, default='avatar/default_avatar.jpeg')
     job_title = models.CharField(_('Job Title'), max_length=32, choices=JOB_TITLE, default='', blank=True)
+    reg_time = models.DateTimeField(_('Register Time'), auto_now_add=True)
     is_active = models.BooleanField(_('Is Active'), default=True)
     is_admin = models.BooleanField(_('Is Admin'), default=False)
     is_staff = models.BooleanField(_('Is Staff'), default=True)

@@ -5,7 +5,8 @@
 # @File    : views_urls.py
 
 from django.conf.urls import url
+from ..views.entity_machine import IDCView
 
 urlpatterns = [
-
+    url(r'^idc/$', IDCView.as_view(), name='idc'),
 ]

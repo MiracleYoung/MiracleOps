@@ -1,0 +1,8 @@
+Django==1.11
+django-bootstrap3==9.1.0
+django-cors-headers==2.1.0
+djangorestframework==3.7.3
+olefile==0.44
+Pillow==4.3.0
+PyMySQL==0.7.11
+pytz==2017.3
