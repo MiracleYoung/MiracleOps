@@ -13,7 +13,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
 
-                        <a href="{% url 'asset:entity-create' %}" class="btn btn-primary margin-bottom">Create</a>
+                        <a href="{% url 'asset:entity:create' %}" class="btn btn-primary margin-bottom">Create</a>
 
                         <table id="table-entity-list" class="table table-bordered table-hover">
                             <thead>
@@ -27,6 +27,7 @@
                                 <th>{% trans 'OoB IP:Port' %}</th>
                                 <th>{% trans 'OoB Account' %}</th>
                                 <th>{% trans 'OoB Password' %}</th>
+                                <th>{% trans 'Action' %}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -41,6 +42,14 @@
                                     <td>{{ entity.oob_ip }}:{{ entity.oob_port }}</td>
                                     <td>{{ entity.oob_admin }}</td>
                                     <td>{{ entity.oob_password }}</td>
+                                    <td>
+                                        <a href="{% url 'asset:entity:detail' entity.id %}" class="btn btn-info btn-sm">
+                                            <i class="fa fa-edit"></i> {% trans 'Edit' %}
+                                        </a>
+                                        <a class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash"></i> {% trans 'Delete' %}
+                                        </a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -55,6 +64,7 @@
                                 <th>{% trans 'OoB IP:Port' %}</th>
                                 <th>{% trans 'OoB Account' %}</th>
                                 <th>{% trans 'OoB Password' %}</th>
+                                <th>{% trans 'Action' %}</th>
                             </tr>
                             </tfoot>
                         </table>

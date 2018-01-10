@@ -2,8 +2,8 @@
     <h1></h1>
     <ol class="breadcrumb" style="top: 8px;right: unset;">
         <li><a href="/"><i class="fa fa-dashboard"></i> {{ Dashboard }}</a></li>
-        {% if app and not path1 %}
-            <li class="active">{{ app }}</li>
+        {% if app %}
+            <li>{{ app }}</li>
         {% endif %}
 
         {% if path1 and not path2 %}

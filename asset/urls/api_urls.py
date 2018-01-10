@@ -4,8 +4,10 @@
 # @Author  : Miracle Young
 # @File    : api_urls.py
 
-from django.conf.urls import url
+from django.conf.urls import url, include
+from ..api import *
 
 urlpatterns = [
+    url(r'^entity/(?P<pk>\d+)/$', EntityDetailApi.as_view(), name='entity-detail'),
 
 ]

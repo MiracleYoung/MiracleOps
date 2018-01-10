@@ -31,6 +31,12 @@ class IDC(models.Model):
 
 
 class Entity(models.Model):
+    STATUS_CHOICE = (
+        (1, 'NORMAL'),
+        (2, 'DELETED'),
+        (3, 'Out of Service'),
+    )
+
     idc = models.ForeignKey(IDC, on_delete=models.DO_NOTHING)
     cabinet = models.CharField(_('Cabinet'), max_length=100, default='', blank=True)
     detail_address = models.CharField(_('Detail Address like n U'), max_length=200, default='', blank=True)
@@ -46,6 +52,7 @@ class Entity(models.Model):
     oob_port = models.SmallIntegerField(_('Out of Band Management Port'), default=80, blank=True)
     oob_admin = models.CharField(_('Out of Band Management Admin Account'), max_length=100, default='', blank=True)
     oob_password = models.CharField(_('Out of Band Management Admin Password'), max_length=100, default='', blank=True)
+    status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=1)
     create_time = models.DateTimeField(_('Create Time'), default=timezone.now(), blank=True)
     update_time = models.DateTimeField(_('Update Time'), auto_now=True)
 

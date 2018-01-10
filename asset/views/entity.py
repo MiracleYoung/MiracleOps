@@ -4,7 +4,7 @@
 # @Author  : MiracleYoung
 # @File    : entity.py
 
-from django.views.generic import TemplateView, ListView, list, FormView, DetailView
+from django.views.generic import TemplateView, ListView, list, FormView, DetailView, DeleteView
 from django.shortcuts import redirect, reverse
 from django.urls import reverse_lazy
 from common.mixin import LoginRequiredMixin
@@ -37,7 +37,7 @@ class EntityView(LoginRequiredMixin, TemplateView):
 class EntityCreateView(LoginRequiredMixin, FormView):
     template_name = 'asset/entity_create.html'
     form_class = EntityForm
-    success_url = reverse_lazy('asset:entity')
+    success_url = reverse_lazy('asset:entity:list')
 
     def form_valid(self, form):
         if form.is_valid():
@@ -49,6 +49,13 @@ class EntityDetailView(LoginRequiredMixin, DetailView):
     model = Entity
     context_object_name = 'entity'
     template_name = 'asset/entity_detail.html'
+
+
+class EntityUpdateView(LoginRequiredMixin, FormView):
+    model = Entity
+    context_object_name = 'entity'
+    template_name = 'asset/entity_update.html'
+
 
 
 
