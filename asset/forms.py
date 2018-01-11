@@ -18,10 +18,9 @@ class IDCForm(forms.ModelForm):
 class EntityForm(forms.ModelForm):
     class Meta:
         model = Entity
-        fields = ['idc', 'cabinet', 'detail_address', 'sn', 'interface1', 'interface2', 'owner',
-                  'oob_admin', 'oob_ip', 'oob_password', 'oob_port', 'cpu', 'memory', 'disk', 'hardware_version',
-                  'create_time']
-
+        fields = '__all__'
         widgets = {
-            'idc': forms.Select()
+            'idc': forms.Select(),
+            'status': forms.Select(),
+            'env': forms.Select(),
         }

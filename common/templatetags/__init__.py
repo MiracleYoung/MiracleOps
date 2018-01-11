@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 # encoding: utf-8
-# @Time    : 1/5/2018 4:57 PM
+# @Time    : 1/11/2018 9:50 AM
 # @Author  : Miracle Young
 # @File    : __init__.py.py
-
-from .user import *
-from .auth import *
-from .group import *

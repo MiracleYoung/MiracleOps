@@ -14,43 +14,17 @@
                     <div class="box-body">
                         {% if form.errors %}
                             <div class="alert alert-danger">
-                                {% for field, error in form.errors.item %}
+                                {% for field, error in form.errors.items %}
                                     {{ field }}: {{ error }}
                                 {% endfor %}
                             </div>
                         {% endif %}
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" action="{% url 'asset:entity:create' %}">
+                        <form class="form-horizontal" method="post" action="">
                             {% csrf_token %}
+                            {% include 'asset/_entity_form.html' %}
 
                             <hr>
-                            <h3>{% trans 'Basic Info' %}</h3>
-                            {% bootstrap_field form.idc layout="horizontal" %}
-                            {% bootstrap_field form.cabinet layout="horizontal" %}
-                            {% bootstrap_field form.detail_address layout="horizontal" %}
-                            {% bootstrap_field form.sn layout="horizontal" %}
-                            {% bootstrap_field form.interface1 layout="horizontal" %}
-                            {% bootstrap_field form.interface2 layout="horizontal" %}
-
-                            <hr>
-                            <h3>{% trans 'Owner' %}</h3>
-                            {% bootstrap_field form.owner layout="horizontal" %}
-
-                            <hr>
-                            <h3>{% trans 'OoB Management' %}</h3>
-                            {% bootstrap_field form.oob_admin layout="horizontal" %}
-                            {% bootstrap_field form.oob_ip layout="horizontal" %}
-                            {% bootstrap_field form.oob_password layout="horizontal" %}
-                            {% bootstrap_field form.oob_port layout="horizontal" %}
-
-                            <hr>
-                            <h3>{% trans 'Hardware Info' %}</h3>
-                            {% bootstrap_field form.cpu layout="horizontal" %}
-                            {% bootstrap_field form.memory layout="horizontal" %}
-                            {% bootstrap_field form.disk layout="horizontal" %}
-                            {% bootstrap_field form.hardware_version layout="horizontal" %}
-
-
                             <div class="form-group">
                                 <div class="col-md-4 col-md-offset-4">
                                     <button type="submit" class="btn btn-info">Create</button>

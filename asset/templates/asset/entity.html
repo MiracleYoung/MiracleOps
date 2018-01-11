@@ -18,32 +18,36 @@
                         <table id="table-entity-list" class="table table-bordered table-hover">
                             <thead>
                             <tr>
+                                <th>{% trans 'SN' %}</th>
+                                <th>{% trans 'Environment' %}</th>
                                 <th>{% trans 'IDC' %}</th>
                                 <th>{% trans 'Owner' %}</th>
-                                <th>{% trans 'SN' %}</th>
-                                <th>{% trans 'CPU' %}</th>
-                                <th>{% trans 'Memory' %}</th>
-                                <th>{% trans 'Disk' %}</th>
-                                <th>{% trans 'OoB IP:Port' %}</th>
-                                <th>{% trans 'OoB Account' %}</th>
-                                <th>{% trans 'OoB Password' %}</th>
+                                <th>{% trans 'Group' %}</th>
+                                <th>{% trans 'Status' %}</th>
                                 <th>{% trans 'Action' %}</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for entity in entity_list %}
                                 <tr>
+                                    <td>
+                                        <a href="{% url 'asset:entity:detail' entity.id %}">{{ entity.sn }}</a>
+                                    </td>
+                                    <td>{{ entity.env }}</td>
                                     <td>{{ entity.idc.name }}</td>
                                     <td>{{ entity.owner.username }}</td>
-                                    <td>{{ entity.sn }}</td>
-                                    <td>{{ entity.cpu }}</td>
-                                    <td>{{ entity.memory }}</td>
-                                    <td>{{ entity.disk }}</td>
-                                    <td>{{ entity.oob_ip }}:{{ entity.oob_port }}</td>
-                                    <td>{{ entity.oob_admin }}</td>
-                                    <td>{{ entity.oob_password }}</td>
+                                    <td>{{ entity.owner.group.name }}</td>
                                     <td>
-                                        <a href="{% url 'asset:entity:detail' entity.id %}" class="btn btn-info btn-sm">
+                                        {% if entity.status == 1 %}
+                                            NORMAL
+                                        {% elif entity.status == 2 %}
+                                            DELETED
+                                        {% elif entity.status == 3 %}
+                                            Out of Service
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'asset:entity:update' pk=entity.id %}" class="btn btn-info btn-sm">
                                             <i class="fa fa-edit"></i> {% trans 'Edit' %}
                                         </a>
                                         <a class="btn btn-danger btn-sm">
@@ -55,15 +59,12 @@
                             </tbody>
                             <tfoot>
                             <tr>
+                                <th>{% trans 'SN' %}</th>
+                                <th>{% trans 'Environment' %}</th>
                                 <th>{% trans 'IDC' %}</th>
                                 <th>{% trans 'Owner' %}</th>
-                                <th>{% trans 'SN' %}</th>
-                                <th>{% trans 'CPU' %}</th>
-                                <th>{% trans 'Memory' %}</th>
-                                <th>{% trans 'Disk' %}</th>
-                                <th>{% trans 'OoB IP:Port' %}</th>
-                                <th>{% trans 'OoB Account' %}</th>
-                                <th>{% trans 'OoB Password' %}</th>
+                                <th>{% trans 'Group' %}</th>
+                                <th>{% trans 'Status' %}</th>
                                 <th>{% trans 'Action' %}</th>
                             </tr>
                             </tfoot>

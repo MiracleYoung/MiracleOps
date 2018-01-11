@@ -5,45 +5,111 @@
 
     <section class="content">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-md-7">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Entity Create</h3>
+                        <h3 class="box-title">Detail</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div class="ibox-content">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td colspan="2">
+                                        <h3>{% trans 'Basic Info' %}</h3>
+                                    </td>
+                                </tr>
+                                <tr class="no-borders-tr">
+                                    <td class="col-md-4">{% trans 'SN' %}:</td>
+                                    <td><b>{{ entity.sn }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'IDC' %}:</td>
+                                    <td><b>{{ entity.idc.name }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Cabinet' %}:</td>
+                                    <td><b>{{ entity.cabinet }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Detail Address' %}:</td>
+                                    <td><b>{{ entity.detail_address }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Interface1' %}:</td>
+                                    <td><b>{{ entity.interface1 }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Interface1' %}:</td>
+                                    <td><b>{{ entity.interface2 }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h3>{% trans 'Owner' %}</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Environment' %}:</td>
+                                    <td><b>{{ entity.env }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Owner' %}:</td>
+                                    <td><b>{{ entity.owner.username }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h3>{% trans 'OoB Management' %}</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'OoB Admin Account' %}:</td>
+                                    <td><b>{{ entity.oob_admin }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'OoB Admin Password' %}:</td>
+                                    <td><b>{{ entity.oob_password }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'OoB Ip' %}:</td>
+                                    <td><b>{{ entity.ip }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'OoB Port' %}:</td>
+                                    <td><b>{{ entity.port }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h3>{% trans 'Hardware Info' %}</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'CPU' %}:</td>
+                                    <td><b>{{ entity.cpu }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Memory' %}:</td>
+                                    <td><b>{{ entity.memory }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Disk' %}:</td>
+                                    <td><b>{{ entity.disk }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Hardware Version' %}:</td>
+                                    <td><b>{{ entity.hardware_version }}</b></td>
+                                </tr>
 
-                        <!-- form start -->
-                        <form class="form-horizontal" method="post" action="{% url 'asset:entity-create' %}">
-                            {% csrf_token %}
-
-                            {% bootstrap_field entity.idc layout="horizontal" %}
-                            {% bootstrap_field entity.cabinet layout="horizontal" %}
-                            {% bootstrap_field entity.detail_address layout="horizontal" %}
-                            {% bootstrap_field entity.sn layout="horizontal" %}
-                            {% bootstrap_field entity.interface1 layout="horizontal" %}
-                            {% bootstrap_field entity.interface2 layout="horizontal" %}
-                            {% bootstrap_field entity.owner layout="horizontal" %}
-                            {% bootstrap_field entity.oob_admin layout="horizontal" %}
-                            {% bootstrap_field entity.oob_ip layout="horizontal" %}
-                            {% bootstrap_field entity.oob_password layout="horizontal" %}
-                            {% bootstrap_field entity.oob_port layout="horizontal" %}
-                            {% bootstrap_field entity.cpu layout="horizontal" %}
-                            {% bootstrap_field entity.memory layout="horizontal" %}
-                            {% bootstrap_field entity.disk layout="horizontal" %}
-                            {% bootstrap_field entity.hardware_version layout="horizontal" %}
-                            {% bootstrap_field entity.create_time layout="horizontal" %}
-
-                            <!-- /.box-footer -->
-                        </form>
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
-                    <!-- /.box-body -->
                 </div>
+                <!-- /.col -->
             </div>
-            <!-- /.col -->
+            <!-- /.row -->
         </div>
-        <!-- /.row -->
     </section>
 
 

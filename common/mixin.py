@@ -22,9 +22,20 @@ class LoginRequiredMixin:
                 u = User.objects.get(pk=request.session.get('uid'))
             except User.DoesNotExist:
                 raise self.form.add_error('user', 'User is incorrect.')
-            context =  self.get_context_data(**kwargs) or {}
-            context['user'] = u
-            kwargs.update(context)
+            try:
+                self.object = self.get_object(self.queryset)
+            except:
+                pass
+            try:
+                self.object_list = self.queryset
+            except:
+                pass
+            try:
+                self.context =  self.get_context_data(**kwargs)
+            except:
+                self.context = {}
+            self.context['user'] = u
+            kwargs.update(self.context)
             return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
         else:
             redirect_url = self.retrieve_redirect_url(request.path)
@@ -34,3 +45,9 @@ class LoginRequiredMixin:
         _login_url = reverse(login_url)
         return '%s?next=%s' % (_login_url, path)
         
+        
+class GetMixin:
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        kwargs.update(context)
+        return super(GetMixin, self).get(request, *args, **kwargs)

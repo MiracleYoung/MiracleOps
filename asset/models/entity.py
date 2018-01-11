@@ -7,7 +7,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from user.models.user import User
+from user.models import User, Group
 
 __all__ = ['IDC', 'Entity']
 
@@ -37,22 +37,34 @@ class Entity(models.Model):
         (3, 'Out of Service'),
     )
 
-    idc = models.ForeignKey(IDC, on_delete=models.DO_NOTHING)
-    cabinet = models.CharField(_('Cabinet'), max_length=100, default='', blank=True)
-    detail_address = models.CharField(_('Detail Address like n U'), max_length=200, default='', blank=True)
-    interface1 = models.CharField(_('Network Interface 1'), max_length=100, default='', blank=True)
-    interface2 = models.CharField(_('Network Interface 2'), max_length=100, default='', blank=True)
+    ENV_CHOICES = (
+        ('PRO', 'PRODUCTION'),
+        ('GRAY', 'GRAY LEVEL'),
+        ('STG', 'STAGE'),
+        ('DEV', 'DEVELOPMENT'),
+        ('TEST', 'TEST'),
+    )
+    # project related
+    status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=1, blank=True)
+    env = models.CharField(_('Environment'), max_length=100, choices=ENV_CHOICES, default='')
     owner = models.ForeignKey(User, verbose_name=_('Owner'))
+    uuid = models.CharField(_('UUID'), max_length=100, default='', blank=True)
+    # self related
     sn = models.CharField(_('Serial Number'), max_length=200, default='')
     cpu = models.CharField(_('CPU Info'), max_length=100, default='')
     memory = models.CharField(_('Memory Info'), max_length=100, default='')
     disk = models.CharField(_('Disk Info'), max_length=100, default='')
     hardware_version = models.CharField(_('Hardware Version'), max_length=200, default='', blank=True)
+    # machined related
+    idc = models.ForeignKey(IDC, on_delete=models.DO_NOTHING)
+    cabinet = models.CharField(_('Cabinet'), max_length=100, default='', blank=True)
+    detail_address = models.CharField(_('Detail Address like n U'), max_length=200, default='', blank=True)
+    interface1 = models.CharField(_('Network Interface 1'), max_length=100, default='', blank=True)
+    interface2 = models.CharField(_('Network Interface 2'), max_length=100, default='', blank=True)
     oob_ip = models.GenericIPAddressField(_('Out of Band Management IP'), default='0.0.0.0')
     oob_port = models.SmallIntegerField(_('Out of Band Management Port'), default=80, blank=True)
     oob_admin = models.CharField(_('Out of Band Management Admin Account'), max_length=100, default='', blank=True)
     oob_password = models.CharField(_('Out of Band Management Admin Password'), max_length=100, default='', blank=True)
-    status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=1)
     create_time = models.DateTimeField(_('Create Time'), default=timezone.now(), blank=True)
     update_time = models.DateTimeField(_('Update Time'), auto_now=True)
 

@@ -8,6 +8,7 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import now
+from .group import Group
 
 __all__ = ['User']
 
@@ -49,6 +50,7 @@ class User(AbstractBaseUser):
         ('Director', 'Director'),
         ('Manager', 'Manager'),
         ('TL', 'Tech Leader'),
+        ('DEV', 'DEVOLOPER'),
     )
 
     email = models.EmailField(_('Email Address'), max_length=128, unique=True)
@@ -57,6 +59,7 @@ class User(AbstractBaseUser):
     avatar = models.ImageField(_('Avatar'), upload_to='avatar', null=True, blank=True, default='avatar/default_avatar.jpeg')
     job_title = models.CharField(_('Job Title'), max_length=32, choices=JOB_TITLE, default='', blank=True)
     reg_time = models.DateTimeField(_('Register Time'), auto_now_add=True)
+    group = models.ForeignKey(Group, verbose_name=_('Group'))
     is_active = models.BooleanField(_('Is Active'), default=True)
     is_admin = models.BooleanField(_('Is Admin'), default=False)
     is_staff = models.BooleanField(_('Is Staff'), default=True)

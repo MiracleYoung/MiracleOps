@@ -29,6 +29,16 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
+    'rest_framework',
+    'bootstrap3',
+
+    # 'rest_framework.authtoken',
+    'common.apps.CommonConfig',
+    'user.apps.UserConfig',
+
+    'asset.apps.AssetConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,14 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'corsheaders',
-    'rest_framework',
-    'bootstrap3',
-
-    # 'rest_framework.authtoken',
-    'user.apps.UserConfig',
-    'common.apps.CommonConfig',
-    'asset.apps.AssetConfig',
 ]
 
 REST_FRAMEWORK = {
@@ -157,7 +159,7 @@ BOOTSTRAP3 = {
     # Label class to use in horizontal forms
     'horizontal_label_class': 'col-md-4',
     # Field class to use in horizontal forms
-    'horizontal_field_class': 'col-md-8',
+    'horizontal_field_class': 'col-md-7',
     # Set placeholder attributes to label if no placeholder is provided.
     # This also considers the 'label' option of {% bootstrap_field %} tags.
     'set_placeholder': True,

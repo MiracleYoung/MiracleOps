@@ -4,45 +4,31 @@
 # @Author  : MiracleYoung
 # @File    : entity.py
 
-from django.views.generic import TemplateView, ListView, list, FormView, DetailView, DeleteView
-from django.shortcuts import redirect, reverse
+from django.views.generic import TemplateView, ListView, FormView, DetailView, UpdateView
 from django.urls import reverse_lazy
-from common.mixin import LoginRequiredMixin
+from common.mixin import LoginRequiredMixin, GetMixin
 from ..models import IDC, Entity
 from ..forms import *
 
 
-class IDCView(LoginRequiredMixin, TemplateView):
+class IDCView(LoginRequiredMixin, GetMixin, ListView):
     template_name = 'asset/idc.html'
-
-    def get_context_data(self, **kwargs):
-        context = {
-            'idc_list': IDC.objects.all(),
-        }
-        kwargs.update(context)
-        return super(IDCView, self).get_context_data(**kwargs)
+    model = IDC
+    queryset = IDC.objects.all()
+    context_object_name = 'idc_list'
 
 
-class EntityView(LoginRequiredMixin, TemplateView):
+
+class EntityView(LoginRequiredMixin, ListView):
     template_name = 'asset/entity.html'
-
-    def get_context_data(self, **kwargs):
-        context = {
-            'entity_list': Entity.objects.all(),
-        }
-        kwargs.update(context)
-        return super(EntityView, self).get_context_data(**kwargs)
+    model = Entity
+    context_object_name = 'entity_list'
 
 
 class EntityCreateView(LoginRequiredMixin, FormView):
     template_name = 'asset/entity_create.html'
     form_class = EntityForm
-    success_url = reverse_lazy('asset:entity:list')
-
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        return super(EntityCreateView, self).form_valid(form)
+    success_url = reverse_lazy('asset:entity:index')
 
 
 class EntityDetailView(LoginRequiredMixin, DetailView):
@@ -51,12 +37,8 @@ class EntityDetailView(LoginRequiredMixin, DetailView):
     template_name = 'asset/entity_detail.html'
 
 
-class EntityUpdateView(LoginRequiredMixin, FormView):
-    model = Entity
-    context_object_name = 'entity'
+class EntityUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'asset/entity_update.html'
-
-
-
-
-
+    model = Entity
+    form_class = EntityForm
+    success_url = reverse_lazy('asset:entity:index')

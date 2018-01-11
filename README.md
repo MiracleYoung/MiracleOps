@@ -13,6 +13,13 @@
 
 ## Release Notes
 
+### version 0.2.3 (2017.01.11)
+
+1. Update `_nav.html` add `<a>` tag to path1.
+2. Update Entity model, EntityForm, LoginRequiredMixin.
+3. Optimize `entity.html`,`entity_create.html`,`entity_update.html` presentation. 
+4. Complete `asset:entity:create`, `asset:entity:update`, `asset:entity:delete`.
+
 ### version 0.2.2 (2017.01.09)
 
 1. Update IDC, Entity model.
