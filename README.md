@@ -11,6 +11,39 @@
 
 ![MiracleOpsArchitecture](https://github.com/MiracleYoung/MiracleOps/raw/master/docs/MiracleOps.png)
 
+## Installation
+
+1. Please use Python 3.x.(3.6 is recommendation.)
+2. Install packages: `pip install -r requirements.txt`
+3. Modify MySQL config in MiracleOps.settings.py: 
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'MiracleOps', # Your Database Name
+        # 'HOST': '127.0.0.1',
+        'HOST': '192.168.29.134' if 'window' in platform.platform().lower() else '127.0.0.1', # Your MySQL instance host or IP
+        'PORT': 3306, # Your MySQL instance port
+        'USER': 'root', # Your MySQL instance user
+        'PASSWORD': '', # Your MySQL instance password
+        'CHARSET': 'utf8', # Your MySQL client character
+    }
+}
+``` 
+4. Migrate python data model to MySQL:
+```python
+python manager.py makemigrations
+python manager.py migrate
+```
+5. Run app in DEBUG schema. `python manager.py runserver 0.0.0.0:8080`
+6. Starting development server at `http://0.0.0.0:8080/`
+
+**Important Advice**: Do not use DEBUG schema in production.
+
+If you like it, please star it, and can also join us by QQ, email.
+
+QQ group and email are in the below \#Author.
+
 ## Release Notes
 
 ### version 0.2.4 (2017.01.12)
@@ -76,6 +109,8 @@
 Journey: DBA -> DevOps -> Prince Miracle
 
 Email: miracleyoung0723@gmail.com
+
+QQ Group: 348158993
 
 ## Q&A
 
