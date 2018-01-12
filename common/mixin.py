@@ -23,14 +23,6 @@ class LoginRequiredMixin:
             except User.DoesNotExist:
                 raise self.form.add_error('user', 'User is incorrect.')
             try:
-                self.object = self.get_object(self.queryset)
-            except:
-                pass
-            try:
-                self.object_list = self.queryset
-            except:
-                pass
-            try:
                 self.context =  self.get_context_data(**kwargs)
             except:
                 self.context = {}

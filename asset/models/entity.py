@@ -12,11 +12,17 @@ from user.models import User, Group
 __all__ = ['IDC', 'Entity']
 
 class IDC(models.Model):
+    STATUS_CHOICE = (
+        (1, 'NORMAL'),
+        (2, 'DELETED'),
+        (3, 'Out of Service'),
+    )
     name = models.CharField(_('IDC Name'), max_length=100, default='')
     idc_user = models.CharField(_('IDC User'), max_length=100, default='')
     idc_user_tel = models.CharField(_('IDC User Phone'), max_length=100, default='')
     user = models.ForeignKey(User, verbose_name=_('Department User'))
     address = models.CharField(_('IDC Address'), max_length=200, default='')
+    status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=1, blank=True)
     create_time = models.DateTimeField(_('Create Time'), default=timezone.now(), blank=True)
     update_time = models.DateTimeField(_('Update Time'), auto_now=True)
 

@@ -5,14 +5,18 @@
 # @File    : entity.py
 
 from rest_framework.serializers import ModelSerializer
-from ..models import Entity
+from ..models import Entity, IDC
 
-__all__ = ['EntitySerializer']
+__all__ = ['EntitySerializer', 'IDCSerializer']
+
 
 class EntitySerializer(ModelSerializer):
     class Meta:
         model = Entity
         fields = '__all__'
 
-    def update(self, instance, validated_data):
-        entity = Entity.objects.get(validated_data['pk'])
+
+class IDCSerializer(ModelSerializer):
+    class Meta:
+        model = IDC
+        fields = '__all__'

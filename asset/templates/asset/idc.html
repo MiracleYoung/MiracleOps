@@ -23,12 +23,14 @@
                                 <th>{% trans 'IDC Charge User' %}</th>
                                 <th>{% trans 'IDC Charge User Phone' %}</th>
                                 <th>{% trans 'Department Charge User' %}</th>
+                                <th>{% trans 'Status' %}</th>
                                 <th>{% trans 'Action' %}</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for idc in idc_list %}
                                 <tr>
+                                    <input type="hidden" value="{% url 'api-asset:idc-detail' idc.id %}"/>
                                     <td>
                                         <a href="{% url 'asset:idc:detail' idc.id %}">{{ idc.name }}</a>
                                     </td>
@@ -37,11 +39,21 @@
                                     <td>{{ idc.idc_user_tel }}</td>
                                     <td>{{ idc.user.username }}</td>
                                     <td>
+                                        {% if idc.status == 1 %}
+                                            NORMAL
+                                        {% elif idc.status == 2 %}
+                                            DELETED
+                                        {% elif idc.status == 3 %}
+                                            Out of Service
+                                        {% endif %}
+                                    </td>
+                                    <td>
                                         <a href="{% url 'asset:idc:update' pk=idc.id %}"
                                            class="btn btn-info btn-sm">
                                             <i class="fa fa-edit"></i> {% trans 'Edit' %}
                                         </a>
-                                        <a class="btn btn-danger btn-sm">
+                                        <a class="btn btn-danger btn-sm" data-toggle="modal"
+                                           data-target="#delete-danger" onclick="setValue(this);">
                                             <i class="fa fa-trash"></i> {% trans 'Delete' %}
                                         </a>
                                     </td>
@@ -55,6 +67,7 @@
                                 <th>{% trans 'IDC Charge User' %}</th>
                                 <th>{% trans 'IDC Charge User Phone' %}</th>
                                 <th>{% trans 'Department Charge User' %}</th>
+                                <th>{% trans 'Status' %}</th>
                                 <th>{% trans 'Action' %}</th>
                             </tr>
                             </tfoot>
@@ -68,12 +81,63 @@
         <!-- /.row -->
     </section>
 
+    <div class="modal modal-danger fade" id="delete-danger">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Danger Action Alert!</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Please Confirm Your Action: </p>
+                    <p>Delete IDC as below:</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline" data-idc-list="{% url 'asset:idc:list' %}"
+                            id="confirm-delete">Confirm
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 {% endblock main %}
 
 {% block js %}
     <script>
-        $('#table-idc-list').DataTable();
+        $('#table-idc-list').DataTable()
+
+        function setValue(e) {
+            var tds = $(e).parent('td').siblings('td')
+            var item = []
+            for (var i = 0; i < tds.length; i++) {
+                item.push(tds[i].innerText)
+            }
+            var p = "<p>IDC Name:" + item[0] + "</p>"
+            $('.modal-body').append(p)
+            var deleteUrl = $(e).parent('td').siblings('input')[0].value
+            $('#confirm-delete').attr({"data-idc-delete": deleteUrl})
+        }
+
+        $('#confirm-delete').click(function () {
+            var deleteUrl = $(this).attr("data-idc-delete")
+            var listUrl = $(this).attr("data-idc-list")
+            $.ajax({
+                url: deleteUrl,
+                method: 'DELETE'
+            }).done(function (data, status, xhr) {
+                if (xhr.status == 204) {
+                    alert('Delete Success.')
+                    window.location.href = listUrl
+                }
+            }).fail(function (err) {
+                alert('Oops, something wrong, please contact your Administrator.')
+            })
+        })
     </script>
 
 {% endblock js %}

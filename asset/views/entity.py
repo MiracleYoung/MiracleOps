@@ -14,8 +14,10 @@ from ..forms import EntityForm, IDCForm
 class IDCView(LoginRequiredMixin, ListView):
     template_name = 'asset/idc.html'
     model = IDC
-    queryset = IDC.objects.all()
     context_object_name = 'idc_list'
+
+    def get_queryset(self):
+        return IDC.objects.all()
 
 
 class IDCCreateView(LoginRequiredMixin, FormView):
@@ -41,8 +43,10 @@ class IDCUpdateView(LoginRequiredMixin, UpdateView):
 class EntityView(LoginRequiredMixin, ListView):
     template_name = 'asset/entity.html'
     model = Entity
-    queryset = Entity.objects.all()
     context_object_name = 'entity_list'
+
+    def get_queryset(self):
+        return super(EntityView, self).get_queryset()
 
 
 class EntityCreateView(LoginRequiredMixin, FormView):

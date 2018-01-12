@@ -7,21 +7,17 @@
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from ..serializer import EntitySerializer
-from ..models import Entity
+from ..serializer import EntitySerializer, IDCSerializer
+from ..models import Entity, IDC
 
-__all__ = ['EntityDetailApi']
+__all__ = ['EntityDetailApi', 'IDCDetailApi']
+
 
 class EntityDetailApi(RetrieveUpdateDestroyAPIView):
     serializer_class = EntitySerializer
-    queryset = Entity.objects.all()
-
-    def get_queryset(self):
-        queryset = super(EntityDetailApi, self).get_queryset()
-        return queryset
 
     def delete(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
+        queryset = Entity.objects.filter(pk=kwargs.get('pk', ''))
         try:
             queryset.update(status=2)
             return Response('', status=status.HTTP_204_NO_CONTENT)
@@ -29,3 +25,13 @@ class EntityDetailApi(RetrieveUpdateDestroyAPIView):
             return Response('', status=status.HTTP_502_BAD_GATEWAY)
 
 
+class IDCDetailApi(RetrieveUpdateDestroyAPIView):
+    serializer_class = IDCSerializer
+
+    def delete(self, request, *args, **kwargs):
+        queryset = IDC.objects.filter(pk=kwargs.get('pk', ''))
+        try:
+            queryset.update(status=2)
+            return Response('', status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Response('', status=status.HTTP_502_BAD_GATEWAY)

@@ -30,10 +30,7 @@
                             <tbody>
                             {% for entity in entity_list %}
                                 <tr>
-                                    <input type="hidden" value="{{ entity.id }}" id=""/>
-                                    <input type="hidden" value="{% url 'api-asset:entity-detail' entity.id %}"
-                                           id="entity-detail-url-{{ entity.id }}"/>
-
+                                    <input type="hidden" value="{% url 'api-asset:entity-detail' entity.id %}"/>
                                     <td>
                                         <a href="{% url 'asset:entity:detail' entity.id %}">{{ entity.sn }}</a>
                                     </td>
@@ -57,7 +54,7 @@
                                         </a>
 
                                         <a class="btn btn-danger btn-sm" data-toggle="modal"
-                                           data-target="#delete-danger">
+                                           data-target="#delete-danger" onclick="setValue(this);">
                                             <i class="fa fa-trash"></i> {% trans 'Delete' %}
                                         </a>
                                     </td>
@@ -96,29 +93,12 @@
                 <div class="modal-body">
                     <p>Please Confirm Your Action: </p>
                     <p>Delete Entity as below:</p>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td>{{ entity.sn }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ entity.env }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ entity.idc.name }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ entity.owner.username }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ entity.owner.group.name }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline" id="confirm-delete">Confirm</button>
+                    <button type="button" class="btn btn-outline" data-entity-list="{% url 'asset:entity:list' %}"
+                            id="confirm-delete">Confirm
+                    </button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -130,18 +110,33 @@
 
 {% block js %}
     <script>
-        $('#table-entity-list').DataTable();
+        $('#table-entity-list').DataTable()
+
+        function setValue(e) {
+            var tds = $(e).parent('td').siblings('td')
+            var item = []
+            for (var i = 0; i < tds.length; i++) {
+                item.push(tds[i].innerText)
+            }
+            var p = "<p>SN:" + item[0] + "</p>"
+            $('.modal-body').append(p)
+            var deleteUrl = $(e).parent('td').siblings('input')[0].value
+            $('#confirm-delete').attr({"data-entity-delete": deleteUrl})
+        }
 
         $('#confirm-delete').click(function () {
-            var detail_url = $(this).siblings('#entity-detail-url')
+            var deleteUrl = $(this).attr("data-entity-delete")
+            var listUrl = $(this).attr("data-entity-list")
             $.ajax({
-                url: detail_url,
+                url: deleteUrl,
                 method: 'DELETE'
-            }).complete(function (xhr, status) {
-                if (status == 204) {
+            }).done(function (data, status, xhr) {
+                if (xhr.status == 204) {
                     alert('Delete Success.')
-                    window.location.href = '{% url 'asset:entity:list' %}'
+                    window.location.href = listUrl
                 }
+            }).fail(function (err) {
+                alert('Oops, something wrong, please contact your Administrator.')
             })
         })
     </script>
