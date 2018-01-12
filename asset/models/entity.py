@@ -65,9 +65,9 @@ class Entity(models.Model):
     # machined related
     idc = models.ForeignKey(IDC, on_delete=models.DO_NOTHING)
     cabinet = models.CharField(_('Cabinet'), max_length=100, default='', blank=True)
-    detail_address = models.CharField(_('Detail Address like n U'), max_length=200, default='', blank=True)
-    interface1 = models.CharField(_('Network Interface 1'), max_length=100, default='', blank=True)
-    interface2 = models.CharField(_('Network Interface 2'), max_length=100, default='', blank=True)
+    detail_address = models.CharField(_('Detail Address'), max_length=200, default='', blank=True)
+    interface1 = models.SmallIntegerField(_('Network Interface 1'), default=0, blank=True)
+    interface2 = models.SmallIntegerField(_('Network Interface 2'), default=0, blank=True)
     oob_ip = models.GenericIPAddressField(_('Out of Band Management IP'), default='0.0.0.0')
     oob_port = models.SmallIntegerField(_('Out of Band Management Port'), default=80, blank=True)
     oob_admin = models.CharField(_('Out of Band Management Admin Account'), max_length=100, default='', blank=True)

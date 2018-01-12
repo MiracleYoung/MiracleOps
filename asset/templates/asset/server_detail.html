@@ -17,24 +17,108 @@
                                 <tbody>
 
                                 <tr class="no-borders-tr">
-                                    <td class="col-md-4">{% trans 'IDC Name' %}:</td>
-                                    <td><b>{{ idc.name }}</b></td>
+                                    <td class="col-md-4">{% trans 'Host' %}:</td>
+                                    <td><b>{{ server.host }}</b></td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans 'IDC Address' %}:</td>
-                                    <td><b>{{ idc.address }}</b></td>
+                                    <td>{% trans 'Public IP' %}:</td>
+                                    <td><b>{{ server.public_ip }}</b></td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans 'IDC Charge User' %}:</td>
-                                    <td><b>{{ idc.idc_user }}</b></td>
+                                    <td>{% trans 'Private IP 1' %}:</td>
+                                    <td><b>{{ server.private_ip1 }}</b></td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans 'IDC Charge User Tel' %}:</td>
-                                    <td><b>{{ idc.idc_user_tel }}</b></td>
+                                    <td>{% trans 'Private IP 2' %}:</td>
+                                    <td><b>{{ server.private_ip2 }}</b></td>
                                 </tr>
                                 <tr>
-                                    <td>{% trans 'Group User' %}:</td>
-                                    <td><b>{{ idc.user.username }}</b></td>
+                                    <td>{% trans 'Private IP 3' %}:</td>
+                                    <td><b>{{ server.private_ip3 }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Network Interface 1' %}:</td>
+                                    <td><b>{{ server.net_interface1 }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Network Interface 2' %}:</td>
+                                    <td><b>{{ server.net_interface2 }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Network Interface 3' %}:</td>
+                                    <td><b>{{ server.net_interface3 }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'CPU' %}:</td>
+                                    <td><b>{{ server.cpu }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Memory' %}:</td>
+                                    <td><b>{{ server.memory }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Disk' %}:</td>
+                                    <td><b>{{ server.disk }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Environment' %}:</td>
+                                    <td>
+                                        <b>
+                                            {% if server.env == 1 %}
+                                                Production
+                                            {% elif server.env == 2 %}
+                                                Gray Level
+                                            {% elif server.env == 3 %}
+                                                Stage
+                                            {% elif server.env == 4 %}
+                                                Development
+                                            {% elif server.env == 5 %}
+                                                Test
+                                            {% endif %}
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Status' %}:</td>
+                                    <td>
+                                        <b>
+                                            {% if server.status == 1 %}
+                                                NORMAL
+                                            {% elif server.status == 2 %}
+                                                DELETED
+                                            {% elif server.status == 3 %}
+                                                Out of Service
+                                            {% endif %}
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Type' %}:</td>
+                                    <td>
+                                        <b>
+                                            {% if server.type == 1 %}
+                                                Web Service
+                                            {% elif server.type == 2 %}
+                                                Database
+                                            {% elif server.type == 3 %}
+                                                Big Data
+                                            {% elif server.type == 4 %}
+                                                Middleware
+                                            {% elif server.type == 5 %}
+                                                Development
+                                            {% elif server.type == 99 %}
+                                                Other
+                                            {% endif %}
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Owner' %}:</td>
+                                    <td><b>{{ server.owner }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Comment' %}:</td>
+                                    <td><b>{{ server.comment }}</b></td>
                                 </tr>
 
                                 </tbody>

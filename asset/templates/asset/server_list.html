@@ -35,9 +35,8 @@
                                 <tr>
                                     <input type="hidden" value="{% url 'api-asset:server-detail' server.id %}"/>
                                     <td>
-                                        <a href="{% url 'asset:server:detail' server.id %}">{{ server.name }}</a>
+                                        <a href="{% url 'asset:server:detail' server.id %}">{{ server.host }}</a>
                                     </td>
-                                    <td>{{ server.host }}</td>
                                     <td>{{ server.public_ip }}</td>
                                     <td>
                                         {% if server.env == 1 %}
@@ -52,9 +51,6 @@
                                             Test
                                         {% endif %}
                                     </td>
-                                    <td>{{ server.cpu }}</td>
-                                    <td>{{ server.memory }}</td>
-                                    <td>{{ server.disk }}</td>
                                     <td>
                                         {% if server.status == 1 %}
                                             NORMAL
@@ -79,6 +75,9 @@
                                             Other
                                         {% endif %}
                                     </td>
+                                    <td>{{ server.cpu }}</td>
+                                    <td>{{ server.memory }}</td>
+                                    <td>{{ server.disk }}</td>
                                     <td>{% trans server.owner.username %}</td>
                                     <td>
                                         <a href="{% url 'asset:server:update' pk=server.id %}"
@@ -131,7 +130,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline" data-server-list="{% url 'asset:server:list' %}"
+                    <button type="button" class="btn btn-outline" data-list-url="{% url 'asset:server:list' %}"
                             id="confirm-delete">Confirm
                     </button>
                 </div>

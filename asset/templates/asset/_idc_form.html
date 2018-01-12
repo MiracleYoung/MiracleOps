@@ -1,8 +1,23 @@
 {% load i18n bootstrap3 %}
 
-<hr>
-{% bootstrap_field form.name layout="horizontal" %}
-{% bootstrap_field form.address layout="horizontal" %}
-{% bootstrap_field form.idc_user layout="horizontal" %}
-{% bootstrap_field form.idc_user_tel layout="horizontal" %}
-{% bootstrap_field form.user layout="horizontal" %}
+<form class="form-horizontal" method="post" action="">
+    {% csrf_token %}
+    <hr>
+    {% bootstrap_field form.name layout="horizontal" %}
+    {% bootstrap_field form.address layout="horizontal" %}
+    {% bootstrap_field form.idc_user layout="horizontal" %}
+    {% bootstrap_field form.idc_user_tel layout="horizontal" %}
+    {% bootstrap_field form.user layout="horizontal" %}
+    {% bootstrap_field form.status layout="horizontal" %}
+
+    <hr>
+    <div class="form-group">
+        <div class="col-md-4 col-md-offset-4">
+            <button type="submit" class="btn btn-info">Submit</button>
+            <a href="{% url 'asset:idc:list' %}" class="btn btn-default">Cancel</a>
+        </div>
+    </div>
+    <!-- /.box-footer -->
+</form>
+
+

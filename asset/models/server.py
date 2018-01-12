@@ -40,7 +40,7 @@ class Server(models.Model):
     private_ip1 = models.GenericIPAddressField(_('Private IP 1'), default='0.0.0.0')
     private_ip2 = models.GenericIPAddressField(_('Private IP 2'), default='0.0.0.0')
     private_ip3 = models.GenericIPAddressField(_('Private IP 3'), default='0.0.0.0')
-    net_interface1 = models.CharField(_('Network Interface 1'), max_length=100)
+    net_interface1 = models.CharField(_('Network Interface 1'), max_length=100, default='eth0')
     net_interface2 = models.CharField(_('Network Interface 2'), max_length=100, blank=True)
     net_interface3 = models.CharField(_('Network Interface 3'), max_length=100, blank=True)
     cpu = models.SmallIntegerField(_('CPU'), default=0)

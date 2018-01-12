@@ -36,6 +36,20 @@
                                     <td>{% trans 'Group User' %}:</td>
                                     <td><b>{{ idc.user.username }}</b></td>
                                 </tr>
+                                <tr>
+                                    <td>{% trans 'Status' %}</td>
+                                    <td>
+                                        <b>
+                                            {% if idc.status == 1 %}
+                                                NORMAL
+                                            {% elif idc.status == 2 %}
+                                                DELETED
+                                            {% elif idc.status == 3 %}
+                                                Out of Service
+                                            {% endif %}
+                                        </b>
+                                    </td>
+                                </tr>
 
                                 </tbody>
                             </table>

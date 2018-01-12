@@ -51,7 +51,21 @@
                                 </tr>
                                 <tr>
                                     <td>{% trans 'Environment' %}:</td>
-                                    <td><b>{{ entity.env }}</b></td>
+                                    <td>
+                                        <b>
+                                            {% if entity.env == 1 %}
+                                                Production
+                                            {% elif entity.env == 2 %}
+                                                Gray Level
+                                            {% elif entity.env == 3 %}
+                                                Stage
+                                            {% elif entity.env == 4 %}
+                                                Development
+                                            {% elif entity.env == 5 %}
+                                                Test
+                                            {% endif %}
+                                        </b>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>{% trans 'Owner' %}:</td>

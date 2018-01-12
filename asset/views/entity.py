@@ -25,6 +25,11 @@ class IDCCreateView(LoginRequiredMixin, FormView):
     form_class = IDCForm
     success_url = reverse_lazy('asset:idc:list')
 
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+        return super(IDCCreateView, self).form_valid(form)
+
 
 class IDCDetailView(LoginRequiredMixin, DetailView):
     model = IDC
@@ -52,6 +57,11 @@ class EntityCreateView(LoginRequiredMixin, FormView):
     template_name = 'asset/entity_create.html'
     form_class = EntityForm
     success_url = reverse_lazy('asset:entity:list')
+
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+        return super(EntityCreateView, self).form_valid(form)
 
 
 class EntityDetailView(LoginRequiredMixin, DetailView):

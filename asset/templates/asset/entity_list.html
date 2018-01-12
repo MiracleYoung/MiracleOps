@@ -34,7 +34,19 @@
                                     <td>
                                         <a href="{% url 'asset:entity:detail' entity.id %}">{{ entity.sn }}</a>
                                     </td>
-                                    <td>{{ entity.env }}</td>
+                                    <td>
+                                        {% if entity.env == 1 %}
+                                            Production
+                                        {% elif entity.env == 2 %}
+                                            Gray Level
+                                        {% elif entity.env == 3 %}
+                                            Stage
+                                        {% elif entity.env == 4 %}
+                                            Development
+                                        {% elif entity.env == 5 %}
+                                            Test
+                                        {% endif %}
+                                    </td>
                                     <td>{{ entity.idc.name }}</td>
                                     <td>{{ entity.owner.username }}</td>
                                     <td>{{ entity.owner.group.name }}</td>

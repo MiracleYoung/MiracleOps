@@ -16,7 +16,13 @@
 ### version 0.2.4 (2017.01.12)
 
 1. Complete api: `api-asset:entity-detail`, `api-asset:idc-detail`
-2. Add server asset.
+2. Complete Server model, api, view.
+3. Asset App v1 complete.
+
+**TODO**
+1. Bulk export, import.
+2. Add Category: Database, Web Service, Middleware, etc.
+3. JS optimize.(use React.js)
 
 ### version 0.2.3 (2017.01.12)
 
@@ -55,8 +61,8 @@
 - login
 - register
 - LoginRequiredMixin
-
 2. Official update Project name to MiracleOps.
+3. User App v1 complete.
 
 **TODO**
 

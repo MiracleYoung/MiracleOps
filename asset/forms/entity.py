@@ -41,4 +41,5 @@ class EntityForm(forms.ModelForm):
             'memory': '*required',
             'disk': '*required',
             'oob_ip': '*required',
+            'detail_address': 'If there are several u, enter like 22,23,24',
         }
