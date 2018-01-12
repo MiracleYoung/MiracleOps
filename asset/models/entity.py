@@ -43,16 +43,17 @@ class Entity(models.Model):
         (3, 'Out of Service'),
     )
 
-    ENV_CHOICES = (
-        ('PRO', 'PRODUCTION'),
-        ('GRAY', 'GRAY LEVEL'),
-        ('STG', 'STAGE'),
-        ('DEV', 'DEVELOPMENT'),
-        ('TEST', 'TEST'),
+    ENV_CHOICE = (
+        (1, 'Production'),
+        (2, 'Gray Level'),
+        (3, 'Stage'),
+        (4, 'Development'),
+        (5, 'Test'),
     )
+
     # project related
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=1, blank=True)
-    env = models.CharField(_('Environment'), max_length=100, choices=ENV_CHOICES, default='')
+    env = models.SmallIntegerField(_('Environment'), choices=ENV_CHOICE, default=1)
     owner = models.ForeignKey(User, verbose_name=_('Owner'))
     uuid = models.CharField(_('UUID'), max_length=100, default='', blank=True)
     # self related
@@ -82,3 +83,4 @@ class Entity(models.Model):
         return 'Entity: <owner: %s>' % self.owner.username
 
     __repr__ = __str__
+

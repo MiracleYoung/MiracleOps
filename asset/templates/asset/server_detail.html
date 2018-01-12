@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load i18n bootstrap3 static %}
+
+{% block main %}
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Detail</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="ibox-content">
+                            <table class="table">
+                                <tbody>
+
+                                <tr class="no-borders-tr">
+                                    <td class="col-md-4">{% trans 'IDC Name' %}:</td>
+                                    <td><b>{{ idc.name }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'IDC Address' %}:</td>
+                                    <td><b>{{ idc.address }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'IDC Charge User' %}:</td>
+                                    <td><b>{{ idc.idc_user }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'IDC Charge User Tel' %}:</td>
+                                    <td><b>{{ idc.idc_user_tel }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Group User' %}:</td>
+                                    <td><b>{{ idc.user.username }}</b></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+    </section>
+
+
+{% endblock main %}

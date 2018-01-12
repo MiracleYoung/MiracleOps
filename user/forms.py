@@ -2,7 +2,7 @@
 # encoding: utf-8
 # @Time    : 1/5/2018 3:14 PM
 # @Author  : Miracle Young
-# @File    : forms.py
+# @File    : entity.py
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block main %}
 
@@ -8,51 +8,50 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Entity Overview</h3>
+                        <h3 class="box-title">IDC Overview</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
 
-                        <a href="{% url 'asset:entity:create' %}" class="btn btn-primary margin-bottom">Create</a>
+                        <a href="{% url 'asset:idc:create' %}" class="btn btn-primary margin-bottom">Create</a>
 
-                        <table id="table-entity-list" class="table table-bordered table-hover">
+                        <table id="table-idc-list" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>{% trans 'SN' %}</th>
-                                <th>{% trans 'Environment' %}</th>
-                                <th>{% trans 'IDC' %}</th>
-                                <th>{% trans 'Owner' %}</th>
-                                <th>{% trans 'Group' %}</th>
+                                <th>{% trans 'IDC Name' %}</th>
+                                <th>{% trans 'IDC Address' %}</th>
+                                <th>{% trans 'IDC Charge User' %}</th>
+                                <th>{% trans 'IDC Charge User Phone' %}</th>
+                                <th>{% trans 'Department Charge User' %}</th>
                                 <th>{% trans 'Status' %}</th>
                                 <th>{% trans 'Action' %}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for entity in entity_list %}
+                            {% for idc in idc_list %}
                                 <tr>
-                                    <input type="hidden" value="{% url 'api-asset:entity-detail' entity.id %}"/>
+                                    <input type="hidden" value="{% url 'api-asset:idc-detail' idc.id %}"/>
                                     <td>
-                                        <a href="{% url 'asset:entity:detail' entity.id %}">{{ entity.sn }}</a>
+                                        <a href="{% url 'asset:idc:detail' idc.id %}">{{ idc.name }}</a>
                                     </td>
-                                    <td>{{ entity.env }}</td>
-                                    <td>{{ entity.idc.name }}</td>
-                                    <td>{{ entity.owner.username }}</td>
-                                    <td>{{ entity.owner.group.name }}</td>
+                                    <td>{{ idc.address }}</td>
+                                    <td>{{ idc.idc_user }}</td>
+                                    <td>{{ idc.idc_user_tel }}</td>
+                                    <td>{{ idc.user.username }}</td>
                                     <td>
-                                        {% if entity.status == 1 %}
+                                        {% if idc.status == 1 %}
                                             NORMAL
-                                        {% elif entity.status == 2 %}
+                                        {% elif idc.status == 2 %}
                                             DELETED
-                                        {% elif entity.status == 3 %}
+                                        {% elif idc.status == 3 %}
                                             Out of Service
                                         {% endif %}
                                     </td>
                                     <td>
-                                        <a href="{% url 'asset:entity:update' pk=entity.id %}"
+                                        <a href="{% url 'asset:idc:update' pk=idc.id %}"
                                            class="btn btn-info btn-sm">
                                             <i class="fa fa-edit"></i> {% trans 'Edit' %}
                                         </a>
-
                                         <a class="btn btn-danger btn-sm" data-toggle="modal"
                                            data-target="#delete-danger" onclick="setValue(this);">
                                             <i class="fa fa-trash"></i> {% trans 'Delete' %}
@@ -63,11 +62,11 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>{% trans 'SN' %}</th>
-                                <th>{% trans 'Environment' %}</th>
-                                <th>{% trans 'IDC' %}</th>
-                                <th>{% trans 'Owner' %}</th>
-                                <th>{% trans 'Group' %}</th>
+                                <th>{% trans 'IDC Name' %}</th>
+                                <th>{% trans 'IDC Address' %}</th>
+                                <th>{% trans 'IDC Charge User' %}</th>
+                                <th>{% trans 'IDC Charge User Phone' %}</th>
+                                <th>{% trans 'Department Charge User' %}</th>
                                 <th>{% trans 'Status' %}</th>
                                 <th>{% trans 'Action' %}</th>
                             </tr>
@@ -92,11 +91,11 @@
                 </div>
                 <div class="modal-body">
                     <p>Please Confirm Your Action: </p>
-                    <p>Delete Entity as below:</p>
+                    <p>Delete IDC as below:</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline" data-entity-list="{% url 'asset:entity:list' %}"
+                    <button type="button" class="btn btn-outline" data-idc-list="{% url 'asset:idc:list' %}"
                             id="confirm-delete">Confirm
                     </button>
                 </div>
@@ -109,36 +108,5 @@
 {% endblock main %}
 
 {% block js %}
-    <script>
-        $('#table-entity-list').DataTable()
-
-        function setValue(e) {
-            var tds = $(e).parent('td').siblings('td')
-            var item = []
-            for (var i = 0; i < tds.length; i++) {
-                item.push(tds[i].innerText)
-            }
-            var p = "<p>SN:" + item[0] + "</p>"
-            $('.modal-body').append(p)
-            var deleteUrl = $(e).parent('td').siblings('input')[0].value
-            $('#confirm-delete').attr({"data-entity-delete": deleteUrl})
-        }
-
-        $('#confirm-delete').click(function () {
-            var deleteUrl = $(this).attr("data-entity-delete")
-            var listUrl = $(this).attr("data-entity-list")
-            $.ajax({
-                url: deleteUrl,
-                method: 'DELETE'
-            }).done(function (data, status, xhr) {
-                if (xhr.status == 204) {
-                    alert('Delete Success.')
-                    window.location.href = listUrl
-                }
-            }).fail(function (err) {
-                alert('Oops, something wrong, please contact your Administrator.')
-            })
-        })
-    </script>
-
+    <script src="{% static 'js/asset.js' %}"></script>
 {% endblock js %}

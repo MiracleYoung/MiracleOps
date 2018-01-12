@@ -16,12 +16,7 @@
 ### version 0.2.4 (2017.01.12)
 
 1. Complete api: `api-asset:entity-detail`, `api-asset:idc-detail`
-
-**Asset module simple complete.**
-
-**TODO**
-1. Bulk export, import.
-2. JS optimize.
+2. Add server asset.
 
 ### version 0.2.3 (2017.01.12)
 

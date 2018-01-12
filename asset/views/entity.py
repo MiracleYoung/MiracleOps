@@ -4,15 +4,15 @@
 # @Author  : MiracleYoung
 # @File    : entity.py
 
-from django.views.generic import TemplateView, ListView, FormView, DetailView, UpdateView
+from django.views.generic import ListView, FormView, DetailView, UpdateView
 from django.urls import reverse_lazy
 from common.mixin import LoginRequiredMixin
 from ..models import IDC, Entity
 from ..forms import EntityForm, IDCForm
 
 
-class IDCView(LoginRequiredMixin, ListView):
-    template_name = 'asset/idc.html'
+class IDCListView(LoginRequiredMixin, ListView):
+    template_name = 'asset/idc_list.html'
     model = IDC
     context_object_name = 'idc_list'
 
@@ -23,7 +23,7 @@ class IDCView(LoginRequiredMixin, ListView):
 class IDCCreateView(LoginRequiredMixin, FormView):
     template_name = 'asset/idc_create.html'
     form_class = IDCForm
-    success_url = reverse_lazy('asset:idc:index')
+    success_url = reverse_lazy('asset:idc:list')
 
 
 class IDCDetailView(LoginRequiredMixin, DetailView):
@@ -36,23 +36,22 @@ class IDCUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'asset/idc_update.html'
     model = IDC
     form_class = IDCForm
-    success_url = reverse_lazy('asset:idc:index')
+    success_url = reverse_lazy('asset:idc:list')
 
 
-
-class EntityView(LoginRequiredMixin, ListView):
-    template_name = 'asset/entity.html'
+class EntityListView(LoginRequiredMixin, ListView):
+    template_name = 'asset/entity_list.html'
     model = Entity
     context_object_name = 'entity_list'
 
     def get_queryset(self):
-        return super(EntityView, self).get_queryset()
+        return super(EntityListView, self).get_queryset()
 
 
 class EntityCreateView(LoginRequiredMixin, FormView):
     template_name = 'asset/entity_create.html'
     form_class = EntityForm
-    success_url = reverse_lazy('asset:entity:index')
+    success_url = reverse_lazy('asset:entity:list')
 
 
 class EntityDetailView(LoginRequiredMixin, DetailView):
@@ -65,4 +64,4 @@ class EntityUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'asset/entity_update.html'
     model = Entity
     form_class = EntityForm
-    success_url = reverse_lazy('asset:entity:index')
+    success_url = reverse_lazy('asset:entity:list')
