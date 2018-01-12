@@ -12,7 +12,7 @@ __all__ = ['IDCForm', 'EntityForm']
 class IDCForm(forms.ModelForm):
     class Meta:
         model = IDC
-        fields = ['name', 'idc_user', 'idc_user_tel', 'user', 'address']
+        fields = '__all__'
 
 
 class EntityForm(forms.ModelForm):

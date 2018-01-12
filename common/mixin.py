@@ -44,10 +44,10 @@ class LoginRequiredMixin:
     def retrieve_redirect_url(self, path, login_url=settings.LOGIN_URL):
         _login_url = reverse(login_url)
         return '%s?next=%s' % (_login_url, path)
-        
-        
-class GetMixin:
+
     def get(self, request, *args, **kwargs):
-        context = self.get_context_data()
-        kwargs.update(context)
-        return super(GetMixin, self).get(request, *args, **kwargs)
+        _g = super().get(request, *args, **kwargs)
+        _g.context_data.update(kwargs)
+        context = _g.context_data
+        return self.render_to_response(context)
+

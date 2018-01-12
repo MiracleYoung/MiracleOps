@@ -30,6 +30,10 @@
                             <tbody>
                             {% for entity in entity_list %}
                                 <tr>
+                                    <input type="hidden" value="{{ entity.id }}" id=""/>
+                                    <input type="hidden" value="{% url 'api-asset:entity-detail' entity.id %}"
+                                           id="entity-detail-url-{{ entity.id }}"/>
+
                                     <td>
                                         <a href="{% url 'asset:entity:detail' entity.id %}">{{ entity.sn }}</a>
                                     </td>
@@ -47,10 +51,13 @@
                                         {% endif %}
                                     </td>
                                     <td>
-                                        <a href="{% url 'asset:entity:update' pk=entity.id %}" class="btn btn-info btn-sm">
+                                        <a href="{% url 'asset:entity:update' pk=entity.id %}"
+                                           class="btn btn-info btn-sm">
                                             <i class="fa fa-edit"></i> {% trans 'Edit' %}
                                         </a>
-                                        <a class="btn btn-danger btn-sm">
+
+                                        <a class="btn btn-danger btn-sm" data-toggle="modal"
+                                           data-target="#delete-danger">
                                             <i class="fa fa-trash"></i> {% trans 'Delete' %}
                                         </a>
                                     </td>
@@ -78,12 +85,65 @@
         <!-- /.row -->
     </section>
 
+    <div class="modal modal-danger fade" id="delete-danger">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Danger Action Alert!</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Please Confirm Your Action: </p>
+                    <p>Delete Entity as below:</p>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>{{ entity.sn }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ entity.env }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ entity.idc.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ entity.owner.username }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ entity.owner.group.name }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline" id="confirm-delete">Confirm</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 {% endblock main %}
 
 {% block js %}
     <script>
         $('#table-entity-list').DataTable();
+
+        $('#confirm-delete').click(function () {
+            var detail_url = $(this).siblings('#entity-detail-url')
+            $.ajax({
+                url: detail_url,
+                method: 'DELETE'
+            }).complete(function (xhr, status) {
+                if (status == 204) {
+                    alert('Delete Success.')
+                    window.location.href = '{% url 'asset:entity:list' %}'
+                }
+            })
+        })
     </script>
 
 {% endblock js %}

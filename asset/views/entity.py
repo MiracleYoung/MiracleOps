@@ -6,22 +6,42 @@
 
 from django.views.generic import TemplateView, ListView, FormView, DetailView, UpdateView
 from django.urls import reverse_lazy
-from common.mixin import LoginRequiredMixin, GetMixin
+from common.mixin import LoginRequiredMixin
 from ..models import IDC, Entity
-from ..forms import *
+from ..forms import EntityForm, IDCForm
 
 
-class IDCView(LoginRequiredMixin, GetMixin, ListView):
+class IDCView(LoginRequiredMixin, ListView):
     template_name = 'asset/idc.html'
     model = IDC
     queryset = IDC.objects.all()
     context_object_name = 'idc_list'
 
 
+class IDCCreateView(LoginRequiredMixin, FormView):
+    template_name = 'asset/idc_create.html'
+    form_class = IDCForm
+    success_url = reverse_lazy('asset:idc:index')
+
+
+class IDCDetailView(LoginRequiredMixin, DetailView):
+    model = IDC
+    context_object_name = 'idc'
+    template_name = 'asset/idc_detail.html'
+
+
+class IDCUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'asset/idc_update.html'
+    model = IDC
+    form_class = IDCForm
+    success_url = reverse_lazy('asset:idc:index')
+
+
 
 class EntityView(LoginRequiredMixin, ListView):
     template_name = 'asset/entity.html'
     model = Entity
+    queryset = Entity.objects.all()
     context_object_name = 'entity_list'
 
 

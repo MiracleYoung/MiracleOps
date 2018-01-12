@@ -17,7 +17,7 @@ class IDC(models.Model):
     idc_user_tel = models.CharField(_('IDC User Phone'), max_length=100, default='')
     user = models.ForeignKey(User, verbose_name=_('Department User'))
     address = models.CharField(_('IDC Address'), max_length=200, default='')
-    create_time = models.DateTimeField(_('Create Time'), default=timezone.now())
+    create_time = models.DateTimeField(_('Create Time'), default=timezone.now(), blank=True)
     update_time = models.DateTimeField(_('Update Time'), auto_now=True)
 
     class Meta:

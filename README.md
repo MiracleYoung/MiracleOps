@@ -13,12 +13,16 @@
 
 ## Release Notes
 
-### version 0.2.3 (2017.01.11)
+### version 0.2.3 (2017.01.12)
 
 1. Update `_nav.html` add `<a>` tag to path1.
 2. Update Entity model, EntityForm, LoginRequiredMixin.
 3. Optimize `entity.html`,`entity_create.html`,`entity_update.html` presentation. 
-4. Complete `asset:entity:create`, `asset:entity:update`, `asset:entity:delete`.
+4. Complete views: `asset:entity:create`, `asset:entity:update`, `asset:entity:delete`, `asset:idc:create`, `asset:idc:update`, `asset:idc:delete`.
+5. Add Group model, Update user model add group.
+
+**TODO**
+1. `entity, idc delete action`
 
 ### version 0.2.2 (2017.01.09)
 

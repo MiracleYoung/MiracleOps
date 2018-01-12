@@ -12,6 +12,9 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+
+                        <a href="{% url 'asset:idc:create' %}" class="btn btn-primary margin-bottom">Create</a>
+
                         <table id="table-idc-list" class="table table-bordered table-hover">
                             <thead>
                             <tr>
@@ -20,16 +23,28 @@
                                 <th>{% trans 'IDC Charge User' %}</th>
                                 <th>{% trans 'IDC Charge User Phone' %}</th>
                                 <th>{% trans 'Department Charge User' %}</th>
+                                <th>{% trans 'Action' %}</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for idc in idc_list %}
                                 <tr>
-                                    <td>{{ idc.name }}</td>
+                                    <td>
+                                        <a href="{% url 'asset:idc:detail' idc.id %}">{{ idc.name }}</a>
+                                    </td>
                                     <td>{{ idc.address }}</td>
                                     <td>{{ idc.idc_user }}</td>
                                     <td>{{ idc.idc_user_tel }}</td>
                                     <td>{{ idc.user.username }}</td>
+                                    <td>
+                                        <a href="{% url 'asset:idc:update' pk=idc.id %}"
+                                           class="btn btn-info btn-sm">
+                                            <i class="fa fa-edit"></i> {% trans 'Edit' %}
+                                        </a>
+                                        <a class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash"></i> {% trans 'Delete' %}
+                                        </a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -40,6 +55,7 @@
                                 <th>{% trans 'IDC Charge User' %}</th>
                                 <th>{% trans 'IDC Charge User Phone' %}</th>
                                 <th>{% trans 'Department Charge User' %}</th>
+                                <th>{% trans 'Action' %}</th>
                             </tr>
                             </tfoot>
                         </table>
