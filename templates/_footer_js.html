@@ -1,14 +1,50 @@
 {% load static %}
-<!-- jQuery 3 -->
+<!-- jQuery -->
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/js.cookie.js' %}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{% static 'js/jquery-ui.min.js' %}"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<!-- Bootstrap -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- FastClick -->
+{#<script src="{% static 'js/plugins/fastclick/fastclick.js' %}"></script>#}
+<!-- NProgress -->
+{#<script src="{% static 'js/plugins/nprogress/nprogress.js' %}"></script>#}
+<!-- Chart.js -->
+{#<script src="{% static 'js/plugins/Chart/Chart.min.js' %}"></script>#}
+<!-- gauge.js -->
+{#<script src="{% static 'js/plugins/gauge/gauge.min.js' %}"></script>#}
+<!-- bootstrap-progressbar -->
+{#<script src="{% static 'js/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js' %}"></script>#}
+<!-- iCheck -->
+{#<script src="{% static 'js/plugins/iCheck/icheck.min.js' %}"></script>#}
+<!-- Skycons -->
+{#    <script src="{% static 'js/plugins/skycons/skycons.js' %}"></script>#}
+<!-- Flot -->
+{#<script src="{% static 'js/plugins/Flot/jquery.flot.js' %}"></script>#}
+{#<script src="{% static 'js/plugins/Flot/jquery.flot.pie.js' %}"></script>#}
+{#<script src="{% static 'js/plugins/Flot/jquery.flot.time.js' %}"></script>#}
+{#<script src="{% static 'js/plugins/Flot/jquery.flot.stack.js' %}"></script>#}
+{#<script src="{% static 'js/plugins/Flot/jquery.flot.resize.js' %}"></script>#}
+<!-- Flot plugins -->
+{#<script src="{% static 'js/plugins/flot.orderbars/jquery.flot.orderBars.js' %}"></script>#}
+{#<script src="{% static 'js/plugins/flot-spline/jquery.flot.spline.min.js' %}"></script>#}
+{#<script src="{% static 'js/plugins/flot.curvedlines/curvedLines.js' %}"></script>#}
+<!-- DateJS -->
+{#<script src="{% static 'js/plugins/DateJS/date.js' %}"></script>#}
+<!-- JQVMap -->
+{#<script src="{% static 'js/plugins/jqvmap/jquery.vmap.min.js' %}"></script>#}
+{#<script src="{% static 'js/plugins/jqvmap/jquery.vmap.world.js' %}"></script>#}
+{#<script src="{% static 'js/plugins/jqvmap/jquery.vmap.sampledata.js' %}"></script>#}
+<!-- bootstrap-daterangepicker -->
+{#<script src="{% static 'js/plugins/moment/moment.min.js' %}"></script>#}
+{#<script src="{% static 'js/plugins/bootstrap-daterangepicker/daterangepicker.js' %}"></script>#}
+
+<!-- Custom Theme Scripts -->
+<script src="{%static 'js/custom.min.js' %}"></script>
 <script>
-    $.widget.bridge('uibutton', $.ui.button);
+{#    $.widget.bridge('uibutton', $.ui.button);#}
 
     var csrftoken = Cookies.get('csrftoken');
+
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
@@ -23,31 +59,3 @@
     });
 
 </script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-{#<!-- Morris.js charts -->#}
-{#<script src="{% static 'bower_components/raphael/raphael.min.js' %}"></script>#}
-{#<script src="{% static 'bower_components/morris.js/morris.min.js' %}"></script>#}
-{#<!-- Sparkline -->#}
-{#<script src="{% static 'bower_components/jquery-sparkline/dist/jquery.sparkline.min.js' %}"></script>#}
-{#<!-- jvectormap -->#}
-{#<script src="{% static 'plugins/jvectormap/jquery-jvectormap-1.2.2.min.js' %}"></script>#}
-{#<script src="{% static 'plugins/jvectormap/jquery-jvectormap-world-mill-en.js' %}"></script>#}
-{#<!-- jQuery Knob Chart -->#}
-{#<script src="{% static 'bower_components/jquery-knob/dist/jquery.knob.min.js' %}"></script>#}
-{#<!-- daterangepicker -->#}
-{#<script src="{% static 'bower_components/moment/min/moment.min.js' %}"></script>#}
-<script src="{% static 'js/plugins/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
-<!-- datepicker -->
-<script src="{% static 'js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js' %}"></script>
-<!-- datatable -->
-<script src="{% static 'js/plugins/datatables/jquery.datatables.min.js' %}"></script>
-<script src="{% static 'js/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
-{#<!-- Bootstrap WYSIHTML5 -->#}
-{#<script src="{% static 'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js' %}"></script>#}
-{#<!-- Slimscroll -->#}
-{#<script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>#}
-{#<!-- FastClick -->#}
-{#<script src="{% static 'bower_components/fastclick/lib/fastclick.js' %}"></script>#}
-<!-- AdminLTE App -->
-<script src="{% static 'js/adminlte.min.js' %}"></script>

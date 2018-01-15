@@ -3,128 +3,151 @@
 
 {% block main %}
 
-    <section class="content">
-        <div class="row">
-            <div class="col-md-7">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Detail</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <div class="ibox-content">
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <td colspan="2">
-                                        <h3>{% trans 'Basic Info' %}</h3>
-                                    </td>
-                                </tr>
-                                <tr class="no-borders-tr">
-                                    <td class="col-md-4">{% trans 'SN' %}:</td>
-                                    <td><b>{{ entity.sn }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'IDC' %}:</td>
-                                    <td><b>{{ entity.idc.name }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'Cabinet' %}:</td>
-                                    <td><b>{{ entity.cabinet }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'Detail Address' %}:</td>
-                                    <td><b>{{ entity.detail_address }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'Interface1' %}:</td>
-                                    <td><b>{{ entity.interface1 }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'Interface1' %}:</td>
-                                    <td><b>{{ entity.interface2 }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <h3>{% trans 'Owner' %}</h3>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'Environment' %}:</td>
-                                    <td>
-                                        <b>
-                                            {% if entity.env == 1 %}
-                                                Production
-                                            {% elif entity.env == 2 %}
-                                                Gray Level
-                                            {% elif entity.env == 3 %}
-                                                Stage
-                                            {% elif entity.env == 4 %}
-                                                Development
-                                            {% elif entity.env == 5 %}
-                                                Test
-                                            {% endif %}
-                                        </b>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'Owner' %}:</td>
-                                    <td><b>{{ entity.owner.username }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <h3>{% trans 'OoB Management' %}</h3>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'OoB Admin Account' %}:</td>
-                                    <td><b>{{ entity.oob_admin }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'OoB Admin Password' %}:</td>
-                                    <td><b>{{ entity.oob_password }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'OoB Ip' %}:</td>
-                                    <td><b>{{ entity.ip }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'OoB Port' %}:</td>
-                                    <td><b>{{ entity.port }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <h3>{% trans 'Hardware Info' %}</h3>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'CPU' %}:</td>
-                                    <td><b>{{ entity.cpu }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'Memory' %}:</td>
-                                    <td><b>{{ entity.memory }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'Disk' %}:</td>
-                                    <td><b>{{ entity.disk }}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>{% trans 'Hardware Version' %}:</td>
-                                    <td><b>{{ entity.hardware_version }}</b></td>
-                                </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- /.col -->
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Entity Detail</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Settings 1</a>
+                            </li>
+                            <li><a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
             </div>
-            <!-- /.row -->
-        </div>
-    </section>
+            <div class="x_content">
+                <table class="table table-hover">
 
+                    <thead>
+                    <tr>
+                        <th colspan="2">
+                            <h3>{% trans 'Basic Info' %}</h3>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="no-borders-tr">
+                        <td class="col-md-4">{% trans 'SN' %}:</td>
+                        <td><b>{{ entity.sn }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'IDC' %}:</td>
+                        <td><b>{{ entity.idc.name }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Cabinet' %}:</td>
+                        <td><b>{{ entity.cabinet }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Detail Address' %}:</td>
+                        <td><b>{{ entity.detail_address }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Interface1' %}:</td>
+                        <td><b>{{ entity.interface1 }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Interface1' %}:</td>
+                        <td><b>{{ entity.interface2 }}</b></td>
+                    </tr>
+
+                    <thead>
+                    <tr>
+                        <th colspan="2">
+                            <h3>{% trans 'Owner' %}</h3>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{% trans 'Environment' %}:</td>
+                        <td>
+                            <b>
+                                {% if entity.env == 1 %}
+                                    Production
+                                {% elif entity.env == 2 %}
+                                    Gray Level
+                                {% elif entity.env == 3 %}
+                                    Stage
+                                {% elif entity.env == 4 %}
+                                    Development
+                                {% elif entity.env == 5 %}
+                                    Test
+                                {% endif %}
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Owner' %}:</td>
+                        <td><b>{{ entity.owner.username }}</b></td>
+                    </tr>
+                    </tbody>
+
+                    <thead>
+                    <tr>
+                        <th colspan="2">
+                            <h3>{% trans 'OoB Management' %}</h3>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{% trans 'OoB Admin Account' %}:</td>
+                        <td><b>{{ entity.oob_admin }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'OoB Admin Password' %}:</td>
+                        <td><b>{{ entity.oob_password }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'OoB Ip' %}:</td>
+                        <td><b>{{ entity.ip }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'OoB Port' %}:</td>
+                        <td><b>{{ entity.port }}</b></td>
+                    </tr>
+                    </tbody>
+
+                    <thead>
+                    <tr>
+                        <td colspan="2">
+                            <h3>{% trans 'Hardware Info' %}</h3>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{% trans 'CPU' %}:</td>
+                        <td><b>{{ entity.cpu }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Memory' %}:</td>
+                        <td><b>{{ entity.memory }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Disk' %}:</td>
+                        <td><b>{{ entity.disk }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Hardware Version' %}:</td>
+                        <td><b>{{ entity.hardware_version }}</b></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
 
 {% endblock main %}

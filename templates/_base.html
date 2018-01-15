@@ -13,13 +13,17 @@
     {% block css %}{% endblock css %}
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
-{% block body %}{% endblock %}
-<!-- ./wrapper -->
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        {% block body %}{% endblock %}
+        <!-- ./wrapper -->
 
-{% include '_footer_js.html' %}
+        {% include '_footer_js.html' %}
 
-{% block js %}{% endblock js %}
+        {% block js %}{% endblock js %}
+    </div>
+</div>
 </body>
 
 </html>

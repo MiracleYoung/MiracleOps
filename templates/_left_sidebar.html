@@ -1,74 +1,51 @@
 {% load static %}
 
-<aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-        <!-- Sidebar user panel -->
-        <div class="user-panel">
-            <div class="pull-left image">
-                <img src="{{ user.avatar.url }}" class="img-circle" alt="Avatar">
+<div class="col-md-3 left_col">
+    <div class="left_col scroll-view">
+        <div class="navbar nav_title" style="border: 0;">
+            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>MiracleOps</span></a>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- menu profile quick info -->
+        <div class="profile clearfix">
+            <div class="profile_pic">
+                <img src="{{ user.avatar.url }}" alt="..." class="img-circle profile_img">
             </div>
-            <div class="pull-left info">
-                <p>{{ user.username }}</p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            <div class="profile_info">
+                <span>Welcome,</span>
+                <h2>{{ user.username }}</h2>
             </div>
         </div>
-        <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-        </form>
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
-        <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">MAIN NAVIGATION</li>
-            <li class="active treeview">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>MO Asset</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
+        <!-- /menu profile quick info -->
 
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-circle-o"></i>EntityMachine
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
+        <br/>
+
+        <!-- sidebar menu -->
+        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+                {#                <h3>General</h3>#}
+                <ul class="nav side-menu">
+                    <li>
+                        <a href="{% url 'index' %}">
+                            <i class="fa fa-home"></i> Dashboard
                         </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="{% url 'asset:idc:list' %}">
-                                    <i class="fa fa-building-o"></i>IDC
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'asset:entity:list' %}">
-                                    <i class="fa fa-server"></i>Entity
-                                </a>
-                            </li>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);">
+                            <i class="fa fa-inbox"></i> Asset <span class="fa fa-chevron-down"></span>
+                        </a>
+                        <ul class="nav child_menu">
+                            <li><a href="{% url 'asset:idc:list' %}"> IDC </a></li>
+                            <li><a href="{% url 'asset:entity:list' %}"> Entity Machine </a></li>
+                            <li><a href="{% url 'asset:server:list' %}"> Server Machine </a></li>
                         </ul>
                     </li>
 
-
-                    <li>
-                        <a href="{% url 'asset:server:list' %}"><i class="fa fa-circle-o"></i>Server</a>
-                    </li>
                 </ul>
-            </li>
-            <li class="header">Account</li>
-            <li><a href="#"><i class="fa fa-dashboard"></i> <span>Login</span></a></li>
-            <li><a href="#"><i class="fa fa-dashboard"></i> <span>Register</span></a>
-            </li>
-
-        </ul>
-    </section>
-    <!-- /.sidebar -->
-</aside>
+            </div>
+        </div>
+        <!-- /sidebar menu -->
+    </div>
+</div>

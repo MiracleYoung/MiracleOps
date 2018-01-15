@@ -65,5 +65,5 @@ class UserCreateView(FormView):
 
 class UserLogoutView(TemplateView):
     def get(self, request, *args, **kwargs):
-        self.request.session.clear()
+        self.request.session.flush()
         return redirect(reverse('user:login'))

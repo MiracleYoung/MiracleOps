@@ -1,6 +1,7 @@
 {% load i18n bootstrap3 %}
 
-<form class="form-horizontal" method="post" action="">
+<form class="form-horizontal form-label-left" novalidate action="" method="post">
+
     {% csrf_token %}
     <hr>
     {% bootstrap_field form.name layout="horizontal" %}

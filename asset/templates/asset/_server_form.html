@@ -1,10 +1,9 @@
 {% load i18n bootstrap3 %}
 
+<form class="form-horizontal form-label-left" novalidate action="" method="post">
 
-<form class="form-horizontal" method="post" action="">
     {% csrf_token %}
-    <hr>
-    <h3>{% trans 'Basic Info' %}</h3>
+    <span class="section">{% trans 'Basic Info' %}</span>
     {% bootstrap_field form.host layout="horizontal" %}
     {% bootstrap_field form.public_ip layout="horizontal" %}
     {% bootstrap_field form.private_ip1 layout="horizontal" %}
@@ -14,21 +13,18 @@
     {% bootstrap_field form.net_interface2 layout="horizontal" %}
     {% bootstrap_field form.net_interface3 layout="horizontal" %}
 
-    <hr>
-    <h3>{% trans 'Hardware Info' %}</h3>
+    <span class="section">{% trans 'Hardware Info' %}</span>
     {% bootstrap_field form.cpu layout="horizontal" %}
     {% bootstrap_field form.memory layout="horizontal" %}
     {% bootstrap_field form.disk layout="horizontal" %}
 
-    <hr>
-    <h3>{% trans 'State' %}</h3>
+    <span class="section">{% trans 'State' %}</span>
     {% bootstrap_field form.env layout="horizontal" %}
     {% bootstrap_field form.status layout="horizontal" %}
     {% bootstrap_field form.type layout="horizontal" %}
     {% bootstrap_field form.owner layout="horizontal" %}
 
-    <hr>
-    <h3>{% trans 'Other' %}</h3>
+    <span class="section">{% trans 'Other' %}</span>
     {% bootstrap_field form.comment layout="horizontal" %}
 
     <hr>
@@ -38,7 +34,6 @@
             <a href="{% url 'asset:server:list' %}" class="btn btn-default">Cancel</a>
         </div>
     </div>
-    <!-- /.box-footer -->
 </form>
 
 

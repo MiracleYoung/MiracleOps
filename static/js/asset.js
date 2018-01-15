@@ -1,4 +1,4 @@
-$('#table-entity-list').DataTable()
+// $('#table-list').dataTable()
 
 function setValue(e) {
     var tds = $(e).parent('td').siblings('td')

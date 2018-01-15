@@ -6,6 +6,9 @@
 
     This System's BLUEPRINT is to be a Magic Operation System.
     CMDB, Auto-Deployment, Auto-Delivery, Monitor, etc.
+    Integrete some others similar system.
+    The code is simple, ha.
+    You can use it for free, and if you have any idea or question, please contact me.
     
 ## Architecture
 
@@ -45,6 +48,13 @@ If you like it, please star it, and can also join us by QQ, email.
 QQ group and email are in the below \#Author.
 
 ## Release Notes
+
+### version 0.3.1 (2017.01.15)
+
+1. Change templates using [gentelella](https://github.com/puikinsh/gentelella).
+2. Using some days to do research for SaltStack.
+3. Version 0.4 will use SaltStack to gather server info, deploy, run command, etc.
+4. Need Optimizing Arch to use SaltStack.
 
 ### version 0.2.4 (2017.01.12)
 
@@ -115,6 +125,3 @@ QQ Group: 348158993
 ## Q&A
 
 This is a Miracle(magic) Ops by MiracleYoung.
-
-You can use it as free, and if you have any idea or questions, please contact me.
-

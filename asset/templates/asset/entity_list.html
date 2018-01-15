@@ -2,99 +2,105 @@
 {% load i18n static %}
 
 {% block main %}
-
-    <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Entity Overview</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-
-                        <a href="{% url 'asset:entity:create' %}" class="btn btn-primary margin-bottom">Create</a>
-
-                        <table id="table-entity-list" class="table table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>{% trans 'SN' %}</th>
-                                <th>{% trans 'Environment' %}</th>
-                                <th>{% trans 'IDC' %}</th>
-                                <th>{% trans 'Owner' %}</th>
-                                <th>{% trans 'Group' %}</th>
-                                <th>{% trans 'Status' %}</th>
-                                <th>{% trans 'Action' %}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for entity in entity_list %}
-                                <tr>
-                                    <input type="hidden" value="{% url 'api-asset:entity-detail' entity.id %}"/>
-                                    <td>
-                                        <a href="{% url 'asset:entity:detail' entity.id %}">{{ entity.sn }}</a>
-                                    </td>
-                                    <td>
-                                        {% if entity.env == 1 %}
-                                            Production
-                                        {% elif entity.env == 2 %}
-                                            Gray Level
-                                        {% elif entity.env == 3 %}
-                                            Stage
-                                        {% elif entity.env == 4 %}
-                                            Development
-                                        {% elif entity.env == 5 %}
-                                            Test
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ entity.idc.name }}</td>
-                                    <td>{{ entity.owner.username }}</td>
-                                    <td>{{ entity.owner.group.name }}</td>
-                                    <td>
-                                        {% if entity.status == 1 %}
-                                            NORMAL
-                                        {% elif entity.status == 2 %}
-                                            DELETED
-                                        {% elif entity.status == 3 %}
-                                            Out of Service
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <a href="{% url 'asset:entity:update' pk=entity.id %}"
-                                           class="btn btn-info btn-sm">
-                                            <i class="fa fa-edit"></i> {% trans 'Edit' %}
-                                        </a>
-
-                                        <a class="btn btn-danger btn-sm" data-toggle="modal"
-                                           data-target="#delete-danger" onclick="setValue(this);">
-                                            <i class="fa fa-trash"></i> {% trans 'Delete' %}
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>{% trans 'SN' %}</th>
-                                <th>{% trans 'Environment' %}</th>
-                                <th>{% trans 'IDC' %}</th>
-                                <th>{% trans 'Owner' %}</th>
-                                <th>{% trans 'Group' %}</th>
-                                <th>{% trans 'Status' %}</th>
-                                <th>{% trans 'Action' %}</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Entity List</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Settings 1</a>
+                            </li>
+                            <li><a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
             </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-    </section>
+            <div class="x_content">
+                <a href="{% url 'asset:entity:create' %}" class="btn btn-primary margin-bottom">Create</a>
+                <table id="datatable" class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>{% trans 'SN' %}</th>
+                        <th>{% trans 'Environment' %}</th>
+                        <th>{% trans 'IDC' %}</th>
+                        <th>{% trans 'Owner' %}</th>
+                        <th>{% trans 'Group' %}</th>
+                        <th>{% trans 'Status' %}</th>
+                        <th>{% trans 'Action' %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entity in entity_list %}
+                        <tr>
+                            <input type="hidden" value="{% url 'api-asset:entity-detail' entity.id %}"/>
+                            <td>
+                                <a href="{% url 'asset:entity:detail' entity.id %}">{{ entity.sn }}</a>
+                            </td>
+                            <td>
+                                {% if entity.env == 1 %}
+                                    Production
+                                {% elif entity.env == 2 %}
+                                    Gray Level
+                                {% elif entity.env == 3 %}
+                                    Stage
+                                {% elif entity.env == 4 %}
+                                    Development
+                                {% elif entity.env == 5 %}
+                                    Test
+                                {% endif %}
+                            </td>
+                            <td>{{ entity.idc.name }}</td>
+                            <td>{{ entity.owner.username }}</td>
+                            <td>{{ entity.owner.group.name }}</td>
+                            <td>
+                                {% if entity.status == 1 %}
+                                    NORMAL
+                                {% elif entity.status == 2 %}
+                                    DELETED
+                                {% elif entity.status == 3 %}
+                                    Out of Service
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'asset:entity:update' pk=entity.id %}"
+                                   class="btn btn-info btn-sm">
+                                    <i class="fa fa-edit"></i> {% trans 'Edit' %}
+                                </a>
 
-    <div class="modal modal-danger fade" id="delete-danger">
+                                <a class="btn btn-danger btn-sm" data-toggle="modal"
+                                   data-target="#delete-danger" onclick="setValue(this);">
+                                    <i class="fa fa-trash"></i> {% trans 'Delete' %}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>{% trans 'SN' %}</th>
+                        <th>{% trans 'Environment' %}</th>
+                        <th>{% trans 'IDC' %}</th>
+                        <th>{% trans 'Owner' %}</th>
+                        <th>{% trans 'Group' %}</th>
+                        <th>{% trans 'Status' %}</th>
+                        <th>{% trans 'Action' %}</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal" id="delete-danger">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

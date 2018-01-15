@@ -58,9 +58,9 @@ class Entity(models.Model):
     uuid = models.CharField(_('UUID'), max_length=100, default='', blank=True)
     # self related
     sn = models.CharField(_('Serial Number'), max_length=200, default='')
-    cpu = models.CharField(_('CPU Info'), max_length=100, default='')
-    memory = models.CharField(_('Memory Info'), max_length=100, default='')
-    disk = models.CharField(_('Disk Info'), max_length=100, default='')
+    cpu = models.SmallIntegerField(_('CPU'), default=0)
+    memory = models.SmallIntegerField(_('Memory'), default=0)
+    disk = models.IntegerField(_('Disk'), default=0)
     hardware_version = models.CharField(_('Hardware Version'), max_length=200, default='', blank=True)
     # machined related
     idc = models.ForeignKey(IDC, on_delete=models.DO_NOTHING)

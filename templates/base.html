@@ -2,31 +2,14 @@
 
 {% block body %}
 
-    {% include '_header.html' %}
-    <!-- Left side column. contains the logo and sidebar -->
     {% include '_left_sidebar.html' %}
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        {% include '_nav.html' %}
+    {% include '_header.html' %}
 
-        <!-- ENDCHG BY MIRACLE -->
-        <section class="content">
-            {% block main %}{% endblock main %}
-        </section>
-
+    <div class="right_col" role="main">
+        {% block main %}{% endblock main %}
     </div>
-    <!-- /.content-wrapper -->
 
     {% include '_footer.html' %}
-
-    <!-- Control Sidebar -->
-    {#    Temporary hidden control sidebar#}
-    {#    {% include '_control_sidebar.html' %}#}
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-{#    <div class="control-sidebar-bg"></div>#}
 
 {% endblock body %}
