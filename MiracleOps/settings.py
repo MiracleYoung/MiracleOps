@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     # 'rest_framework.authtoken',
     'common.apps.CommonConfig',
     'user.apps.UserConfig',
-
     'asset.apps.AssetConfig',
+    'deploy.apps.DeployConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',

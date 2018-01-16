@@ -49,6 +49,11 @@ QQ group and email are in the below \#Author.
 
 ## Release Notes
 
+### version 0.4.1 (2017.01.16)
+
+1. Add deploy app.
+2. Update Arch.
+
 ### version 0.3.1 (2017.01.15)
 
 1. Change templates using [gentelella](https://github.com/puikinsh/gentelella).

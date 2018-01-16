@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^user/', include('user.urls.views_urls', namespace='user')),
     url(r'^asset/', include('asset.urls.views_urls', namespace='asset'), kwargs={'app': 'Asset'}),
+    url(r'^deploy/', include('deploy.urls', namespace='deploy'), kwargs={'app': 'Deployment'}),
 
     url(r'^api/user/', include('user.urls.api_urls', namespace='api-user')),
     url(r'^api/asset/', include('asset.urls.api_urls', namespace='api-asset')),
