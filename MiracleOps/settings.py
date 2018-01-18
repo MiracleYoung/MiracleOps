@@ -97,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'MiracleOps',
         # 'HOST': '127.0.0.1',
-        'HOST': '192.168.29.130' if 'window' in platform.platform().lower() else '172.16.46.182',
+        'HOST': '192.168.29.130' if 'linux' in platform.platform().lower() else '172.16.46.182',
         'PORT': 3306,
         'USER': 'root',
         'PASSWORD': '',
@@ -164,6 +164,10 @@ BOOTSTRAP3 = {
     # This also considers the 'label' option of {% bootstrap_field %} tags.
     'set_placeholder': True,
 }
+
+SALT_API_URL = 'http://localhost:9000'
+SALT_API_USERNAME = 'saltapi'
+SALT_API_PASSWORD = 'saltapi'
 
 # EMAIL_HOST = 'smtp.163.com'
 # EMAIL_PORT = 25

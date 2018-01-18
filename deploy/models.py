@@ -19,7 +19,7 @@ class SaltMinion(models.Model):
     # minion salt key status
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=0)
     is_alive = models.BooleanField(_('Is Alive'))
-    last_alive_time = models.DateTimeField(_('Last Alive Time'), auto_now=True)
+    last_alive_time = models.DateTimeField(_('Last Alive Time'), null=True)
     # discover minion time
     discover_time = models.DateTimeField(_('Discover Time'), auto_now_add=True)
     update_time = models.DateTimeField(_('Update Time'), auto_now=True)
@@ -29,6 +29,6 @@ class SaltMinion(models.Model):
         ordering = ['discover_time', ]
 
     def __str__(self):
-        return self.server.hostname
+        return self.hostname
 
     __repr__ = __str__

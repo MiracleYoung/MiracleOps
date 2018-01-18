@@ -49,6 +49,12 @@ QQ group and email are in the below \#Author.
 
 ## Release Notes
 
+### version 0.4.3 (2017.01.18)
+
+1. Add saltapi.py include general salt api by rest-cherrypy.
+2. MinionImportApi, MinionCheckAliveApi, MinionApi.
+3. salt\_minion\_list.html.
+
 ### version 0.4.2 (2017.01.18)
 
 1. Merge entity, server to server.

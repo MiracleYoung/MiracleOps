@@ -1,0 +1,1 @@
+var saltApiUrl = 'http://localhost:9000'

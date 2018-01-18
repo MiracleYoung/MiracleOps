@@ -1,6 +1,27 @@
 {% extends 'base.html' %}
+{% load i18n static %}
 
 {% block main %}
+
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Salt Minion List</h3>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12 ">
+        <div class="x_panel">
+            <button class="btn btn-info" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Importing Minions"
+                    onclick="importMinions(this)">Import Salt Minions
+            </button>
+            <button class="btn btn-info" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Refreshing"
+                    onclick="refreshMinionsHealth(this)">Refresh Salt Minions Health
+            </button>
+        </div>
+
+    </div>
+
 
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -28,23 +49,25 @@
                 <table id="datatable-accepted" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                        <th>{% trans 'Hostname' %}</th>
+                        <th>{% trans 'Is Alive' %}</th>
+                        <th>{% trans 'Action' %}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    {% for minion in minion_accept %}
+                        <input type="hidden" value="{% url 'api-deploy:minion' %}"/>
+                        <tr>
+                            <td>{{ minion.hostname }}</td>
+                            <td>{{ minion.is_alive }}</td>
+                            <td>
+                                <a class="btn btn-danger btn-sm" data-toggle="modal"
+                                   data-target="#delete-danger" onclick="deleteMinion(this);">
+                                    <i class="fa fa-trash"></i> {% trans 'Delete' %}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
 
                 </table>
@@ -75,26 +98,26 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <table id="datatable-unaccepted" class="table table-striped table-bordered">
+                <table id="datatable-accepted" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                        <th>{% trans 'Hostname' %}</th>
+                        <th>{% trans 'Action' %}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    {% for minion in minion_pre %}
+                        <input type="hidden" value="{% url 'api-deploy:minion' minion.hostname %}"/>
+                        <tr>
+                            <td>{{ minion.hostname }}</td>
+                            <td>
+                                <a class="btn btn-danger btn-sm" data-toggle="modal"
+                                   data-target="#delete-danger" onclick="acceptMinion(this);">
+                                    <i class="fa fa-trash"></i> {% trans 'Accept' %}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
 
                 </table>
@@ -102,104 +125,33 @@
         </div>
     </div>
 
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Denied Keys</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Settings 1</a>
-                            </li>
-                            <li><a href="#">Settings 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
+    <div class="modal fade bs-example-modal" id="delete-danger">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Danger Action Alert!</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Please Confirm Your Action: </p>
+                    <p>Delete Minion As Below:</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline" data-list-url="{% url 'deploy:minion-list' %}"
+                            id="confirm-delete">Confirm
+                    </button>
+                </div>
             </div>
-            <div class="x_content">
-                <table id="datatable-denied" class="table table-striped table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-
-                </table>
-            </div>
+            <!-- /.modal-content -->
         </div>
+        <!-- /.modal-dialog -->
     </div>
 
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Rejected Keys</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Settings 1</a>
-                            </li>
-                            <li><a href="#">Settings 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <table id="datatable-rejected" class="table table-striped table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-
-                </table>
-            </div>
-        </div>
-    </div>
 
 {% endblock main %}
+
+{% block js %}
+    <script src="{% static 'js/deploy.js' %}"></script>
+{% endblock js %}
