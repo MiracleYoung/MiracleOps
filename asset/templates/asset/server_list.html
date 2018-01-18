@@ -2,11 +2,10 @@
 {% load i18n static %}
 
 {% block main %}
-
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Server List</h2>
+                <h2>server List</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -27,17 +26,15 @@
             </div>
             <div class="x_content">
                 <a href="{% url 'asset:server:create' %}" class="btn btn-primary margin-bottom">Create</a>
-                <table id="datatable" class="table table-bordered table-hover">
+                <table id="datatable" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th>{% trans 'Host' %}</th>
-                        <th>{% trans 'Public IP' %}</th>
-                        <th>{% trans 'Owner' %}</th>
+                        <th>{% trans 'Hostname' %}</th>
                         <th>{% trans 'Environment' %}</th>
                         <th>{% trans 'Type' %}</th>
-                        <th>{% trans 'Cpu' %}</th>
-                        <th>{% trans 'Memory' %}</th>
-                        <th>{% trans 'Disk' %}</th>
+                        <th>{% trans 'IDC' %}</th>
+                        <th>{% trans 'Owner' %}</th>
+                        <th>{% trans 'Group' %}</th>
                         <th>{% trans 'Status' %}</th>
                         <th>{% trans 'Action' %}</th>
                     </tr>
@@ -47,10 +44,8 @@
                         <tr>
                             <input type="hidden" value="{% url 'api-asset:server-detail' server.id %}"/>
                             <td>
-                                <a href="{% url 'asset:server:detail' server.id %}">{{ server.host }}</a>
+                                <a href="{% url 'asset:server:detail' server.id %}">{{ server.hostname }}</a>
                             </td>
-                            <td>{{ server.public_ip }}</td>
-                            <td>{% trans server.owner.username %}</td>
                             <td>
                                 {% if server.env == 1 %}
                                     Production
@@ -79,9 +74,9 @@
                                     Other
                                 {% endif %}
                             </td>
-                            <td>{{ server.cpu }}</td>
-                            <td>{{ server.memory }}</td>
-                            <td>{{ server.disk }}</td>
+                            <td>{{ server.idc.name }}</td>
+                            <td>{{ server.owner.username }}</td>
+                            <td>{{ server.owner.group.name }}</td>
                             <td>
                                 {% if server.status == 1 %}
                                     NORMAL
@@ -96,6 +91,7 @@
                                    class="btn btn-info btn-sm">
                                     <i class="fa fa-edit"></i> {% trans 'Edit' %}
                                 </a>
+
                                 <a class="btn btn-danger btn-sm" data-toggle="modal"
                                    data-target="#delete-danger" onclick="setValue(this);">
                                     <i class="fa fa-trash"></i> {% trans 'Delete' %}
@@ -106,14 +102,12 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>{% trans 'Host' %}</th>
-                        <th>{% trans 'Public IP' %}</th>
-                        <th>{% trans 'Owner' %}</th>
+                        <th>{% trans 'SN' %}</th>
                         <th>{% trans 'Environment' %}</th>
                         <th>{% trans 'Type' %}</th>
-                        <th>{% trans 'Cpu' %}</th>
-                        <th>{% trans 'Memory' %}</th>
-                        <th>{% trans 'Disk' %}</th>
+                        <th>{% trans 'IDC' %}</th>
+                        <th>{% trans 'Owner' %}</th>
+                        <th>{% trans 'Group' %}</th>
                         <th>{% trans 'Status' %}</th>
                         <th>{% trans 'Action' %}</th>
                     </tr>
@@ -133,7 +127,7 @@
                 </div>
                 <div class="modal-body">
                     <p>Please Confirm Your Action: </p>
-                    <p>Delete Server as below:</p>
+                    <p>Delete server as below:</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>

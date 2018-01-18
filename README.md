@@ -49,6 +49,11 @@ QQ group and email are in the below \#Author.
 
 ## Release Notes
 
+### version 0.4.2 (2017.01.18)
+
+1. Merge entity, server to server.
+2. Add SaltMinion model, SaltMinionView.
+
 ### version 0.4.1 (2017.01.16)
 
 1. Add deploy app.

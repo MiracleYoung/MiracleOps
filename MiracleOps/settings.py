@@ -97,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'MiracleOps',
         # 'HOST': '127.0.0.1',
-        'HOST': '192.168.29.130' if 'window' in platform.platform().lower() else '127.0.0.1',
+        'HOST': '192.168.29.130' if 'window' in platform.platform().lower() else '172.16.46.182',
         'PORT': 3306,
         'USER': 'root',
         'PASSWORD': '',

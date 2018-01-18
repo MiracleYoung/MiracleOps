@@ -2,10 +2,11 @@
 {% load i18n bootstrap3 static %}
 
 {% block main %}
+
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Server Detail</h2>
+                <h2>server Detail</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -26,50 +27,77 @@
             </div>
             <div class="x_content">
                 <table class="table table-hover">
+
+                    <thead>
+                    <tr>
+                        <th colspan="2">
+                            <h3>{% trans 'Basic Info' %}</h3>
+                        </th>
+                    </tr>
+                    </thead>
                     <tbody>
                     <tr class="no-borders-tr">
-                        <td class="col-md-4">{% trans 'Host' %}:</td>
-                        <td><b>{{ server.host }}</b></td>
-                    </tr>
-                    <tr>
-                        <td>{% trans 'Public IP' %}:</td>
+                        <td class="col-md-4">{% trans 'Public IP' %}:</td>
                         <td><b>{{ server.public_ip }}</b></td>
                     </tr>
-                    <tr>
+                    <tr class="no-borders-tr">
+                        <td>{% trans 'Hostname' %}:</td>
+                        <td><b>{{ server.hostname }}</b></td>
+                    </tr>
+                    <tr class="no-borders-tr">
                         <td>{% trans 'Private IP 1' %}:</td>
                         <td><b>{{ server.private_ip1 }}</b></td>
                     </tr>
-                    <tr>
+                    <tr class="no-borders-tr">
                         <td>{% trans 'Private IP 2' %}:</td>
                         <td><b>{{ server.private_ip2 }}</b></td>
                     </tr>
-                    <tr>
-                        <td>{% trans 'Private IP 3' %}:</td>
-                        <td><b>{{ server.private_ip3 }}</b></td>
+                    <tr class="no-borders-tr">
+                        <td>{% trans 'SN' %}:</td>
+                        <td><b>{{ server.sn }}</b></td>
                     </tr>
                     <tr>
-                        <td>{% trans 'Network Interface 1' %}:</td>
-                        <td><b>{{ server.net_interface1 }}</b></td>
+                        <td>{% trans 'IDC' %}:</td>
+                        <td><b>{{ server.idc.name }}</b></td>
                     </tr>
                     <tr>
-                        <td>{% trans 'Network Interface 2' %}:</td>
-                        <td><b>{{ server.net_interface2 }}</b></td>
+                        <td>{% trans 'Cabinet' %}:</td>
+                        <td><b>{{ server.cabinet }}</b></td>
                     </tr>
                     <tr>
-                        <td>{% trans 'Network Interface 3' %}:</td>
-                        <td><b>{{ server.net_interface3 }}</b></td>
+                        <td>{% trans 'Detail Address' %}:</td>
+                        <td><b>{{ server.detail_address }}</b></td>
                     </tr>
                     <tr>
-                        <td>{% trans 'CPU' %}:</td>
-                        <td><b>{{ server.cpu }}</b></td>
+                        <td>{% trans 'Interface1' %}:</td>
+                        <td><b>{{ server.interface1 }}</b></td>
                     </tr>
                     <tr>
-                        <td>{% trans 'Memory' %}:</td>
-                        <td><b>{{ server.memory }}</b></td>
+                        <td>{% trans 'Interface1' %}:</td>
+                        <td><b>{{ server.interface2 }}</b></td>
                     </tr>
+
+                    <thead>
                     <tr>
-                        <td>{% trans 'Disk' %}:</td>
-                        <td><b>{{ server.disk }}</b></td>
+                        <th colspan="2">
+                            <h3>{% trans 'Owner' %}</h3>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{% trans 'Status' %}:</td>
+                        <td>
+                            <b>
+                                {% if server.status == 1 %}
+                                    NORMAL
+                                {% elif server.status == 2 %}
+                                    DELETED
+                                {% elif server.status == 3 %}
+                                    Out of Service
+                                {% endif %}
+                            </b>
+                        </td>
                     </tr>
                     <tr>
                         <td>{% trans 'Environment' %}:</td>
@@ -85,20 +113,6 @@
                                     Development
                                 {% elif server.env == 5 %}
                                     Test
-                                {% endif %}
-                            </b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>{% trans 'Status' %}:</td>
-                        <td>
-                            <b>
-                                {% if server.status == 1 %}
-                                    NORMAL
-                                {% elif server.status == 2 %}
-                                    DELETED
-                                {% elif server.status == 3 %}
-                                    Out of Service
                                 {% endif %}
                             </b>
                         </td>
@@ -123,17 +137,70 @@
                             </b>
                         </td>
                     </tr>
-                    <tr>
-                        <td>{% trans 'Owner' %}:</td>
-                        <td><b>{{ server.owner }}</b></td>
+                    <tr class="no-borders-tr">
+                        <td>{% trans 'UUID' %}:</td>
+                        <td><b>{{ server.uuid }}</b></td>
                     </tr>
                     <tr>
-                        <td>{% trans 'Comment' %}:</td>
-                        <td><b>{{ server.comment }}</b></td>
+                        <td>{% trans 'Owner' %}:</td>
+                        <td><b>{{ server.owner.username }}</b></td>
                     </tr>
 
                     </tbody>
+
+                    <thead>
+                    <tr>
+                        <th colspan="2">
+                            <h3>{% trans 'OoB Management' %}</h3>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{% trans 'OoB Admin Account' %}:</td>
+                        <td><b>{{ server.oob_admin }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'OoB Admin Password' %}:</td>
+                        <td><b>{{ server.oob_password }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'OoB Ip' %}:</td>
+                        <td><b>{{ server.oob_ip }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'OoB Port' %}:</td>
+                        <td><b>{{ server.oob_port }}</b></td>
+                    </tr>
+                    </tbody>
+
+                    <thead>
+                    <tr>
+                        <td colspan="2">
+                            <h3>{% trans 'Hardware Info' %}</h3>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{% trans 'CPU' %}:</td>
+                        <td><b>{{ server.cpu }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Memory' %}:</td>
+                        <td><b>{{ server.memory }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Disk' %}:</td>
+                        <td><b>{{ server.disk }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Hardware Version' %}:</td>
+                        <td><b>{{ server.hardware_version }}</b></td>
+                    </tr>
+                    </tbody>
                 </table>
+
             </div>
         </div>
     </div>

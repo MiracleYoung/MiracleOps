@@ -5,14 +5,14 @@
 # @File    : entity.py
 
 from rest_framework.serializers import ModelSerializer
-from ..models import Entity, IDC
+from asset.models import Server, IDC
 
-__all__ = ['EntitySerializer', 'IDCSerializer']
+__all__ = ['ServerSerializer', 'IDCSerializer']
 
 
-class EntitySerializer(ModelSerializer):
+class ServerSerializer(ModelSerializer):
     class Meta:
-        model = Entity
+        model = Server
         fields = '__all__'
 
 

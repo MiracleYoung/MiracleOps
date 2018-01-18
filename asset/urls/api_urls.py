@@ -8,7 +8,6 @@ from django.conf.urls import url, include
 from ..api import *
 
 urlpatterns = [
-    url(r'^entity/(?P<pk>\d+)/$', EntityDetailApi.as_view(), name='entity-detail'),
-    url(r'^idc/(?P<pk>\d+)/$', IDCDetailApi.as_view(), name='idc-detail'),
     url(r'^server/(?P<pk>\d+)/$', ServerDetailApi.as_view(), name='server-detail'),
+    url(r'^idc/(?P<pk>\d+)/$', IDCDetailApi.as_view(), name='idc-detail'),
 ]
