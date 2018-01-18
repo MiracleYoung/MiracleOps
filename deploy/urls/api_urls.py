@@ -8,7 +8,7 @@ from django.conf.urls import url
 from .. import api
 
 urlpatterns = [
-    url(r'^minion-import/$', api.MinionImportApi.as_view(), name='minion-import'),
+    url(r'^minion-refresh/$', api.MinionRefreshApi.as_view(), name='minion-refresh'),
     url(r'^minion-check-alive/$', api.MinionCheckAliveApi.as_view(), name='minion-check-alive'),
-    url(r'^minion/$', api.MinionApi.as_view(), name='minion'),
+    url(r'^minion/(?P<pk>\d+)/$', api.MinionApi.as_view(), name='minion'),
 ]

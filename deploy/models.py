@@ -11,6 +11,7 @@ class SaltMinion(models.Model):
         (2, 'Unaccepted'),
         (3, 'Reject'),
         (4, 'Denied'),
+        (5, 'Deleted'),
     )
 
     hostname = models.CharField(_('Hostname'), max_length=100, default='')

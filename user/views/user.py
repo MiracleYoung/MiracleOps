@@ -32,6 +32,7 @@ class UserLoginView(FormView):
                 if u.check_password(form.cleaned_data['password']) and u.is_authenticated:
                     # create token
                     # add token, token_exp, uid to request.session
+                    self.request.user = u
                     self.request.session['uid'] = u.id
                     self.request.session['token'] = gen_token(u)
                     self.request.session['token_exp'] = (timezone.now() + datetime.timedelta(days=7)).timestamp()

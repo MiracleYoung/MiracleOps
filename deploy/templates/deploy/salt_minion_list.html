@@ -12,11 +12,11 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12 ">
         <div class="x_panel">
-            <button class="btn btn-info" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Importing Minions"
-                    onclick="importMinions(this)">Import Salt Minions
-            </button>
             <button class="btn btn-info" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Refreshing"
-                    onclick="refreshMinionsHealth(this)">Refresh Salt Minions Health
+                    onclick="importMinions(this)">{% trans 'Refresh Salt Minions' %}
+            </button>
+            <button class="btn btn-info" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Checking"
+                    onclick="refreshMinionsHealth(this)">{% trans 'Check Salt Minions Health' %}
             </button>
         </div>
 
@@ -56,8 +56,8 @@
                     </thead>
                     <tbody>
                     {% for minion in minion_accept %}
-                        <input type="hidden" value="{% url 'api-deploy:minion' %}"/>
                         <tr>
+                            <input type="hidden" value="{% url 'api-deploy:minion' minion.id %}"/>
                             <td>{{ minion.hostname }}</td>
                             <td>{{ minion.is_alive }}</td>
                             <td>
@@ -107,8 +107,8 @@
                     </thead>
                     <tbody>
                     {% for minion in minion_pre %}
-                        <input type="hidden" value="{% url 'api-deploy:minion' minion.hostname %}"/>
                         <tr>
+                            <input type="hidden" value="{% url 'api-deploy:minion' minion.id %}"/>
                             <td>{{ minion.hostname }}</td>
                             <td>
                                 <a class="btn btn-danger btn-sm" data-toggle="modal"
@@ -125,29 +125,7 @@
         </div>
     </div>
 
-    <div class="modal fade bs-example-modal" id="delete-danger">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Danger Action Alert!</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Please Confirm Your Action: </p>
-                    <p>Delete Minion As Below:</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline" data-list-url="{% url 'deploy:minion-list' %}"
-                            id="confirm-delete">Confirm
-                    </button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
+    {% include '_modal.html' %}
 
 
 {% endblock main %}

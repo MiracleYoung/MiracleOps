@@ -165,7 +165,7 @@ BOOTSTRAP3 = {
     'set_placeholder': True,
 }
 
-SALT_API_URL = 'http://localhost:9000'
+SALT_API_URL = 'http://192.168.29.130:9000' if 'linux' in platform.platform().lower() else 'http://172.16.46.182:9000'
 SALT_API_USERNAME = 'saltapi'
 SALT_API_PASSWORD = 'saltapi'
 

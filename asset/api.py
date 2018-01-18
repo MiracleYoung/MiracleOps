@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # encoding: utf-8
-# @Time    : 2018/1/12 下午7:40
+# @Time    : 2018/1/9 下午10:13
 # @Author  : MiracleYoung
-# @File    : server.py
+# @File    : entity.py
 
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from ..serializer import ServerSerializer
-from ..models import Server
+from asset.serializer import ServerSerializer, IDCSerializer
+from asset.models import Server, IDC
 
-__all__ = ['ServerDetailApi']
+__all__ = ['ServerDetailApi', 'IDCDetailApi']
 
 
 class ServerDetailApi(RetrieveUpdateDestroyAPIView):
@@ -18,6 +18,18 @@ class ServerDetailApi(RetrieveUpdateDestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         queryset = Server.objects.filter(pk=kwargs.get('pk', ''))
+        try:
+            queryset.update(status=2)
+            return Response('', status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Response('', status=status.HTTP_502_BAD_GATEWAY)
+
+
+class IDCDetailApi(RetrieveUpdateDestroyAPIView):
+    serializer_class = IDCSerializer
+
+    def delete(self, request, *args, **kwargs):
+        queryset = IDC.objects.filter(pk=kwargs.get('pk', ''))
         try:
             queryset.update(status=2)
             return Response('', status=status.HTTP_204_NO_CONTENT)

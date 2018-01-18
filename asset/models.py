@@ -65,6 +65,8 @@ class Server(models.Model):
     hostname = models.CharField(_('Hostname'), max_length=100, default='', blank=True)
     private_ip1 = models.GenericIPAddressField(_('Private IP 1'), default='0.0.0.0')
     private_ip2 = models.GenericIPAddressField(_('Private IP 2'), default='0.0.0.0')
+    os = models.CharField(_('OS'), max_length=100, default='')
+    os_arch = models.CharField(_('OS Arch'), max_length=100, default='')
     # project related
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=1, blank=True)
     env = models.SmallIntegerField(_('Environment'), choices=ENV_CHOICE, default=1)

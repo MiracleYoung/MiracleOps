@@ -14,14 +14,13 @@ function setValue(e) {
 
 $('#confirm-delete').click(function () {
     var deleteUrl = $(this).attr("data-delete-url")
-    var listUrl = $(this).attr("data-list-url")
     $.ajax({
         url: deleteUrl,
         method: 'DELETE'
     }).done(function (data, status, xhr) {
         if (xhr.status == 204) {
             alert('Delete Success.')
-            window.location.href = listUrl
+            window.location.reload()
         }
     }).fail(function (err) {
         alert('Oops, something wrong, please contact your Administrator.')

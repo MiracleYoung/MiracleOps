@@ -1,4 +1,4 @@
-function salt(ele, url, successStr){
+function salt(ele, url, successStr) {
     $.ajax({
             url: url,
             beforeSend: function (xhr) {
@@ -17,36 +17,31 @@ function salt(ele, url, successStr){
 
 
 function importMinions(ele) {
-    url= '/api/deploy/minion-import/'
+    url = '/api/deploy/minion-refresh/'
     successStr = 'Import Minions Success.'
     salt(ele, url, successStr)
 }
 
 function refreshMinionsHealth(ele) {
-    url= '/api/deploy/minion-check-alive/'
+    url = '/api/deploy/minion-check-alive/'
     successStr = 'Refresh Minions Health Success.'
     salt(ele, url, successStr)
 }
 
+// ajax: delete minion
 function deleteMinion(ele) {
     var tds = $(ele).parent('td').siblings('td')
-    var item = []
-    for (var i = 0; i < tds.length; i++) {
-        item.push(tds[i].innerText)
-    }
-    var p = "<p>Hostname:" + item[0] + "</p>"
+    var hostname = tds[0].innerText
+    var p = "<p>Hostname:" + hostname + "</p>"
     $('.modal-body').append(p)
-    $('#confirm-delete').attr({"data-delete-url": item[0]})
+    var url = $(ele).parent('td').siblings('input')[0].value
+    $('#confirm-delete').attr({"data-delete-url": url})
 }
 
 $('#confirm-delete').click(function () {
-    var hostname = $(this).attr("data-delete-url")
     var url = $(this).attr("data-delete-url")
     $.ajax({
         url: url,
-        data: {
-            'hostname': hostname
-        },
         method: 'DELETE'
     }).done(function (data, status, xhr) {
         if (xhr.status == 204) {
@@ -58,20 +53,15 @@ $('#confirm-delete').click(function () {
     })
 })
 
+// ajax: accept minion key
 function acceptMinion(ele) {
-    var tds = $(ele).parent('td').siblings('td')
-    var hostname = tds[0].innerText
     var url = $(ele).parent('td').siblings('input')[0].value
-
     $.ajax({
         url: url,
-        method: 'PUT',
-        data: {
-            'hostname': hostname
-        }
+        method: 'PUT'
     }).done(function (data, status, xhr) {
         if (xhr.status == 200) {
-            alert('Delete Success.')
+            alert('Accept Success.')
             window.location.reload()
         }
     }).fail(function (err) {
