@@ -72,16 +72,16 @@ class Server(models.Model):
     env = models.SmallIntegerField(_('Environment'), choices=ENV_CHOICE, default=1)
     type = models.SmallIntegerField(_('Server Type'), choices=TYPE_CHOICE, default=1)
 
-    owner = models.ForeignKey(User, verbose_name=_('Owner'))
+    owner = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name=_('Owner'), null=True)
     uuid = models.CharField(_('UUID'), max_length=100, default='', blank=True)
     # self related
     sn = models.CharField(_('Serial Number'), max_length=200, default='')
     cpu = models.SmallIntegerField(_('CPU'), default=0)
     memory = models.SmallIntegerField(_('Memory'), default=0)
-    disk = models.IntegerField(_('Disk'), default=0)
+    disk = models.CharField(_('Disk'), max_length=1000, default='')
     hardware_version = models.CharField(_('Hardware Version'), max_length=200, default='', blank=True)
     # machined related
-    idc = models.ForeignKey(IDC, on_delete=models.DO_NOTHING)
+    idc = models.ForeignKey(IDC, on_delete=models.DO_NOTHING, verbose_name=_('IDC'), null=True)
     cabinet = models.CharField(_('Cabinet'), max_length=100, default='', blank=True)
     cab_u = models.CharField(_('Cabinet U'), max_length=100, default='', blank=True)
     interface1 = models.SmallIntegerField(_('Network Interface 1'), default=0, blank=True)
@@ -100,10 +100,10 @@ class Server(models.Model):
         db_table = 'asset_server'
         ordering = ['create_time', ]
 
-    def __str__(self):
-        return 'Server: <owner: {}>'.format(self.owner.username)
+    def __repr__(self):
+        return self.hostname
 
-    __repr__ = __str__
+    __str__ = __repr__
 
 
 

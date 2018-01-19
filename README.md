@@ -49,6 +49,13 @@ QQ group and email are in the below \#Author.
 
 ## Release Notes
 
+### version 0.4.5 (2017.01.19)
+
+1. Complete MinionRefreshApi, MinionApi.
+2. Optimize `asset:server:list`, `asset:server:detail`, `asset:server:update`.
+3. Remove `asset:server:create` logic, by salt auto initial.
+4. Optimize some layout templates.
+
 ### version 0.4.4 (2017.01.19)
 
 1. Optimize MinionRefreshApi: auto fill out server info and create it.

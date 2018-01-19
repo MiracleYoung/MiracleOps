@@ -24,10 +24,13 @@
     {% bootstrap_field form.oob_password layout="horizontal" %}
 
     <span class="section">{% trans 'Hardware Info' %}</span>
+    {% bootstrap_field form.uuid layout="horizontal" %}
     {% bootstrap_field form.public_ip layout="horizontal" %}
     {% bootstrap_field form.hostname layout="horizontal" %}
     {% bootstrap_field form.private_ip1 layout="horizontal" %}
     {% bootstrap_field form.private_ip2 layout="horizontal" %}
+    {% bootstrap_field form.os layout="horizontal" %}
+    {% bootstrap_field form.os_arch layout="horizontal" %}
     {% bootstrap_field form.cpu layout="horizontal" %}
     {% bootstrap_field form.memory layout="horizontal" %}
     {% bootstrap_field form.disk layout="horizontal" %}

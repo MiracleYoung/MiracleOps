@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load i18n bootstrap3 static %}
+{% load serializer_filter math_filter %}
 
 {% block main %}
+
 
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="x_panel">
@@ -80,7 +82,7 @@
                     <thead>
                     <tr>
                         <th colspan="2">
-                            <h3>{% trans 'Owner' %}</h3>
+                            <h3>{% trans 'State' %}</h3>
                         </th>
                     </tr>
                     </thead>
@@ -183,6 +185,14 @@
                     </thead>
                     <tbody>
                     <tr>
+                        <td>{% trans 'OS' %}:</td>
+                        <td><b>{{ server.os }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'OS Arch' %}:</td>
+                        <td><b>{{ server.os_arch }}</b></td>
+                    </tr>
+                    <tr>
                         <td>{% trans 'CPU' %}:</td>
                         <td><b>{{ server.cpu }}</b></td>
                     </tr>
@@ -192,11 +202,31 @@
                     </tr>
                     <tr>
                         <td>{% trans 'Disk' %}:</td>
-                        <td><b>{{ server.disk }}</b></td>
+                        <td><b>
+                            {% with disk=server.disk|json_loads %}
+                                {% for drive, detail in disk.items %}
+                                    - {{ drive }} : {{ detail.total|math_div:1024|math_div:1024|math_div:1024|math_round:1 }}G <br>
+                                {% endfor %}
+                            {% endwith %}
+                        </b></td>
                     </tr>
                     <tr>
                         <td>{% trans 'Hardware Version' %}:</td>
                         <td><b>{{ server.hardware_version }}</b></td>
+                    </tr>
+                    </tbody>
+
+                    <thead>
+                    <tr>
+                        <td colspan="2">
+                            <h3>{% trans 'Others' %}</h3>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{% trans 'Remark' %}:</td>
+                        <td><b>{{ server.remark }}</b></td>
                     </tr>
                     </tbody>
                 </table>

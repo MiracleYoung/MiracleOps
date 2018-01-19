@@ -16,7 +16,7 @@ class SaltMinion(models.Model):
 
     hostname = models.CharField(_('Hostname'), max_length=100, default='')
     # when accept minion, need to initial server attr
-    server = models.ForeignKey(Server, verbose_name=_('Server'), null=True)
+    server = models.ForeignKey(Server, on_delete=models.DO_NOTHING, verbose_name=_('Server'), null=True)
     # minion salt key status
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=0)
     is_alive = models.BooleanField(_('Is Alive'))
@@ -29,7 +29,7 @@ class SaltMinion(models.Model):
         db_table = 'deploy_salt_minion'
         ordering = ['discover_time', ]
 
-    def __str__(self):
+    def __repr__(self):
         return self.hostname
 
-    __repr__ = __str__
+    __str__ = __repr__

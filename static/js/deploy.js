@@ -58,10 +58,14 @@ function acceptMinion(ele) {
     var url = $(ele).parent('td').siblings('input')[0].value
     $.ajax({
         url: url,
+        beforeSend: function (xhr) {
+            $(ele).button('loading');
+        },
         method: 'PUT'
     }).done(function (data, status, xhr) {
         if (xhr.status == 200) {
             alert('Accept Success.')
+            $(ele).button('reset')
             window.location.reload()
         }
     }).fail(function (err) {

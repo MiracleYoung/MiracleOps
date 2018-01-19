@@ -53,17 +53,6 @@ class ServerListView(LoginRequiredMixin, ListView):
         return super(ServerListView, self).get_queryset()
 
 
-class ServerCreateView(LoginRequiredMixin, FormView):
-    template_name = 'asset/server_create.html'
-    form_class = ServerForm
-    success_url = reverse_lazy('asset:server:list')
-
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        return super(ServerCreateView, self).form_valid(form)
-
-
 class ServerDetailView(LoginRequiredMixin, DetailView):
     model = Server
     context_object_name = 'server'

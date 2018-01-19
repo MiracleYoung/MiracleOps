@@ -113,9 +113,9 @@ class SaltAPI(object):
         ret = content['return'][0]
         return ret
 
-    def remote_server_info(self, tgt, fun):
+    def remote_one_server(self, tgt, fun):
         '''
-        获取远程主机信息
+        获取单一主机信息
         '''
         data = {'client': 'local', 'tgt': tgt, 'fun': fun}
         self.token_id()
@@ -123,26 +123,14 @@ class SaltAPI(object):
         ret = content['return'][0][tgt]
         return ret
 
-    def remote_noarg_execution(self, tgt, fun):
-        """
-        执行命令没有参数
-        :param tgt: 目标主机
-        :param fun:  执行模块
-        :return:
-        """
-        data = {'client': 'local', 'tgt': tgt, 'fun': fun}
-        self.token_id()
-        content = self.post_request(data)
-        ret = content['return'][0].values()
-        return ret
-
-    def remote_execution(self, tgt, fun, arg):
+    def remote_execution(self, tgt, fun, arg=None):
         ''' 执行命令有参数 '''
-        data = {'client': 'local', 'tgt': tgt, 'fun': fun, 'arg': arg}
+        data = {'client': 'local', 'tgt': tgt, 'fun': fun}
+        if arg:
+            data['arg'] = arg
         self.token_id()
         content = self.post_request(data)
-        print(content)
-        ret = content['return'][0][tgt]
+        ret = content['return'][0]
         return ret
 
     def remote_execution_module(self, tgt, fun, arg):
@@ -152,7 +140,6 @@ class SaltAPI(object):
         data = {'client': 'local_async', 'tgt': tgt, 'fun': fun, 'arg': arg, 'expr_form': 'list'}
         self.token_id()
         content = self.post_request(data)
-        print(content)
         jid = content['return'][0]['jid']
         return jid
 

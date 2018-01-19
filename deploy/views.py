@@ -16,3 +16,10 @@ class SaltMinionListView(LoginRequiredMixin, TemplateView):
             'minion_pre': _minion_pre,
         })
         return super(SaltMinionListView, self).get_context_data(**kwargs)
+
+class ExecuteCommandView(LoginRequiredMixin, ListView):
+    template_name = 'deploy/execute_command.html'
+    context_object_name = 'minion_list'
+
+    def get_queryset(self):
+        return SaltMinion.objects.all()
