@@ -13,7 +13,7 @@
     
 ## Architecture
 
-![MiracleOpsArchitecture](https://github.com/MiracleYoung/MiracleOps/raw/master/docs/MiracleOps.png)
+![MiracleOpsArchitecture](https://github.com/MiracleYoung/MiracleOps/raw/master/utils/MiracleOps.png)
 
 ## Installation
 
