@@ -49,6 +49,7 @@ class Server(models.Model):
         (3, 'Stage'),
         (4, 'Development'),
         (5, 'Test'),
+        (99, 'Other'),
     )
 
     TYPE_CHOICE = (

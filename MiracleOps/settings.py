@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'asset.apps.AssetConfig',
     'deploy.apps.DeployConfig',
+    'doc.apps.DocConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',

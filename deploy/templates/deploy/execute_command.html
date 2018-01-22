@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block main %}
+
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>{{ path1 }}</h2>
+                <h2>{{ path1 }} {{ path2 }}</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -23,34 +25,136 @@
                 </ul>
                 <div class="clearfix"></div>
             </div>
+
             <div class="x_content">
                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
                     <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                         <li role="presentation" class="active">
-                            <a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab"
-                               aria-expanded="true">Single Server Execute
-                            </a>
+                            <a href="#tab_content1" id="server-tab" role="tab" data-toggle="tab" aria-expanded="true">
+                                Server List </a>
                         </li>
-
                         <li role="presentation" class="">
-                            <a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab"
-                               aria-expanded="false">Multi Server Execute</a>
+                            <a href="#tab_content2" role="tab" id="glob-tab" data-toggle="tab" aria-expanded="false">
+                                Glob Expression</a>
                         </li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content1"
-                             aria-labelledby="home-tab">
-                            <select multiple="multiple" class="form-control" size="2">
-                                <option>123</option>
-                                <option>456</option>
-                                <option>456</option>
-                            </select>
+                             aria-labelledby="server-tab">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td class="col-md-3">{% trans 'Server' %}</td>
+                                    <td class="col-md-9">
+                                        <select multiple="multiple" class="form-control" id="server">
+                                            {% for minion in minion_list %}
+                                                <option>{{ minion }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {% trans 'Command' %}
+                                        <button class="btn btn-success btn-sm" id="server-add">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" id="server-minus">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                    <td id="server-cmd" data-count="1">
+                                        <input type="text" class="form-group form-control" id="server-cmd-1">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {% trans 'Arguments (If no args, let it empty)' %}
+                                        {% trans '**Please take care the order' %}
+                                    </td>
+                                    <td id="server-arg">
+                                        <input type="text" class="form-group form-control" id="server-arg-1">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Action' %}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <button type="reset" class="btn btn-info">
+                                                <i class="ion ion-ios-loop-strong"></i> Reset
+                                            </button>
+                                            <button type="button" class="btn btn-danger" id="server-execute">
+                                                <i class="fa fa-play"></i> Execute
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Feedback' %}</td>
+                                    <td id="feedback">
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                            <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee
-                                squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes
-                                anderson artisan four loko farm-to-table craft beer twee. Qui photo
-                                booth letterpress, commodo enim craft beer mlkshk aliquip</p>
+                        <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="glob-tab">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td class="col-md-3">
+                                        {% trans 'Regular' %}
+                                        {% trans 'Example: "*"' %}
+                                    </td>
+                                    <td class="col-md-9">
+                                        <input type="text" class="form-control" id="reg">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {% trans 'Command' %}
+                                        <button class="btn btn-success btn-sm" id="glob-add">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" id="glob-minus">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                    <td id="glob-cmd" data-count="1">
+                                        <input type="text" class="form-group form-control" id="glob-cmd-1">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {% trans 'Arguments (If no args, let it empty)' %}
+                                        {% trans '**Please take care the order' %}
+                                    </td>
+                                    <td id="glob-arg">
+                                        <input type="text" class="form-group form-control" id="glob-arg-1">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Action' %}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <button type="reset" class="btn btn-info">
+                                                <i class="ion ion-ios-loop-strong"></i> Reset
+                                            </button>
+                                            <button type="button" class="btn btn-danger" id="glob-execute">
+                                                <i class="fa fa-play"></i> Execute
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Feedback' %}</td>
+                                    <td id="glob-feedback">
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -59,3 +163,110 @@
         </div>
     </div>
 {% endblock main %}
+
+{% block js %}
+    <script>
+        $('#server-execute').on('click', function (ele) {
+            $('#server-feedback').empty()
+            let servers = []
+            for (let s of $('#server').val()) {
+                servers.push(s)
+            }
+            let count = $('#server-cmd').data().count
+            let cmds = []
+            let args = []
+            for (let i = 1; i <= count; i++) {
+                cmds.push($(`#server-cmd-${i}`).val())
+                args.push($(`#server-arg-${i}`).val())
+            }
+
+            $.ajax({
+                url: "{% url 'api-deploy:execute-cmd' %}",
+                method: 'POST',
+                data: {
+                    servers: servers,
+                    cmds: cmds,
+                    args: args,
+                    type: "list"
+                }
+            }).done(function (data, status, xhr) {
+                if (xhr.status == 200) {
+                    for (let key in data) {
+                        $('#server-feedback').append(`<h4>${key}:</h4>`)
+                        for (let _key in data[key]) {
+                            if (typeof(data[key][_key]) == "object") {
+                                $('#server-feedback').append(`<p>${_key}: ${JSON.stringify(data[key][_key])}</p>`)
+                            } else {
+                                $('#server-feedback').append(`<p>${_key}: ${data[key][_key]}</p>`)
+                            }
+                        }
+                    }
+                }
+            }).fail(function (err) {
+                console.log(err)
+            })
+        })
+
+        $('#glob-execute').on('click', function (ele) {
+            $('#glob-feedback').empty()
+            let glob = $('#reg').val()
+            let count = $('#glob-cmd').data().count
+            let cmds = []
+            let args = []
+            for (let i = 1; i <= count; i++) {
+                cmds.push($(`#glob-cmd-${i}`).val())
+                args.push($(`#glob-arg-${i}`).val())
+            }
+
+            $.ajax({
+                url: "{% url 'api-deploy:execute-cmd' %}",
+                method: 'POST',
+                data: {
+                    servers: glob,
+                    cmds: cmds,
+                    args: args,
+                    type: "glob"
+                }
+            }).done(function (data, status, xhr) {
+                if (xhr.status == 200) {
+                    for (let key in data) {
+                        $('#glob-feedback').append(`<h4>${key}:</h4>`)
+                        for (let _key in data[key]) {
+                            if (typeof(data[key][_key]) == "object") {
+                                $('#glob-feedback').append(`<p>${_key}: ${JSON.stringify(data[key][_key])}</p>`)
+                            } else {
+                                $('#glob-feedback').append(`<p>${_key}: ${data[key][_key]}</p>`)
+                            }
+                        }
+                    }
+                }
+            }).fail(function (err) {
+                console.log(err)
+            })
+        })
+
+
+        $('#server-add').click({tab: 'server'}, add)
+        $('#glob-add').click({tab: 'glob'}, add)
+
+        function add(event) {
+            $(`#${event.data.tab}-cmd`).data({'count': $(`#${event.data.tab}-cmd`).data().count + 1})
+            let count = $(`#${event.data.tab}-cmd`).data('count')
+            $(`#${event.data.tab}-cmd`).append(`<input type='text' class='form-group form-control' id='${event.data.tab}-cmd-${count}' />`)
+            $(`#${event.data.tab}-arg`).append(`<input type='text' class='form-group form-control' id='${event.data.tab}-arg-${count}' />`)
+        }
+
+        function minus(event) {
+            let count = $(`#${event.data.tab}-cmd`).data('count')
+            if (count > 1) {
+                $(`#${event.data.tab}-cmd-${count}`).remove()
+                $(`#${event.data.tab}-arg-${count}`).remove()
+                $(`#${event.data.tab}-cmd`).data({'count': count - 1})
+            }
+        }
+
+        $('#server-minus').click({tab: 'server'}, minus)
+        $('#glob-minus').click({tab: 'glob'}, minus)
+
+    </script>
+{% endblock js %}

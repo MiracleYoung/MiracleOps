@@ -1,24 +1,39 @@
 {% load url_tag %}
 
-<section class="content-header">
-    <h1></h1>
-    <ol class="breadcrumb" style="top: 8px;right: unset;">
-        <li><a href="/"><i class="fa fa-dashboard"></i> {{ Dashboard }}</a></li>
-        {% if app %}
-            <li>{{ app }}</li>
-        {% endif %}
+<div class="page-title">
+    <div class="title_left">
+        <h3></h3>
+        <ol class="breadcrumb" style="top: 8px;right: unset;">
+            <li><a href="/"><i class="fa fa-dashboard"></i> {{ Dashboard }}</a></li>
+            {% if app %}
+                <li>{{ app }}</li>
+            {% endif %}
 
-        {% if path1 and not path2 %}
-            <li class="active">
-                <a href="{% url_reverse app|lower path1|lower 'index'  %}">{{ path1 }}</a>
-            </li>
-        {% endif %}
+            {% if path1 and not path2 %}
+                <li class="active">
+                    <a href="{% url_reverse app|lower path1|lower 'index' %}">{{ path1 }}</a>
+                </li>
+            {% endif %}
 
-        {% if path1 and path2 %}
-            <li>
-                <a href="{% url_reverse app|lower path1|lower 'index'  %}">{{ path1 }}</a>
-            </li>
-            <li class="active">{{ path2 }}</li>
-        {% endif %}
-    </ol>
-</section>
+            {% if path1 and path2 %}
+                <li>
+                    <a href="{% url_reverse app|lower path1|lower 'index' %}">{{ path1 }}</a>
+                </li>
+                <li class="active">{{ path2 }}</li>
+            {% endif %}
+        </ol>
+    </div>
+
+    {#    <div class="title_right">#}
+    {#        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">#}
+    {#            <div class="input-group">#}
+    {#                <input type="text" class="form-control" placeholder="Search for...">#}
+    {#                <span class="input-group-btn">#}
+    {#                      <button class="btn btn-default" type="button">Go!</button>#}
+    {#                    </span>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+</div>
+
+<div class="clearfix"></div>

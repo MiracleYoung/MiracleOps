@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                {% include '_x_title.html' %}
+                <div class="x_content">
+                    {% with prefix=html_prefix %}
+                        {% include prefix %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -50,7 +50,29 @@
                             <li><a href="{% url 'deploy:execute-command' %}"> Execute Command </a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="javascript:void(0);">
+                            <i class="fa fa-file-text"></i> Doc <span class="fa fa-chevron-down"></span>
+                        </a>
+                        <ul class="nav child_menu">
+                            <li><a> MO Tutorial <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li class="sub_menu"><a> Deploy <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="{% url 'doc:deploy:minion-list' %}"> Minion List </a></li>
+                                            <li><a href="{% url 'doc:deploy:execute-command' %}"> Execute Command </a></li>
+                                        </ul>
+                                    </li>
 
+
+                                </ul>
+                            </li>
+                            <li><a href="#"> DB Standard </a></li>
+                            <li><a href="#"> Web Standard </a></li>
+                            <li><a href="#"> Dev Standard </a></li>
+                            <li><a href="#"> Test Standard </a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

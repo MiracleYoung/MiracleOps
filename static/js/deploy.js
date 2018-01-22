@@ -70,5 +70,6 @@ function acceptMinion(ele) {
         }
     }).fail(function (err) {
         alert('Oops, something wrong, please contact your Administrator.')
+        $(ele).button('reset')
     })
 }

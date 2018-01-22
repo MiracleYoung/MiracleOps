@@ -47,7 +47,16 @@ If you like it, please star it, and can also join us by QQ, email.
 
 QQ group and email are in the below \#Author.
 
-## Release Notes
+## Change Logs
+
+### version 0.5.1 (2017.01.22)
+
+1. Add doc app.
+
+### version 0.4.6 (2017.01.22)
+
+1. Complete deploy app v1.
+2. Add breadcrumbs nav.
 
 ### version 0.4.5 (2017.01.19)
 

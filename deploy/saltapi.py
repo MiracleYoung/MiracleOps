@@ -41,6 +41,12 @@ class SaltAPI(object):
         req = requests.post(url, json=data, headers=headers)
         return req.json()
 
+    def get_request(self, data, prefix='/'):
+        url = self.__url + prefix
+        headers = {'X-Auth-Token': self.__token_id}
+        req = requests.get(url, json=data, headers=headers)
+        return req.json()
+
     def list_all_key(self):
         """
         获取包括认证、未认证salt主机
@@ -123,9 +129,9 @@ class SaltAPI(object):
         ret = content['return'][0][tgt]
         return ret
 
-    def remote_execution(self, tgt, fun, arg=None):
+    def remote_execution(self, tgt, fun, tgt_type='glob', arg=None):
         ''' 执行命令有参数 '''
-        data = {'client': 'local', 'tgt': tgt, 'fun': fun}
+        data = {'client': 'local', 'tgt': tgt, 'fun': fun, 'tgt_type': tgt_type}
         if arg:
             data['arg'] = arg
         self.token_id()
@@ -133,11 +139,19 @@ class SaltAPI(object):
         ret = content['return'][0]
         return ret
 
-    def remote_execution_module(self, tgt, fun, arg):
+    def salt_get_minions_ret(self, tgt, fun, tgt_type='glob', arg=None):
+        data = {'tgt': ','.join(tgt), 'fun': fun, 'tgt_type': tgt_type}
+        if arg:
+            data['arg'] = arg
+        self.token_id()
+        content = self.post_request(data, '/minions')
+        return content
+
+    def remote_execution_module(self, tgt, fun, arg, tgt_type='glob'):
         '''
         异步执行远程命令、部署模块
         '''
-        data = {'client': 'local_async', 'tgt': tgt, 'fun': fun, 'arg': arg, 'expr_form': 'list'}
+        data = {'client': 'local_async', 'tgt': tgt, 'fun': fun, 'arg': arg, 'expr_form': 'list', 'tgt_type': tgt_type}
         self.token_id()
         content = self.post_request(data)
         jid = content['return'][0]['jid']
