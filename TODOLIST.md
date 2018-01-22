@@ -1,0 +1,26 @@
+- User
+    - Group
+    - Permission
+- Asset
+    - Export
+    - Import
+    - Bulk Export
+    - Bulk Import
+- Deploy
+    - State
+    - Pillar
+    - Module
+        - Deploy
+    - File
+        - Upload
+        - Download
+        - Rollback
+    - Job
+- Monitor
+    - DB
+        - MySQL
+        - MongoDB
+        - Redis
+    - Web
+        - Nginx
+        

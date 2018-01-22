@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^$', IndexView.as_view(), name='index', kwargs={'app': 'Dashboard'}),
     url(r'^user/', include('user.urls.views_urls', namespace='user')),
     url(r'^asset/', include('asset.urls.views_urls', namespace='asset'), kwargs={'app': 'Asset'}),
-    url(r'^deploy/', include('deploy.urls.views_urls', namespace='deploy'), kwargs={'app': 'Deployment'}),
+    url(r'^deploy/', include('deploy.urls.views_urls', namespace='deploy'), kwargs={'app': 'Deploy'}),
     url(r'^doc/', include('doc.urls', namespace='doc'), kwargs={'app': 'Doc'}),
 
     url(r'^api/user/', include('user.urls.api_urls', namespace='api-user')),

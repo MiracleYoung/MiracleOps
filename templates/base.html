@@ -1,16 +1,17 @@
 {% extends '_base.html' %}
 
-{% block body %}
+{% block html_body %}
 
-    {% include '_left_sidebar.html' %}
-
-    {% include '_header.html' %}
-
-    <div class="right_col" role="main">
-        {% include '_nav.html' %}
-        {% block main %}{% endblock main %}
+    <div class="container body">
+        <div class="main_container">
+            {% include '_left_sidebar.html' %}
+            {% include '_header.html' %}
+            <div class="right_col" role="main">
+                {% include '_nav.html' %}
+                {% block main %}{% endblock main %}
+            </div>
+            {% include '_footer.html' %}
+        </div>
     </div>
 
-    {% include '_footer.html' %}
-
-{% endblock body %}
+{% endblock html_body %}

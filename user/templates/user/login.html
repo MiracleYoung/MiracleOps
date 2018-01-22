@@ -1,62 +1,73 @@
 {% extends '_base.html' %}
+{% load bootstrap3 %}
 
 {% block js %}
     <script>
-        $('body').addClass('login-page');
+        $('body').addClass('login');
     </script>
-{% endblock %}
+{% endblock js %}
 
-{% block body %}
+{% block html_body %}
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
 
-    <div class="login-box">
-        <div class="login-logo">
-            <a href="#"><b>MiracleOps</b> Login</a>
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+                    {% if message %}
+                        <p class="text-danger">{{ message }}</p>
+                    {% endif %}
+
+                    {% if form.errors %}
+                        {% for field, error in form.errors.items %}
+                            <p class="text-danger">{{ field }} : {{ error.0 }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form action="{% url 'user:login' %}" method="post">
+                        {% csrf_token %}
+                        <h1>MO Login Form</h1>
+
+                        <div class="form-group has-feedback">
+                            <input type="email" class="form-control" placeholder="Email" name="email">
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <input type="password" class="form-control" placeholder="Password" name="password">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">Log In</button>
+                            </div>
+
+                            <a class="reset_pass" href="#">Lost your password?</a>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="separator">
+                            <p class="change_link">New to site?
+                                <a href="{% url 'user:register' %}" class="to_register"> Create Account </a>
+                            </p>
+
+                            <div class="clearfix"></div>
+                            <br/>
+
+                            <div>
+                                <h1><i class="fa fa-paw"></i> MiracleOps </h1>
+                                <p>MiracleOps - Auto Operation Web Platform</p>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
         </div>
-        <!-- /.login-logo -->
-        <div class="login-box-body">
-            <p class="login-box-msg">Sign in to start your Ops</p>
 
-            {% if message %}
-                <p class="text-danger">{{ message }}</p>
-            {% endif %}
-
-            {% if form.errors %}
-                {% for field, error in form.errors.items %}
-                    <p class="text-danger">{{ field }} : {{ error.0 }}</p>
-                {% endfor %}
-            {% endif %}
-
-            <form action="{% url 'user:login' %}" method="post">
-                {% csrf_token %}
-                <div class="form-group has-feedback">
-                    <input type="email" class="form-control" placeholder="Email" name="email">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                </div>
-
-                <div class="form-group has-feedback">
-                    <input type="password" class="form-control" placeholder="Password" name="password">
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                </div>
-                <div class="row">
-
-
-                    <!-- /.col -->
-                    <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                    </div>
-                    <div class="col-xs-4 col-xs-offset-4">
-                        <a href="{% url 'user:register' %}"
-                           class="btn btn-danger btn-block btn-flat">Register</a>
-                    </div>
-                    <!-- /.col -->
-                </div>
-            </form>
-
-            <a href="#">I forgot my password</a><br>
-
-        </div>
-        <!-- /.login-box-body -->
     </div>
-    <!-- /.login-box -->
 
-{% endblock body %}
+{% endblock html_body %}

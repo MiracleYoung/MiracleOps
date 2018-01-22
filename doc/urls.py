@@ -7,9 +7,15 @@
 from django.conf.urls import url, include
 from . import views
 
-urlpatterns = [
+mo_url_patterns = [
+    url(r'^list/', views.DocMOListView.as_view(), name='list', kwargs={'path2': 'List'}),
     url(r'^deploy/', include([
-        url(r'^execute-command', views.DocDeployExecuteCommandView.as_view(), name='execute-command', kwargs={'path2': 'Execute Command'}),
-        url(r'^minion-list', views.DocDeployMinionListView.as_view(), name='minion-list', kwargs={'path2': 'Minion List'}),
-    ], namespace='deploy'), kwargs={'path1': 'Deploy'}),
+        url(r'^execute-command/$', views.DocDeployExecuteCommandView.as_view(), name='execute-command'),
+        url(r'^minion-list/$', views.DocDeployMinionListView.as_view(), name='minion-list'),
+    ], namespace='deploy'), kwargs={'path2': 'Deploy'}),
+]
+
+urlpatterns = [
+    url(r'^mo/', include(mo_url_patterns, namespace='mo'), kwargs={'path1': 'MO'})
+
 ]

@@ -13,7 +13,10 @@ from common.error import f_valid_required_err
 class UserCreateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'username', 'wechat', 'password', 'avatar', 'job_title']
+        fields = ['email', 'username', 'wechat', 'password', 'avatar', 'job_title',]
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
 
     def clean_avatar(self):
         avatar = self.cleaned_data['avatar']

@@ -1,4 +1,4 @@
-{% load url_tag %}
+{% load url %}
 
 <div class="page-title">
     <div class="title_left">
@@ -11,15 +11,15 @@
 
             {% if path1 and not path2 %}
                 <li class="active">
-                    <a href="{% url_reverse app|lower path1|lower 'index' %}">{{ path1 }}</a>
+                    <a href="{% url_reverse app|reverse_space2dash|lower path1|reverse_space2dash|lower 'list' %}">{{ path1 }}</a>
                 </li>
             {% endif %}
 
             {% if path1 and path2 %}
                 <li>
-                    <a href="{% url_reverse app|lower path1|lower 'index' %}">{{ path1 }}</a>
+                    <a href="{% url_reverse app|reverse_space2dash|lower path1|reverse_space2dash|lower 'list' %}">{{ path1 }}</a>
                 </li>
-                <li class="active">{{ path2 }}</li>
+                <li class="active">{{ path2|reverse_space2dash }}</li>
             {% endif %}
         </ol>
     </div>

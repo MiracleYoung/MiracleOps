@@ -39,9 +39,9 @@
 {#<script src="{% static 'js/plugins/bootstrap-daterangepicker/daterangepicker.js' %}"></script>#}
 
 <!-- Custom Theme Scripts -->
-<script src="{%static 'js/custom.min.js' %}"></script>
+<script src="{% static 'js/custom.min.js' %}"></script>
 <script>
-{#    $.widget.bridge('uibutton', $.ui.button);#}
+    {#    $.widget.bridge('uibutton', $.ui.button);#}
 
     var csrftoken = Cookies.get('csrftoken');
 
@@ -58,5 +58,6 @@
         }
     });
 
+    $('body').addClass('nav-md');
+
 </script>
-<script src="{% static 'js/g.js' %}"></script>

@@ -8,6 +8,8 @@ from django.conf.urls import url, include
 from deploy import views
 
 urlpatterns = [
-    url(r'^minion-list/$', views.SaltMinionListView.as_view(), name='minion-list', kwargs={'path1': 'Minion List'}),
-    url(r'^execute-command/$', views.ExecuteCommandView.as_view(), name='execute-command', kwargs={'path1': 'Execute Command'})
+    url(r'^minion-list/$', views.SaltMinionListView.as_view(), name='minion-list',
+        kwargs={'path1': 'Minion List'}),
+    url(r'^execute-command/$', views.ExecuteCommandView.as_view(), name='execute-command',
+        kwargs={'path1': 'Execute Command'})
 ]

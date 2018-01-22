@@ -1,5 +1,7 @@
 <div class="x_title">
-    <h2>{{ path1 }} - {{ path2 }}</h2>
+    {% if path1 is not None or path2 is not None %}
+        <h2>{{ path1 }} - {{ path2 }}</h2>
+    {% endif %}
     <ul class="nav navbar-right panel_toolbox">
         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
         </li>

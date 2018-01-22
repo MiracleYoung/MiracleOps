@@ -3,72 +3,59 @@
 
 {% block js %}
     <script>
-        $('body').addClass('login-page');
+        $('body').addClass('login');
     </script>
 {% endblock %}
 
-{% block body %}
-    <div class="register-box">
-        <div class="register-logo">
-            <a href="#"><b>MiracleOps</b> Register</a>
-        </div>
+{% block html_body %}
+    <div class=" wrapper col-md-6 col-md-offset-3">
+        <div id="register" class="form">
+            <section class="login_content">
+                {% if form.errors %}
+                    {% for field, error in form.errors.items %}
+                        <p class="text-danger">{{ field }} : {{ error.0 }}</p>
+                    {% endfor %}
+                {% endif %}
 
-        <div class="register-box-body">
-            <p class="login-box-msg">Register a new membership</p>
+                <form action="{% url 'user:register' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h1>Create Account</h1>
+                    {% bootstrap_field form.username layout='horizontal' %}
+                    
+                    {% bootstrap_field form.email layout='horizontal' %}
 
-            {% if form.errors %}
-                {% for field, error in form.errors.items %}
-                    <p class="text-danger">{{ field }} : {{ error.0 }}</p>
-                {% endfor %}
-            {% endif %}
+                    {% bootstrap_field form.password layout='horizontal' %}
 
-            <form action="{% url 'user:register' %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group has-feedback">
-                    <input type="text" class="form-control" placeholder="Username" name="{{ form.username.html_name }}">
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback">
-                    <input type="email" class="form-control" placeholder="Email" name="{{ form.email.html_name }}">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback">
-                    <input type="text" class="form-control" placeholder="WeChat" name="{{ form.wechat.html_name }}">
-                    <span class="fa fa-wechat form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback">
-                    {% bootstrap_field form.job_title show_label=False %}
+                    {% bootstrap_field form.wechat layout='horizontal' label='Wechat' %}
 
-                </div>
-                <div class="form-group has-feedback">
-                    <input type="file" class="form-control" placeholder="Avatar" name="{{ form.avatar.html_name }}">
-                    <span class="fa fa-upload form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback">
-                    <input type="password" class="form-control" placeholder="Password"
-                           name="{{ form.password.html_name }}">
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                </div>
-                {#                <div class="form-group has-feedback">#}
-                {#                    <input type="password" class="form-control" placeholder="Retype password" name="{{ form.username.html_name }}">#}
-                {#                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>#}
-                {#                </div>#}
+                    {% bootstrap_field form.job_title layout='horizontal' %}
 
-                <div class="row">
-                    <!-- /.col -->
-                    <div class="col-xs-4">
-                        <button type="submit" class="btn btn-danger btn-block btn-flat">Register</button>
+                    {% bootstrap_field form.avatar layout='horizontal' %}
+
+
+                    <div class="row">
+                        <button type="submit" class="btn btn-info submit" href="{% url 'user:register' %}">Submit
+                        </button>
                     </div>
 
-                    <div class="col-xs-4 col-xs-offset-4">
-                        <a href="{% url 'user:login' %}" class="btn btn-primary btn-block btn-flat">Sign In</a>
-                    </div>
-                    <!-- /.col -->
-                </div>
-            </form>
+                    <div class="clearfix"></div>
 
+                    <div class="separator">
+                        <p class="change_link">Already a member ?
+                            <a href="#signin" class="to_register"> Log in </a>
+                        </p>
+
+                        <div class="clearfix"></div>
+                        <br/>
+
+                        <div>
+                            <h1><i class="fa fa-paw"></i> MiracleOps </h1>
+                            <p>MiracleOps - Auto Operation Web Platform</p>
+                        </div>
+                    </div>
+                </form>
+            </section>
         </div>
-        <!-- /.form-box -->
 
         {% if error_message %}
             <div class="alert alert-warning alert-dismissible">
@@ -80,5 +67,5 @@
 
     </div>
     <!-- /.register-box -->
-{% endblock body %}
+{% endblock html_body %}
 

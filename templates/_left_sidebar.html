@@ -55,18 +55,7 @@
                             <i class="fa fa-file-text"></i> Doc <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a> MO Tutorial <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li class="sub_menu"><a> Deploy <span class="fa fa-chevron-down"></span></a>
-                                        <ul class="nav child_menu">
-                                            <li><a href="{% url 'doc:deploy:minion-list' %}"> Minion List </a></li>
-                                            <li><a href="{% url 'doc:deploy:execute-command' %}"> Execute Command </a></li>
-                                        </ul>
-                                    </li>
-
-
-                                </ul>
-                            </li>
+                            <li><a href="{% url 'doc:mo:list' %}"> MO Tutorial </a></li>
                             <li><a href="#"> DB Standard </a></li>
                             <li><a href="#"> Web Standard </a></li>
                             <li><a href="#"> Dev Standard </a></li>
@@ -77,5 +66,11 @@
             </div>
         </div>
         <!-- /sidebar menu -->
+
+        <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Logout" href="{% url 'user:logout' %}">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+        </div>
     </div>
 </div>

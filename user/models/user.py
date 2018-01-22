@@ -42,7 +42,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    JOB_TITLE = (
+    JOB_TITLE_CHOICE = (
         ('DBA', 'Database Administrator'),
         ('SA', 'System Administrator'),
         ('NA', 'Network Administrator'),
@@ -57,9 +57,9 @@ class User(AbstractBaseUser):
     username = models.CharField(_('User Name'), max_length=32)
     wechat = models.CharField(_('WeChat Account'), max_length=32, blank=True)
     avatar = models.ImageField(_('Avatar'), upload_to='avatar', null=True, blank=True, default='avatar/default_avatar.jpeg')
-    job_title = models.CharField(_('Job Title'), max_length=32, choices=JOB_TITLE, default='', blank=True)
+    job_title = models.CharField(_('Job Title'), max_length=32, choices=JOB_TITLE_CHOICE, default='', blank=True)
     reg_time = models.DateTimeField(_('Register Time'), auto_now_add=True)
-    group = models.ForeignKey(Group, verbose_name=_('Group'))
+    group = models.ForeignKey(Group, verbose_name=_('Group'), null=True)
     is_active = models.BooleanField(_('Is Active'), default=True)
     is_admin = models.BooleanField(_('Is Admin'), default=False)
     is_staff = models.BooleanField(_('Is Staff'), default=True)

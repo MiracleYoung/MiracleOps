@@ -15,17 +15,12 @@
     {% block css %}{% endblock css %}
 </head>
 
-<body class="nav-md">
-<div class="container body">
-    <div class="main_container">
-        {% block body %}{% endblock %}
-        <!-- ./wrapper -->
+<body>
+{% block html_body %}{% endblock html_body %}
 
-        {% include '_footer_js.html' %}
+{% include '_footer_js.html' %}
 
-        {% block js %}{% endblock js %}
-    </div>
-</div>
+{% block js %}{% endblock js %}
 </body>
 
 </html>
