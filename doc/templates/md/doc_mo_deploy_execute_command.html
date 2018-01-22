@@ -1,3 +1,5 @@
+{% load static %}
+
 ### Server List
 
 #### Button
@@ -33,7 +35,7 @@ If one line you have mulitiple arguments, use ',' between two arguments.
 
 #### Snapshot
 
-![Execute Command Server](https://raw.githubusercontent.com/MiracleYoung/MiracleOps/master/static/images/doc/doc_mo_deploy_execute_command_server.png)
+<img src="{% static 'images/doc/mo/execute_command_server.png' %}" class="img-responsive" alt="Execute Command Server" />
 
 ### Glob
 
@@ -41,4 +43,4 @@ In this way, you can use glob syntax(like regular but more simple) to retrieve s
 
 #### Snapshot
 
-![Execute Command Server](https://raw.githubusercontent.com/MiracleYoung/MiracleOps/master/static/images/doc/doc_mo_deploy_execute_command_glob.png)
+<img src="{% static 'images/doc/mo/execute_command_glob.png' %}" class="img-responsive" alt="Execute Command Glob" />

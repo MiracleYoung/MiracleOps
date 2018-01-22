@@ -52,5 +52,5 @@ class GetHtmlPrefixMixin:
         return _html_prefix
 
     def get_context_data(self, **kwargs):
-        kwargs['html_prefix'] = 'md/' + self.get_html_prefix() + '.md'
+        kwargs['html_prefix'] = 'md/' + self.get_html_prefix() + '.html'
         return kwargs

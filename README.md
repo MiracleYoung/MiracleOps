@@ -15,6 +15,20 @@
 
 ![MiracleOpsArchitecture](https://github.com/MiracleYoung/MiracleOps/raw/master/utils/MiracleOps.png)
 
+## Screenshots
+
+![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/idc.png)
+
+![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/idc-detail.png)
+
+![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/server.png)
+
+![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/minion-list.png)
+
+![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/execute_command_server.png)
+
+![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/execute_command_glob.png)
+
 ## Installation
 
 1. Please use Python 3.x.(3.6 is recommendation.)
