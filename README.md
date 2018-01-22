@@ -19,9 +19,9 @@
 
 ![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/idc.png)
 
-![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/idc-detail.png)
-
 ![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/server.png)
+
+![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/server-detail.png)
 
 ![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/minion-list.png)
 
