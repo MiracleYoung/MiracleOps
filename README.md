@@ -25,9 +25,9 @@
 
 ![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/minion-list.png)
 
-![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/execute_command_server.png)
+![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/execute_command_server.png)
 
-![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/execute_command_glob.png)
+![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/execute_command_glob.png)
 
 ## Installation
 
