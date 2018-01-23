@@ -147,3 +147,4 @@ class ExecuteCommand(APIView):
         _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
         _payload = _saltapi.remote_execution(_server, _cmds, tgt_type=_type, arg=_args)
         return Response(_payload, status=status.HTTP_200_OK)
+

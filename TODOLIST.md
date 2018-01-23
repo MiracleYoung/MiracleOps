@@ -4,13 +4,17 @@
     - Reset Password
     - Redo Register Flow
     
-    ![user register flow](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/todolist/user-register-flow.png)
+    <img alt="user register flow" src="https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/todolist/user-register-flow.png" width="300">
 - Asset
     - Export
     - Import
     - Bulk Export
     - Bulk Import
 - Deploy
+    - SSH
+        - Roster
+        - Execute
+        - Install Minion
     - State
     - Pillar
     - Module

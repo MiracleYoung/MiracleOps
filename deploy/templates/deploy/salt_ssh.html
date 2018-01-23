@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load i18n static bootstrap3 %}
+
+{% block css %}
+    <link href="{% static 'css/plugins/nprogress/nprogress.css' %}" rel="stylesheet">
+    <link href="{% static 'dropzone.min.css' %}" rel="stylesheet">
+
+{% endblock css %}
+
+{% block main %}
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            {% include '_x_title.html' %}
+
+            <div class="x_content">
+                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#tab_roster_list" id="roster-list-tab" role="tab" data-toggle="tab"
+                               aria-expanded="true">
+                                Roster List
+                            </a>
+                        </li>
+                        <li role="presentation" class="">
+                            <a href="#tab_roster_upload" id="roster-upload-tab" role="tab" data-toggle="tab"
+                               aria-expanded="true">
+                                Roster Upload
+                            </a>
+                        </li>
+                        <li role="presentation" class="">
+                            <a href="#tab_install_minion" id="install-minion-tab" role="tab" data-toggle="tab"
+                               aria-expanded="true">
+                                Install Minion
+                            </a>
+                        </li>
+                        <li role="presentation" class="">
+                            <a href="#tab_server" id="server-tab" role="tab" data-toggle="tab" aria-expanded="true">
+                                Server List </a>
+                        </li>
+                        <li role="presentation" class="">
+                            <a href="#tab_glob" role="tab" id="glob-tab" data-toggle="tab" aria-expanded="false">
+                                Glob Expression</a>
+                        </li>
+                    </ul>
+
+                    <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="tab_roster_list"
+                             aria-labelledby="roster-list-tab">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>{% trans 'File Name' %}</th>
+                                    <th>{% trans 'Create Time' %}</th>
+                                    <th>{% trans 'Action' %}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for roster in rosters %}
+                                    <tr>
+                                        <td>{{ roster.file_name }}</td>
+                                        <td>{{ roster.create_time }}</td>
+                                        <td>
+                                            <a href="#"
+                                               class="btn btn-info btn-sm">
+                                                <i class="fa fa-edit"></i> {% trans 'Edit' %}
+                                            </a>
+                                            <a class="btn btn-danger btn-sm" data-toggle="modal"
+                                               data-target="#delete-danger">
+                                                <i class="fa fa-trash"></i> {% trans 'Delete' %}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane fade" id="tab_roster_upload"
+                             aria-labelledby="roster-upload-tab">
+                            {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    {% for field, error in form.errors.items %}
+                                        {{ field }}: {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {#                            <form class="dropzone" novalidate action="" method="post"#}
+                            {#                                  enctype="multipart/form-data">#}
+                            {#                                {% csrf_token %}#}
+                            {##}
+                            {#                                {% bootstrap_field form.upload_to label='Upload Roster File' layout='horizontal' form_group_class='form_control' %}#}
+                            {#                                <hr>#}
+                            {#                                <div class="form-group">#}
+                            {#                                    <div class="col-md-4 col-md-offset-4">#}
+                            {#                                        <button type="submit" class="btn btn-info">Submit</button>#}
+                            {#                                    </div>#}
+                            {#                                </div>#}
+                            {#                            </form>#}
+
+
+                            <div class="x_content">
+                                <p>Drag multiple files to the box below for multi upload or click to select files. This
+                                    is for demonstration purposes only, the files are not uploaded to any server.</p>
+                                <form action="{% url 'deploy:ssh' %}" class="dropzone" method="post"
+                                      enctype="multipart/form-data">
+                                </form>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                            </div>
+
+                        </div>
+                        {% include 'deploy/_server_execute.html' %}
+                        {% include 'deploy/_glob_execute.html' %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% include '_modal.html' %}
+{% endblock main %}
+
+{% block js %}
+    <script src="{% static 'js/deploy.js' %}"></script>
+    <script>
+        $('#glob-execute').click({
+            url: "{% url 'api-deploy:execute-cmd' %}",
+            tab: 'glob',
+            tgt_type: 'glob'
+        }, execute)
+        $('#glob-add').click({tab: 'glob'}, add)
+        $('#glob-minus').click({tab: 'glob'}, minus)
+
+        $('#server-execute').click({
+            url: "{% url 'api-deploy:execute-cmd' %}",
+            tab: 'server',
+            tgt_type: 'list'
+        }, execute)
+        $('#server-add').click({tab: 'server'}, add)
+        $('#server-minus').click({tab: 'server'}, minus)
+
+    </script>
+    <script src="{% static 'js/plugins/nprogress/nprogress.js' %}"></script>
+    <script src="{% static 'dropzone.min.js' %}"></script>
+{% endblock js %}

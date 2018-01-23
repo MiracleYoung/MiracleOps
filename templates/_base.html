@@ -11,8 +11,8 @@
     <title>MiracleOps</title>
 
     {% include "_head_css_js.html" %}
-
     {% block css %}{% endblock css %}
+    <link href="{% static 'css/custom.min.css' %}" rel="stylesheet">
 </head>
 
 <body>
@@ -21,6 +21,7 @@
 {% include '_footer_js.html' %}
 
 {% block js %}{% endblock js %}
+<script src="{% static 'js/custom.min.js' %}"></script>
 </body>
 
 </html>

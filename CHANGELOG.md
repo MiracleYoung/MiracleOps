@@ -1,3 +1,9 @@
+## version 1.0.1 (2017.01.23)
+
+1. Add Roster model.
+2. Add Deploy SSH.
+3. Opitimize deploy.js call.
+
 ## version 0.5.2 (2017.01.22)
 
 1. Version 1.0.0 release.

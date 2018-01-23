@@ -13,11 +13,11 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12 ">
         <div class="x_panel">
-            <button class="btn btn-info" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Refreshing"
-                    onclick="refreshMinions(this)">{% trans 'Refresh Salt Minions' %}
+            <button id="btn-refresh-minions" class="btn btn-info"
+                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Refreshing">{% trans 'Refresh Salt Minions' %}
             </button>
-            <button class="btn btn-info" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Checking"
-                    onclick="checkMinionsHealth(this)">{% trans 'Check Salt Minions Health' %}
+            <button id="btn-check-minions-health" class="btn btn-info"
+                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Checking">{% trans 'Check Salt Minions Health' %}
             </button>
         </div>
 
@@ -48,9 +48,9 @@
                             </td>
                             <td>{{ minion.is_alive }}</td>
                             <td>
-                                <a class="btn btn-danger btn-sm"
+                                <a class="btn btn-danger btn-sm" id="a-delete-minion"
                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Deleting"
-                                   data-toggle="modal" data-target="#delete-danger" onclick="deleteMinion(this);">
+                                   data-toggle="modal" data-target="#delete-danger">
                                     <i class="fa fa-trash"></i> {% trans 'Delete' %}
                                 </a>
                             </td>
@@ -99,7 +99,7 @@
                             <input type="hidden" value="{% url 'api-deploy:minion' minion.id %}"/>
                             <td>{{ minion.hostname }}</td>
                             <td>
-                                <button class="btn btn-danger btn-sm" onclick="acceptMinion(this);"
+                                <button class="btn btn-danger btn-sm" id="btn-accept-minion"
                                         data-loading-text="<i class='fa fa-spinner fa-spin'></i> Accepting">
                                     <i class="fa fa-trash"></i> {% trans 'Accept' %}
                                 </button>
@@ -119,81 +119,14 @@
 {% endblock main %}
 
 {% block js %}
+    <script src="{% static 'js/deploy.js' %}"></script>
     <script>
-        function salt(ele, url, successStr) {
-            $.ajax({
-                    url: url,
-                    beforeSend: function (xhr) {
-                        $(ele).button('loading');
-                    }
-                }
-            ).done(function (data, status, xhr) {
-                alert(successStr)
-                $(ele).button('reset')
-                window.location.reload(true)
-            }).fail(function (err) {
-                alert('Oops, something wrong, please contact your administrator.')
-                $(ele).button('reset')
-            })
-        }
-
-
-        function refreshMinions(ele) {
-            url = "{% url 'api-deploy:minion-refresh' %}"
-            successStr = 'Import Minions Success.'
-            salt(ele, url, successStr)
-        }
-
-        function checkMinionsHealth(ele) {
-            url = "{% url 'api-deploy:minion-check-alive' %}"
-            successStr = 'Refresh Minions Health Success.'
-            salt(ele, url, successStr)
-        }
-
+        $('#btn-refresh-minions').click({url: "{% url 'api-deploy:minion-refresh' %}"}, importMinions)
+        $('#btn-check-minions-health').click({url: "{% url 'api-deploy:minion-check-alive' %}"}, refreshMinionsHealth)
         // ajax: delete minion
-        function deleteMinion(ele) {
-            var tds = $(ele).parent('td').siblings('td')
-            var hostname = tds[0].innerText
-            var p = "<p>Hostname:" + hostname + "</p>"
-            $('.modal-body').append(p)
-            var url = $(ele).parent('td').siblings('input')[0].value
-            $('#confirm-delete').attr({"data-delete-url": url})
-        }
-
-        $('#confirm-delete').click(function () {
-            var url = $(this).attr("data-delete-url")
-            $.ajax({
-                url: url,
-                method: 'DELETE'
-            }).done(function (data, status, xhr) {
-                if (xhr.status == 204) {
-                    alert('Delete Success.')
-                    window.location.reload()
-                }
-            }).fail(function (err) {
-                alert('Oops, something wrong, please contact your Administrator.')
-            })
-        })
-
+        $('#a-delete-minion').click(deleteMinion)
+        $('#confirm-delete').click(confirmDelete)
         // ajax: accept minion key
-        function acceptMinion(ele) {
-            var url = $(ele).parent('td').siblings('input')[0].value
-            $.ajax({
-                url: url,
-                beforeSend: function (xhr) {
-                    $(ele).button('loading');
-                },
-                method: 'PUT'
-            }).done(function (data, status, xhr) {
-                if (xhr.status == 200) {
-                    alert('Accept Success.')
-                    $(ele).button('reset')
-                    window.location.reload()
-                }
-            }).fail(function (err) {
-                alert('Oops, something wrong, please contact your Administrator.')
-                $(ele).button('reset')
-            })
-        }
+        $('#btn-accept-minion').click(acceptMinion)
     </script>
 {% endblock js %}
