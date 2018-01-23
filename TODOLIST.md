@@ -1,6 +1,10 @@
 - User
     - Group
     - Permission
+    - Reset Password
+    - Redo Register Flow
+    
+    ![user register flow](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/todolist/user-register-flow.png)
 - Asset
     - Export
     - Import
