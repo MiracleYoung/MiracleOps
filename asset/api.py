@@ -7,13 +7,13 @@
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from asset.serializer import ServerSerializer, IDCSerializer
-from asset.models import Server, IDC
+from asset.serializer import *
+from asset.models import *
 
-__all__ = ['ServerDetailApi', 'IDCDetailApi']
+__all__ = ['ServerApi', 'IDCApi']
 
 
-class ServerDetailApi(RetrieveUpdateDestroyAPIView):
+class ServerApi(RetrieveUpdateDestroyAPIView):
     serializer_class = ServerSerializer
 
     def delete(self, request, *args, **kwargs):
@@ -25,7 +25,7 @@ class ServerDetailApi(RetrieveUpdateDestroyAPIView):
             return Response('', status=status.HTTP_502_BAD_GATEWAY)
 
 
-class IDCDetailApi(RetrieveUpdateDestroyAPIView):
+class IDCApi(RetrieveUpdateDestroyAPIView):
     serializer_class = IDCSerializer
 
     def delete(self, request, *args, **kwargs):

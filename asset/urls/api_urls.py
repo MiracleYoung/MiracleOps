@@ -5,9 +5,9 @@
 # @File    : api_urls.py
 
 from django.conf.urls import url, include
-from ..api import *
+from .. import api
 
 urlpatterns = [
-    url(r'^server/(?P<pk>\d+)/$', ServerDetailApi.as_view(), name='server-detail'),
-    url(r'^idc/(?P<pk>\d+)/$', IDCDetailApi.as_view(), name='idc-detail'),
+    url(r'^server/(?P<pk>\d+)/$', api.ServerApi.as_view(), name='server'),
+    url(r'^idc/(?P<pk>\d+)/$', api.IDCApi.as_view(), name='idc'),
 ]

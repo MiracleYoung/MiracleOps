@@ -1,0 +1,17 @@
+web-pro.centos1.com:
+  host: web-pro.centos1.com
+  user: root
+  password: 123
+  sudo: True
+
+db-dev.centos2.com:
+  host: db-dev.centos2.com
+  user: root
+  password: 123
+  sudo: True
+
+web-stg.centos3.com:
+  host: web-stg.centos3.com
+  user: root
+  password: 123
+  sudo: True

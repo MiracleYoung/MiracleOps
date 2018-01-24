@@ -1,3 +1,8 @@
+## version 1.0.3.1 (2017.01.24)
+
+1. Optimize asset js, deploy.js
+2. Complete RosterApi.
+
 ## version 1.0.2 (2017.01.24)
 
 1. Complete Roster List.

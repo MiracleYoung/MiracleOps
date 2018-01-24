@@ -9,8 +9,9 @@ from rest_framework.views import APIView
 from rest_framework import generics, status
 from django.conf import settings
 from django.utils import timezone
-import json
-from .models import SaltMinion
+from django.core.exceptions import ObjectDoesNotExist
+import json, os
+from .models import *
 from .saltapi import SaltAPI
 from asset.models import Server
 
@@ -76,21 +77,23 @@ class MinionRefreshApi(APIView):
         _minions = _saltapi.list_all_key()[0]
         _minions_pre = _saltapi.list_all_key()[1]
 
-        for _minion in _minions:
-            if not SaltMinion.objects.filter(hostname=_minion):
-                _salt_minion = SaltMinion(hostname=_minion, status=1, is_alive=False)
-                # retrieve server info and initial it
-                _salt_minion.server = init_server(_saltapi, _minion)
-                _salt_minion.save()
-            else:
-                SaltMinion.objects.filter(hostname=_minion).update(status=1, is_alive=False)
-        for _minion in _minions_pre:
-            if not SaltMinion.objects.filter(hostname=_minion):
-                SaltMinion.objects.create(hostname=_minion, status=2, is_alive=False)
-            else:
-                SaltMinion.objects.filter(hostname=_minion).update(status=2, is_alive=False)
 
-        return Response('success', status=status.HTTP_200_OK)
+install
+for _minion in _minions:
+    if not SaltMinion.objects.filter(hostname=_minion):
+        _salt_minion = SaltMinion(hostname=_minion, status=1, is_alive=False)
+        # retrieve server info and initial it
+        _salt_minion.server = init_server(_saltapi, _minion)
+        _salt_minion.save()
+    else:
+        SaltMinion.objects.filter(hostname=_minion).update(status=1, is_alive=False)
+for _minion in _minions_pre:
+    if not SaltMinion.objects.filter(hostname=_minion):
+        SaltMinion.objects.create(hostname=_minion, status=2, is_alive=False)
+    else:
+        SaltMinion.objects.filter(hostname=_minion).update(status=2, is_alive=False)
+
+return Response('success', status=status.HTTP_200_OK)
 
 
 class MinionCheckAliveApi(APIView):
@@ -98,7 +101,8 @@ class MinionCheckAliveApi(APIView):
         _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
         _ret = _saltapi.salt_check_alive('*')
         for host, is_alive in _ret.items():
-            SaltMinion.objects.filter(hostname=host).update(is_alive=is_alive, last_alive_time=timezone.now(), update_time=timezone.now())
+            SaltMinion.objects.filter(hostname=host).update(is_alive=is_alive, last_alive_time=timezone.now(),
+                                                            update_time=timezone.now())
         return Response('success')
 
 
@@ -133,7 +137,8 @@ class MinionApi(generics.RetrieveUpdateDestroyAPIView):
             return Response(status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-class ExecuteCommand(APIView):
+
+class ExecuteCommandApi(APIView):
 
     def post(self, request, *args, **kwargs):
         _type = request.data.get('type', '')
@@ -148,3 +153,46 @@ class ExecuteCommand(APIView):
         _payload = _saltapi.remote_execution(_server, _cmds, tgt_type=_type, arg=_args)
         return Response(_payload, status=status.HTTP_200_OK)
 
+
+class RosterApi(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Roster
+
+    def get(self, request, *args, **kwargs):
+        _pk = kwargs.get('pk', -1)
+        try:
+            _roster = Roster.objects.get(pk=_pk)
+        except ObjectDoesNotExist:
+            raise Response('roster does not exist', status=status.HTTP_404_NOT_FOUND)
+        with open(_roster.file.path, 'r') as f:
+            _content = f.read()
+        return Response(_content.replace('\n', '<br>').replace(' ', '&nbsp;' * 2), status=status.HTTP_200_OK)
+
+    def delete(self, request, *args, **kwargs):
+        _pk = kwargs.get('pk', -1)
+        try:
+            _roster = Roster.objects.get(pk=_pk)
+        except ObjectDoesNotExist:
+            raise Response('roster does not exist', status=status.HTTP_404_NOT_FOUND)
+        _roster.status = 2
+        _roster.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class InstallMinionApi(APIView):
+    def get(self, request, *args, **kwargs):
+        _pk = self.kwargs.get('roster_id', -1)
+        try:
+            _roster = Roster.objects.get(pk=_pk)
+        except ObjectDoesNotExist:
+            raise Response('roster does not exist', status=status.HTTP_400_BAD_REQUEST)
+        # create symbol link from roster to /etc/salt/roster
+        _filepath = _roster.file.path
+        _rosterpath = '/etc/salt/roster'
+        if os.path.exists(_rosterpath):
+            os.remove(_rosterpath)
+        os.symlink(_filepath, _rosterpath)
+        _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
+        _fun = ['cmd.run', ]
+        _arg = [['curl -L https://bootstrap.saltstack.com -o install_salt.sh', 'sudo sh install_salt.sh', ], ]
+        _payload = _saltapi.remote_execution(tgt='*', fun=_fun, arg=_arg, client='ssh')
+        return Response(_payload, status=status.HTTP_200_OK)

@@ -23,7 +23,6 @@
                     <tbody>
                     {% for server in server_list %}
                         <tr>
-                            <input type="hidden" value="{% url 'api-asset:server-detail' server.id %}"/>
                             <td>
                                 <a href="{% url 'asset:server:detail' server.id %}">{{ server.hostname }}</a>
                             </td>
@@ -73,10 +72,10 @@
                                     <i class="fa fa-edit"></i> {% trans 'Edit' %}
                                 </a>
 
-                                <a class="btn btn-danger btn-sm" data-toggle="modal"
-                                   data-target="#delete-danger" onclick="setValue(this);">
+                                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-del"
+                                        onclick='delServer(this, "{% url 'api-asset:server' server.id %}", "{{ server.hostname }}" );'>
                                     <i class="fa fa-trash"></i> {% trans 'Delete' %}
-                                </a>
+                                </button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -98,7 +97,7 @@
         </div>
     </div>
 
-    {% include '_modal.html' %}
+    {% include '_modal_delete.html' %}
 
 {% endblock main %}
 

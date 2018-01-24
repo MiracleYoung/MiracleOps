@@ -119,19 +119,19 @@ class SaltAPI(object):
         ret = content['return'][0]
         return ret
 
-    def remote_one_server(self, tgt, fun):
+    def remote_one_server(self, tgt, fun, client='local'):
         '''
         获取单一主机信息
         '''
-        data = {'client': 'local', 'tgt': tgt, 'fun': fun}
+        data = {'client': client, 'tgt': tgt, 'fun': fun}
         self.token_id()
         content = self.post_request(data)
         ret = content['return'][0][tgt]
         return ret
 
-    def remote_execution(self, tgt, fun, tgt_type='glob', arg=None):
+    def remote_execution(self, tgt, fun, tgt_type='glob', arg=None, client='local'):
         ''' 执行命令有参数 '''
-        data = {'client': 'local', 'tgt': tgt, 'fun': fun, 'tgt_type': tgt_type}
+        data = {'client': client, 'tgt': tgt, 'fun': fun, 'tgt_type': tgt_type}
         if arg:
             data['arg'] = arg
         self.token_id()

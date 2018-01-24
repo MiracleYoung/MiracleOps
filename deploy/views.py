@@ -1,9 +1,9 @@
-from django.views.generic import ListView, TemplateView, FormView
+from django.views.generic import ListView, TemplateView, FormView, DetailView
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.shortcuts import get_object_or_404
+from django.http import Http404, HttpResponseBadRequest
 from common.mixin import LoginRequiredMixin
-import salt.client
-import salt.key
 import uuid
 from .models import *
 from .forms import *
@@ -44,12 +44,14 @@ class SaltSSHView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         if form.is_valid():
             _u = User.objects.get(pk=self.request.session['uid'])
-            file_name = '{}.{}.roster'.format(_u.username, int(timezone.now().timestamp()))
+            _f_name = self.request.FILES['file'].name
+            if not _f_name.endswith('.roster'):
+                return HttpResponseBadRequest('file must be like *.roster')
+            file_name = '{}_{}_{}'.format(_f_name, _u.username, int(timezone.now().timestamp()))
             form.instance.file.name = file_name
             form.instance.uuid = uuid.uuid4()
             form.instance.user = _u
             form.instance.status = 1
             form.save()
             return super(SaltSSHView, self).form_valid(form)
-
-
+        return HttpResponseBadRequest()
