@@ -15,10 +15,12 @@
         <tr>
             <td>
                 {% trans 'Command' %}
-                <button class="btn btn-success btn-sm" id="glob-add">
+                <button class="btn btn-success btn-sm" id="glob-add"
+                        onclick='add(this, "glob")'>
                     <i class="fa fa-plus"></i>
                 </button>
-                <button class="btn btn-danger btn-sm" id="glob-minus">
+                <button class="btn btn-danger btn-sm" id="glob-minus"
+                        onclick='minus(this, "glob")'>>
                     <i class="fa fa-minus"></i>
                 </button>
             </td>
@@ -42,7 +44,8 @@
                     <button type="reset" class="btn btn-info">
                         <i class="ion ion-ios-loop-strong"></i> Reset
                     </button>
-                    <button type="button" class="btn btn-danger" id="glob-execute">
+                    <button type="button" class="btn btn-danger" id="glob-execute"
+                            onclick='execute(this, "{% url 'api-deploy:execute-cmd' %}", "glob", "glob")'>>
                         <i class="fa fa-play"></i> Execute
                     </button>
                 </div>

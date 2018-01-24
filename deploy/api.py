@@ -71,29 +71,39 @@ def init_server(saltapi, hostname):
     return _server
 
 
+def sym_link_roster(pk):
+    try:
+        _roster = Roster.objects.get(pk=pk)
+    except ObjectDoesNotExist:
+        raise Response('roster does not exist', status=status.HTTP_400_BAD_REQUEST)
+    # create symbol link from roster to /etc/salt/roster
+    _filepath = _roster.file.path
+    _rosterpath = '/etc/salt/roster'
+    if os.path.exists(_rosterpath):
+        os.remove(_rosterpath)
+    os.symlink(_filepath, _rosterpath)
+
+
 class MinionRefreshApi(APIView):
     def get(self, request, **kwargs):
         _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
         _minions = _saltapi.list_all_key()[0]
         _minions_pre = _saltapi.list_all_key()[1]
+        for _minion in _minions:
+            if not SaltMinion.objects.filter(hostname=_minion):
+                _salt_minion = SaltMinion(hostname=_minion, status=1, is_alive=False)
+                # retrieve server info and initial it
+                _salt_minion.server = init_server(_saltapi, _minion)
+                _salt_minion.save()
+            else:
+                SaltMinion.objects.filter(hostname=_minion).update(status=1, is_alive=False)
+        for _minion in _minions_pre:
+            if not SaltMinion.objects.filter(hostname=_minion):
+                SaltMinion.objects.create(hostname=_minion, status=2, is_alive=False)
+            else:
+                SaltMinion.objects.filter(hostname=_minion).update(status=2, is_alive=False)
 
-
-install
-for _minion in _minions:
-    if not SaltMinion.objects.filter(hostname=_minion):
-        _salt_minion = SaltMinion(hostname=_minion, status=1, is_alive=False)
-        # retrieve server info and initial it
-        _salt_minion.server = init_server(_saltapi, _minion)
-        _salt_minion.save()
-    else:
-        SaltMinion.objects.filter(hostname=_minion).update(status=1, is_alive=False)
-for _minion in _minions_pre:
-    if not SaltMinion.objects.filter(hostname=_minion):
-        SaltMinion.objects.create(hostname=_minion, status=2, is_alive=False)
-    else:
-        SaltMinion.objects.filter(hostname=_minion).update(status=2, is_alive=False)
-
-return Response('success', status=status.HTTP_200_OK)
+        return Response('success', status=status.HTTP_200_OK)
 
 
 class MinionCheckAliveApi(APIView):
@@ -138,8 +148,7 @@ class MinionApi(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class ExecuteCommandApi(APIView):
-
+class MinionExecApi(APIView):
     def post(self, request, *args, **kwargs):
         _type = request.data.get('type', '')
         if _type == 'glob':
@@ -181,18 +190,34 @@ class RosterApi(generics.RetrieveUpdateDestroyAPIView):
 class InstallMinionApi(APIView):
     def get(self, request, *args, **kwargs):
         _pk = self.kwargs.get('roster_id', -1)
-        try:
-            _roster = Roster.objects.get(pk=_pk)
-        except ObjectDoesNotExist:
-            raise Response('roster does not exist', status=status.HTTP_400_BAD_REQUEST)
-        # create symbol link from roster to /etc/salt/roster
-        _filepath = _roster.file.path
-        _rosterpath = '/etc/salt/roster'
-        if os.path.exists(_rosterpath):
-            os.remove(_rosterpath)
-        os.symlink(_filepath, _rosterpath)
+        sym_link_roster(_pk)
+
         _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
-        _fun = ['cmd.run', ]
-        _arg = [['curl -L https://bootstrap.saltstack.com -o install_salt.sh', 'sudo sh install_salt.sh', ], ]
-        _payload = _saltapi.remote_execution(tgt='*', fun=_fun, arg=_arg, client='ssh')
+        _cp_fun = 'cp.get_file'
+        _cp_arg = ['salt://install_salt.sh', '/etc/salt/', ]
+        _cp_payload = _saltapi.ssh_execution(tgt='*', fun=_cp_fun, arg=_cp_arg)
+
+        _sh_fun = 'cmd.run'
+        _sh_arg = ['sudo sh /etc/salt/install_salt.sh', ]
+        # _sh_arg = ['yum install salt-minion -y']
+        _sh_payload = _saltapi.ssh_execution(tgt='*', fun=_sh_fun, arg=_sh_arg)
+        _payload = {}
+        # print(_cp_payload)
+        for _host, _ret in _cp_payload.items():
+            _payload[_host] = _sh_payload[_host] if _ret['return'] else _cp_payload[_host]
+
         return Response(_payload, status=status.HTTP_200_OK)
+
+
+
+class SSHCmdApi(APIView):
+    def get(self, request, *args, **kwargs):
+        _pk = kwargs.get('roster_id', -1)
+        # sym_link_roster(_pk)
+
+        _fun = request.data.getlist('cmds[]', '')
+        _raw_args = request.data.getlist('args[]', [])
+        _args = [_arg.split(',') for _arg in _raw_args]
+        _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
+        _payload = _saltapi.ssh_execution(tgt='8', fun=_fun, arg=_args)
+        return _payload

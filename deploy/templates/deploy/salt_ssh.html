@@ -36,7 +36,8 @@
                             </a>
                         </li>
                         <li role="presentation" class="">
-                            <a href="#tab_server" id="server-tab" role="tab" data-toggle="tab" aria-expanded="true">
+                            <a href="#tab_execution" id="execution-tab" role="tab" data-toggle="tab"
+                               aria-expanded="true">
                                 Server List </a>
                         </li>
                         <li role="presentation" class="">
@@ -99,7 +100,7 @@
                                 </div>
                             {% endif %}
 
-                            <form action="{% url 'deploy:ssh' %}" class="file-dropzone" method="post"
+                            <form action="{% url 'deploy:ssh' %}" class="dropzone" method="post"
                                   enctype="multipart/form-data">
                                 {% csrf_token %}
                             </form>
@@ -110,9 +111,9 @@
                             <table class="table">
                                 <tbody>
                                 <tr>
-                                    <td class="col-md-3">{% trans 'Server' %}</td>
+                                    <td class="col-md-3">{% trans 'Roster' %}</td>
                                     <td class="col-md-9">
-                                        <select class="form-control" id="roster">
+                                        <select class="form-control" id="roster-install-list">
                                             {% for roster in rosters %}
                                                 <option value="{{ roster.id }}">{% retrieve_roster_name roster.file.name %}</option>
                                             {% endfor %}
@@ -141,8 +142,66 @@
                             </table>
                         </div>
 
-                        {% include 'deploy/_server_execute.html' %}
-                        {% include 'deploy/_glob_execute.html' %}
+                        <div role="tabpanel" class="tab-pane fade" id="tab_execution"
+                             aria-labelledby="execution-tab">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td class="col-md-3">{% trans 'Roster' %}</td>
+                                    <td class="col-md-9">
+                                        <select multiple="multiple" class="form-control" id="roster-exec-list">
+                                            {% for roster in rosters %}
+                                                <option value="{{ roster.id }}">{% retrieve_roster_name roster.file.name %}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {% trans 'Command' %}
+                                        <button class="btn btn-success btn-sm" id="roster-add">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" id="roster-minus">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                    <td id="roster-cmd" data-count="1">
+                                        <input type="text" class="form-group form-control" id="roster-cmd-1">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {% trans 'Arguments (If no args, let it empty)' %}
+                                        {% trans '**Please take care the order' %}
+                                    </td>
+                                    <td id="roster-arg">
+                                        <input type="text" class="form-group form-control" id="roster-arg-1">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Action' %}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <button type="reset" class="btn btn-info">
+                                                <i class="ion ion-ios-loop-strong"></i> Reset
+                                            </button>
+                                            <button type="button" class="btn btn-danger" id="roster-execute"
+                                                    onclick="rosterExec(this)">
+                                                <i class="fa fa-play"></i> Execute
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Feedback' %}</td>
+                                    <td id="roster-feedback">
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>
@@ -158,8 +217,35 @@
 {% block js %}
     <script src="{% static 'js/plugins/nprogress/nprogress.js' %}"></script>
     <script src="{% static 'js/plugins/dropzone/dropzone.min.js' %}"></script>
-    <script src="{% static 'js/deploy.js' %}"></script>
+    <script src="{% static 'js/mo/ssh.js' %}"></script>
     <script>
+        // dropzone
+        $(".dropzone").dropzone({
+            maxFiles: 10,
+            maxFilesize: 5120,
+            acceptedFiles: ".roster",
+            success: function () {
+                window.location.reload()
+            }
+        });
 
+        // delete modal button confirm
+        $('#confirm-delete').click(confirmDel)
+        $('#minion-install').click({tab: 'install'}, installMinion)
+
+        function rosterExec(ele) {
+            let _roster_id = $('#roster-exec')
+            let _url = '/api/deploy/ssh-cmd/' + _roster_id + '/'
+            execute(ele, _url, 'roster', '*')
+        }
+
+        // roster execution tab
+        $('#roster-execute').click({
+            url: "{% url 'api-deploy:ssh-cmd'  %}",
+            tab: 'roster',
+            tgt_type: 'glob'
+        }, execute)
+        $('#roster-add').click({tab: 'roster'}, add)
+        $('#roster-minus').click({tab: 'roster'}, minus)
     </script>
 {% endblock js %}

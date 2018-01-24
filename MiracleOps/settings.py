@@ -98,7 +98,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'MiracleOps',
         # 'HOST': '127.0.0.1',
-        'HOST': '192.168.29.130' if 'linux' in platform.platform().lower() else '172.16.46.182',
+        'HOST': '127.0.0.1' if 'linux' in platform.platform().lower() else '172.16.46.182',
         'PORT': 3306,
         'USER': 'root',
         'PASSWORD': '',
@@ -166,7 +166,7 @@ BOOTSTRAP3 = {
     'set_placeholder': True,
 }
 
-SALT_API_URL = 'http://192.168.29.130:9000' if 'linux' in platform.platform().lower() else 'http://172.16.46.182:9000'
+SALT_API_URL = 'http://127.0.0.1:9000' if 'linux' in platform.platform().lower() else 'http://172.16.46.182:9000'
 SALT_API_USERNAME = 'saltapi'
 SALT_API_PASSWORD = 'saltapi'
 

@@ -1,6 +1,11 @@
+## version 1.0.3.2 (2017.01.25)
+
+1. Split deploy.js to ssh.js/execute-command.js/salt-minion-list.js
+2. Add InstallMinionApi, SSHCmdApi.
+
 ## version 1.0.3.1 (2017.01.24)
 
-1. Optimize asset js, deploy.js
+1. Optimize asset.js, ssh.js
 2. Complete RosterApi.
 
 ## version 1.0.2 (2017.01.24)
@@ -12,7 +17,7 @@
 
 1. Add Roster model.
 2. Add Deploy SSH.
-3. Opitimize deploy.js call.
+3. Opitimize ssh.js call.
 
 ## version 0.5.2 (2017.01.22)
 
@@ -37,7 +42,7 @@
 ## version 0.4.4 (2017.01.19)
 
 1. Optimize MinionRefreshApi: auto fill out server info and create it.
-2. Complete deploy.js: deleteMinion, acceptMinion.
+2. Complete ssh.js: deleteMinion, acceptMinion.
 
 ## version 0.4.3 (2017.01.18)
 

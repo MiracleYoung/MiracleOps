@@ -1,0 +1,8 @@
+web-pro.centos2.com:
+  host: web-pro.centos2.com
+  user: root
+  password: 123
+db-stg.centos3.com:
+  host: db-stg.centos3.com
+  user: root
+  password: 123

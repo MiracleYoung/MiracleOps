@@ -119,7 +119,7 @@
 {% endblock main %}
 
 {% block js %}
-    <script src="{% static 'js/deploy.js' %}"></script>
+    <script src="{% static 'js/mo/salt-minion-list.js' %}"></script>
     <script>
         $('#btn-refresh-minions').click({url: "{% url 'api-deploy:minion-refresh' %}"}, importMinions)
         $('#btn-check-minions-health').click({url: "{% url 'api-deploy:minion-check-alive' %}"}, refreshMinionsHealth)

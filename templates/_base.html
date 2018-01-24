@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,9 +11,8 @@
 
     {% include "_head_css_js.html" %}
     {% block css %}{% endblock css %}
-
+    <link href="{% static 'css/custom.min.css' %}" rel="stylesheet">
 </head>
-
 <body>
 {% block html_body %}{% endblock html_body %}
 
@@ -23,5 +21,4 @@
 {% block js %}{% endblock js %}
 
 </body>
-
 </html>

@@ -31,23 +31,5 @@
 {% endblock main %}
 
 {% block js %}
-    <script src="{% static 'js/deploy.js' %}"></script>
-    <script>
-        $('#tab_server').addClass('active in')
-        $('#glob-execute').click({
-            url: "{% url 'api-deploy:execute-cmd' %}",
-            tab: 'glob',
-            tgt_type: 'glob'
-        }, execute)
-        $('#glob-add').click({tab: 'glob'}, add)
-        $('#glob-minus').click({tab: 'glob'}, minus)
-
-        $('#server-execute').click({
-            url: "{% url 'api-deploy:execute-cmd' %}",
-            tab: 'server',
-            tgt_type: 'list'
-        }, execute)
-        $('#server-add').click({tab: 'server'}, add)
-        $('#server-minus').click({tab: 'server'}, minus)
-    </script>
+    <script src="{% static 'js/mo/execute-command.js' %}"></script>
 {% endblock js %}

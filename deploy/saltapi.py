@@ -139,6 +139,20 @@ class SaltAPI(object):
         ret = content['return'][0]
         return ret
 
+    def run_execution(self, tgt, fun, arg=None, client='local'):
+        '''/run'''
+        data = {'client': client, 'tgt': tgt, 'fun': fun}
+        if arg:
+            data['arg'] = arg
+        self.token_id()
+        content = self.post_request(data, prefix='/run')
+        ret = content['return'][0]
+        return ret
+
+    def ssh_execution(self, tgt, fun, arg=None):
+        '''ssh /run'''
+        return self.run_execution(tgt, fun, arg, 'ssh')
+
     def salt_get_minions_ret(self, tgt, fun, tgt_type='glob', arg=None):
         data = {'tgt': ','.join(tgt), 'fun': fun, 'tgt_type': tgt_type}
         if arg:
@@ -165,21 +179,21 @@ class SaltAPI(object):
         ret = content['return'][0]
         return ret
 
-    def salt_state(self, tgt, arg, expr_form):
+    def salt_state(self, tgt, arg, tgt_type):
         '''
         sls文件
         '''
-        data = {'client': 'local', 'tgt': tgt, 'fun': 'state.sls', 'arg': arg, 'expr_form': expr_form}
+        data = {'client': 'local', 'tgt': tgt, 'fun': 'state.sls', 'arg': arg, 'tgt_type': tgt_type}
         self.token_id()
         content = self.post_request(data)
         ret = content['return'][0]
         return ret
 
-    def project_manage(self, tgt, fun, arg1, arg2, arg3, arg4, arg5, expr_form):
+    def project_manage(self, tgt, fun, arg1, arg2, arg3, arg4, arg5, tgt_type):
         '''
         文件上传、备份到minion、项目管理
         '''
-        data = {'client': 'local', 'tgt': tgt, 'fun': fun, 'arg': arg1, 'expr_form': expr_form}
+        data = {'client': 'local', 'tgt': tgt, 'fun': fun, 'arg': arg1, 'tgt_type': tgt_type}
         # 拼接url参数
         data2 = {'arg': arg2}
         arg_add = urllib.parse.urlencode(data2)
