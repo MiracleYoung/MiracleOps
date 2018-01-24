@@ -45,11 +45,10 @@ class SaltSSHView(LoginRequiredMixin, FormView):
         if form.is_valid():
             _u = User.objects.get(pk=self.request.session['uid'])
             file_name = '{}.{}.roster'.format(_u.username, int(timezone.now().timestamp()))
-            form.instance.upload_to.name = file_name
+            form.instance.file.name = file_name
             form.instance.uuid = uuid.uuid4()
             form.instance.user = _u
             form.instance.status = 1
-            form.instance.file_name = file_name
             form.save()
             return super(SaltSSHView, self).form_valid(form)
 

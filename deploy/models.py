@@ -46,17 +46,16 @@ class Roster(models.Model):
 
     uuid = models.CharField(_('UUID'), max_length=100, blank=True)
     user = models.ForeignKey(User, blank=True, null=True)
-    file_name = models.CharField(_('Roster File Name'), max_length=200, blank=True)
-    upload_to = models.FileField(_('Upload to'), upload_to='roster/')
+    file = models.FileField(_('File'), upload_to='roster/')
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=0, blank=True)
     create_time = models.DateTimeField(_('Create Time'), auto_now_add=True, null=True, blank=True)
     update_time = models.DateTimeField(_('Update Time'), default=timezone.now(), null=True, blank=True)
 
     class Meta:
         db_table = 'deploy_roster'
-        ordering = ['file_name', ]
+        ordering = ['file', ]
 
     def __repr__(self):
-        return self.file_name
+        return self.file.name
 
     __str__ = __repr__

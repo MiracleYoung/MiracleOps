@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% load i18n static bootstrap3 %}
+{% load str_handle %}
 
 {% block css %}
     <link href="{% static 'css/plugins/nprogress/nprogress.css' %}" rel="stylesheet">
-    <link href="{% static 'dropzone.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/plugins/dropzone/dropzone.min.css' %}" rel="stylesheet">
 
 {% endblock css %}
 
@@ -50,7 +51,7 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>{% trans 'File Name' %}</th>
+                                    <th>{% trans 'File' %}</th>
                                     <th>{% trans 'Create Time' %}</th>
                                     <th>{% trans 'Action' %}</th>
                                 </tr>
@@ -58,7 +59,7 @@
                                 <tbody>
                                 {% for roster in rosters %}
                                     <tr>
-                                        <td>{{ roster.file_name }}</td>
+                                        <td>{{ roster.file.name|split:"/"|index:1 }}</td>
                                         <td>{{ roster.create_time }}</td>
                                         <td>
                                             <a href="#"
@@ -85,46 +86,31 @@
                                     {% endfor %}
                                 </div>
                             {% endif %}
-                            {#                            <form class="dropzone" novalidate action="" method="post"#}
-                            {#                                  enctype="multipart/form-data">#}
-                            {#                                {% csrf_token %}#}
-                            {##}
-                            {#                                {% bootstrap_field form.upload_to label='Upload Roster File' layout='horizontal' form_group_class='form_control' %}#}
-                            {#                                <hr>#}
-                            {#                                <div class="form-group">#}
-                            {#                                    <div class="col-md-4 col-md-offset-4">#}
-                            {#                                        <button type="submit" class="btn btn-info">Submit</button>#}
-                            {#                                    </div>#}
-                            {#                                </div>#}
-                            {#                            </form>#}
 
-
-                            <div class="x_content">
-                                <p>Drag multiple files to the box below for multi upload or click to select files. This
-                                    is for demonstration purposes only, the files are not uploaded to any server.</p>
-                                <form action="{% url 'deploy:ssh' %}" class="dropzone" method="post"
-                                      enctype="multipart/form-data">
-                                </form>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                            </div>
-
+                            <form action="{% url 'deploy:ssh' %}" class="dropzone" method="post"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+                            </form>
                         </div>
+
+
                         {% include 'deploy/_server_execute.html' %}
                         {% include 'deploy/_glob_execute.html' %}
                     </div>
-                </div>
 
+                </div>
             </div>
+
         </div>
+    </div>
     </div>
 
     {% include '_modal.html' %}
 {% endblock main %}
 
 {% block js %}
+    <script src="{% static 'js/plugins/nprogress/nprogress.js' %}"></script>
+    <script src="{% static 'js/plugins/dropzone/dropzone.min.js' %}"></script>
     <script src="{% static 'js/deploy.js' %}"></script>
     <script>
         $('#glob-execute').click({
@@ -143,7 +129,13 @@
         $('#server-add').click({tab: 'server'}, add)
         $('#server-minus').click({tab: 'server'}, minus)
 
+        $("#dropz").dropzone({
+            url: "handle-upload.php",
+            maxFiles: 10,
+            maxFilesize: 512,
+            acceptedFiles: ".js,.obj,.dae"
+        });
+
     </script>
-    <script src="{% static 'js/plugins/nprogress/nprogress.js' %}"></script>
-    <script src="{% static 'dropzone.min.js' %}"></script>
+
 {% endblock js %}
