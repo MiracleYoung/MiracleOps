@@ -16,14 +16,14 @@ function salt(ele, url, successStr) {
     })
 }
 
-function importMinions(event) {
+function importMinions(ele, url) {
     successStr = 'Import Minions Success.'
-    salt(this, event.data.url, successStr)
+    salt(ele, url, successStr)
 }
 
-function refreshMinionsHealth(event) {
+function refreshMinionsHealth(ele, url) {
     successStr = 'Refresh Minions Health Success.'
-    salt(this, event.data.url, successStr)
+    salt(ele, url, successStr)
 }
 
 // ajax: accept minion key

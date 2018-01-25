@@ -14,9 +14,11 @@
     <div class="col-md-12 col-sm-12 col-xs-12 ">
         <div class="x_panel">
             <button id="btn-refresh-minions" class="btn btn-info"
+                    onclick='importMinions(this, "{% url 'api-deploy:minion-refresh' %}")'
                     data-loading-text="<i class='fa fa-spinner fa-spin'></i> Refreshing">{% trans 'Refresh Salt Minions' %}
             </button>
             <button id="btn-check-minions-health" class="btn btn-info"
+                    onclick='refreshMinionsHealth(this, "{% url 'api-deploy:minion-check-alive' %}")'
                     data-loading-text="<i class='fa fa-spinner fa-spin'></i> Checking">{% trans 'Check Salt Minions Health' %}
             </button>
         </div>
@@ -121,11 +123,8 @@
 {% block js %}
     <script src="{% static 'js/mo/salt-minion-list.js' %}"></script>
     <script>
-        $('#btn-refresh-minions').click({url: "{% url 'api-deploy:minion-refresh' %}"}, importMinions)
-        $('#btn-check-minions-health').click({url: "{% url 'api-deploy:minion-check-alive' %}"}, refreshMinionsHealth)
-        // ajax: delete minion
-        $('#a-delete-minion').click(deleteMinion)
-        $('#confirm-delete').click(confirmDelete)
+        $('#a-delete-minion').click(del)
+        $('#confirm-delete').click(confirmDel)
         // ajax: accept minion key
         $('#btn-accept-minion').click(acceptMinion)
     </script>

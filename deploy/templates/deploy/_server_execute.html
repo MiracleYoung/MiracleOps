@@ -48,7 +48,7 @@
                         <i class="ion ion-ios-loop-strong"></i> Reset
                     </button>
                     <button type="button" class="btn btn-danger" id="server-execute"
-                            onclick='execute(this, "{% url 'api-deploy:execute-cmd' %}", "server", "list")'>
+                            onclick='serverExec(this, "{% url 'minion-cmd' %}")'>
                         <i class="fa fa-play"></i> Execute
                     </button>
                 </div>

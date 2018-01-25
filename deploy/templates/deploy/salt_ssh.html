@@ -40,10 +40,6 @@
                                aria-expanded="true">
                                 Server List </a>
                         </li>
-                        <li role="presentation" class="">
-                            <a href="#tab_glob" role="tab" id="glob-tab" data-toggle="tab" aria-expanded="false">
-                                Glob Expression</a>
-                        </li>
                     </ul>
 
                     <div id="myTabContent" class="tab-content">
@@ -100,7 +96,7 @@
                                 </div>
                             {% endif %}
 
-                            <form action="{% url 'deploy:ssh' %}" class="dropzone" method="post"
+                            <form action="{% url 'deploy:ssh' %}" class="dropzone" id="filedropzone" method="post"
                                   enctype="multipart/form-data">
                                 {% csrf_token %}
                             </form>
@@ -115,7 +111,9 @@
                                     <td class="col-md-9">
                                         <select class="form-control" id="roster-install-list">
                                             {% for roster in rosters %}
-                                                <option value="{{ roster.id }}">{% retrieve_roster_name roster.file.name %}</option>
+                                                {% if roster.status == 1 %}
+                                                    <option value="{{ roster.id }}">{% retrieve_roster_name roster.file.name %}</option>
+                                                {% endif %}
                                             {% endfor %}
                                         </select>
 
@@ -126,7 +124,8 @@
                                     <td>
                                         <div class="form-group">
                                             <button type="button" class="btn btn-info" id="minion-install"
-                                                    onclick='installMinion()'>
+                                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Installing"
+                                                    onclick='installMinion(this, "install")'>
                                                 <i class="fa fa-play"></i> Install
                                             </button>
                                         </div>
@@ -149,23 +148,17 @@
                                 <tr>
                                     <td class="col-md-3">{% trans 'Roster' %}</td>
                                     <td class="col-md-9">
-                                        <select multiple="multiple" class="form-control" id="roster-exec-list">
+                                        <select class="form-control" id="roster-exec-list">
                                             {% for roster in rosters %}
-                                                <option value="{{ roster.id }}">{% retrieve_roster_name roster.file.name %}</option>
+                                                {% if roster.status == 1 %}
+                                                    <option value="{{ roster.id }}">{% retrieve_roster_name roster.file.name %}</option>
+                                                {% endif %}
                                             {% endfor %}
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        {% trans 'Command' %}
-                                        <button class="btn btn-success btn-sm" id="roster-add">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" id="roster-minus">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </td>
+                                    <td>{% trans 'Command' %}</td>
                                     <td id="roster-cmd" data-count="1">
                                         <input type="text" class="form-group form-control" id="roster-cmd-1">
                                     </td>
@@ -218,34 +211,4 @@
     <script src="{% static 'js/plugins/nprogress/nprogress.js' %}"></script>
     <script src="{% static 'js/plugins/dropzone/dropzone.min.js' %}"></script>
     <script src="{% static 'js/mo/ssh.js' %}"></script>
-    <script>
-        // dropzone
-        $(".dropzone").dropzone({
-            maxFiles: 10,
-            maxFilesize: 5120,
-            acceptedFiles: ".roster",
-            success: function () {
-                window.location.reload()
-            }
-        });
-
-        // delete modal button confirm
-        $('#confirm-delete').click(confirmDel)
-        $('#minion-install').click({tab: 'install'}, installMinion)
-
-        function rosterExec(ele) {
-            let _roster_id = $('#roster-exec')
-            let _url = '/api/deploy/ssh-cmd/' + _roster_id + '/'
-            execute(ele, _url, 'roster', '*')
-        }
-
-        // roster execution tab
-        $('#roster-execute').click({
-            url: "{% url 'api-deploy:ssh-cmd'  %}",
-            tab: 'roster',
-            tgt_type: 'glob'
-        }, execute)
-        $('#roster-add').click({tab: 'roster'}, add)
-        $('#roster-minus').click({tab: 'roster'}, minus)
-    </script>
 {% endblock js %}

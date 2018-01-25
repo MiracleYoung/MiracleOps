@@ -17,17 +17,31 @@
 
 ## Screenshots
 
-![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/idc.png)
+#### Asset:
 
-![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/server.png)
+![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/mo/idc.png)
 
-![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/server-detail.png)
+![server](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/mo/server.png)
 
-![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/readme/minion-list.png)
+![server-detail](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/mo/server-detail.png)
 
-![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/execute_command_server.png)
+#### Salt Minion
 
-![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/execute_command_glob.png)
+![minion-list](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/mo/minion-list.png)
+
+![execute_command_server](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/execute_command_server.png)
+
+![execute_command_glob](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/execute_command_glob.png)
+
+#### Salt SSH
+
+![execute_command_glob](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/ssh_roster_list_detail.png)
+
+![execute_command_glob](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/ssh_roster_upload.png)
+
+![execute_command_glob](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/ssh_install_minion.png)
+
+![execute_command_glob](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/ssh_cmd.png)
 
 ## Installation
 
@@ -79,7 +93,7 @@ useradd saltapi -s /sbin/nologin
 
 6. Test your salt-api
 ```bash
-[root@miracle salt]# salt-api # execute salt-api directly, and it will hang front-end.
+[root@miracle salt]# salt-api exec
 
 # open another terminal
 [root@miracle salt]# curl http://localhost:9000/login \
@@ -112,7 +126,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'MiracleOps', # Your Database Name
         # 'HOST': '127.0.0.1',
-        'HOST': '192.168.29.134' if 'window' in platform.platform().lower() else '127.0.0.1', # Your MySQL instance host or IP
+        'HOST': '127.0.0.1', # Your MySQL instance host or IP
         'PORT': 3306, # Your MySQL instance port
         'USER': 'root', # Your MySQL instance user
         'PASSWORD': '', # Your MySQL instance password
@@ -141,7 +155,13 @@ QQ group and email are in the below \#Author.
 
 ## Release Notes
 
-### version 1.0.0 (2017.01.22)
+### version 1.1 release (2017.01.25)
+
+1. Complete SSH unit.
+2. Opitmize js.
+3. Fix some bugs.
+
+### version 1.0 release (2017.01.22)
 
 - User
     - User Login

@@ -6,9 +6,13 @@ class DocMOListView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
     template_name = 'doc/_doc.html'
 
 
-class DocDeployExecuteCommandView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
+class DocDeployExecCmdView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
     template_name = 'doc/_doc.html'
 
 
 class DocDeployMinionListView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
+    template_name = 'doc/_doc.html'
+
+
+class DocSSHView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
     template_name = 'doc/_doc.html'

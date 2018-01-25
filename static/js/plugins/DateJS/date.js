@@ -136,7 +136,7 @@
 
 		setTimeout(function() {
 			head.insertBefore(script, head.firstChild);
-		}, 0); // allows return to execute first
+		}, 0); // allows return to exec first
 		
 		return {
 			done: function (cb) {

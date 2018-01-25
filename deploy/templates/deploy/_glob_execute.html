@@ -20,7 +20,7 @@
                     <i class="fa fa-plus"></i>
                 </button>
                 <button class="btn btn-danger btn-sm" id="glob-minus"
-                        onclick='minus(this, "glob")'>>
+                        onclick='minus(this, "glob")'>
                     <i class="fa fa-minus"></i>
                 </button>
             </td>
@@ -45,7 +45,7 @@
                         <i class="ion ion-ios-loop-strong"></i> Reset
                     </button>
                     <button type="button" class="btn btn-danger" id="glob-execute"
-                            onclick='execute(this, "{% url 'api-deploy:execute-cmd' %}", "glob", "glob")'>>
+                            onclick='globExec(this, "{% url 'minion-cmd' %}")'>
                         <i class="fa fa-play"></i> Execute
                     </button>
                 </div>
@@ -60,3 +60,4 @@
         </tbody>
     </table>
 </div>
+

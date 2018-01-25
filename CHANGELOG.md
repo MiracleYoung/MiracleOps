@@ -1,3 +1,11 @@
+## version 1.1 release (2017.01.25)
+
+1. Complete SSH unit.
+2. Opitmize g.js, ssh.js, execute-command.js, salt-minion-list.js.
+3. Fix some bugs.
+4. Improve installation step.
+5. Update Arch.
+
 ## version 1.0.3.2 (2017.01.25)
 
 1. Split deploy.js to ssh.js/execute-command.js/salt-minion-list.js
