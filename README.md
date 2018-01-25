@@ -19,15 +19,15 @@
 
 #### Asset:
 
-![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/mo/idc.png)
+![idc](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/idc.png)
 
-![server](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/mo/server.png)
+![server](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/server.png)
 
-![server-detail](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/mo/server-detail.png)
+![server-detail](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/server-detail.png)
 
 #### Salt Minion
 
-![minion-list](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/mo/minion-list.png)
+![minion-list](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/minion-list.png)
 
 ![execute_command_server](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/execute_command_server.png)
 
