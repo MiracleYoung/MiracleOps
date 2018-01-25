@@ -160,6 +160,8 @@ QQ group and email are in the below \#Author.
 1. Complete SSH unit.
 2. Opitmize js.
 3. Fix some bugs.
+4. Improve installation step.
+5. Update Arch.
 
 ### version 1.0 release (2017.01.22)
 
