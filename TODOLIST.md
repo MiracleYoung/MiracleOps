@@ -1,34 +1,36 @@
 - User
-    - Group
-    - Permission
-    - Reset Password
-    - Redo Register Flow
+    - [] Group
+    - [] Permission
+    - [] Reset Password
+    - [] Redo Register Flow
     
     <img alt="user register flow" src="https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/todolist/user-register-flow.png" width="300">
 - Asset
-    - Export
-    - Import
-    - Bulk Export
-    - Bulk Import
+    - [] Export
+    - [] Import
+    - [] Bulk Export
+    - [] Bulk Import
 - Deploy
     - SSH
-        - Roster
-        - Execute
-        - Install Minion
+        - [x] Roster
+        - [x] Execute
+        - [x] Install Minion
     - State
-    - Pillar
+        - [] Single SLS
+        - [] Multi Level SLS 
+    - [] Pillar
     - Module
-        - Deploy
+        - [] Deploy
     - File
-        - Upload
-        - Download
-        - Rollback
-    - Job
+        - [] Upload
+        - [] Download
+        - [] Rollback
+    - [] Job
 - Monitor
     - DB
-        - MySQL
-        - MongoDB
-        - Redis
+        - [] MySQL
+        - [] MongoDB
+        - [] Redis
     - Web
-        - Nginx
+        - [] Nginx
         
