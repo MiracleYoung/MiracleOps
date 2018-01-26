@@ -11,6 +11,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 import json, os
+from common.str_parse import text2html
 from .models import *
 from .saltapi import SaltAPI
 from asset.models import Server
@@ -82,6 +83,36 @@ def sym_link_roster(pk):
     if os.path.exists(_rosterpath):
         os.remove(_rosterpath)
     os.symlink(_filepath, _rosterpath)
+
+
+def sym_link_sls(pk):
+    try:
+        _sls = Sls.objects.get(pk=pk)
+    except ObjectDoesNotExist:
+        raise Response('sls does not exist', status=status.HTTP_400_BAD_REQUEST)
+    # create symbol link from /media/sls/name/sls, /media/sls/name/top.sls to /etc/salt/sls/, /etc/salt/top.sls
+    # _filepath = sls/biz_username_ts
+    _filepath = _sls.file.path
+    _slsdirpath = '/etc/salt/sls'
+    _topslspath = '/etc/salt/top.sls'
+    if os.path.exists(_slsdirpath):
+        os.remove(_slsdirpath)
+    os.symlink(os.path.join(_filepath, 'sls'), _slsdirpath)
+    if os.path.exists(_topslspath):
+        os.remove(_topslspath)
+    os.symlink(os.path.join(_filepath, 'top.sls'), _topslspath)
+
+
+def from_dir_get_files(path: str):
+    if os.path.isdir(path):
+        for item in os.walk(path):
+            if item[2]:
+                for file in item[2]:
+                    with open(file) as f:
+                        yield os.path.join(item[0], file), f.read()
+    else:
+        with open(path) as f:
+            yield path, f.read()
 
 
 class MinionRefreshApi(APIView):
@@ -162,7 +193,7 @@ class MinionCmdApi(APIView):
 
 
 class RosterApi(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Roster
+    queryset = Roster.objects.all()
 
     def get(self, request, *args, **kwargs):
         _pk = kwargs.get('pk', -1)
@@ -172,7 +203,7 @@ class RosterApi(generics.RetrieveUpdateDestroyAPIView):
             raise Response('roster does not exist', status=status.HTTP_404_NOT_FOUND)
         with open(_roster.file.path, 'r') as f:
             _content = f.read()
-        return Response(_content.replace('\n', '<br>').replace(' ', '&nbsp;' * 2), status=status.HTTP_200_OK)
+        return Response(text2html(_content), status=status.HTTP_200_OK)
 
     def delete(self, request, *args, **kwargs):
         _pk = kwargs.get('pk', -1)
@@ -208,13 +239,32 @@ class InstallMinionApi(APIView):
 
 class SSHCmdApi(APIView):
     def post(self, request, *args, **kwargs):
-        _pk = kwargs.get('roster_id', -1)
+        _pk = request.data.get('roster_id', -1)
         sym_link_roster(_pk)
         _fun = request.data.get('cmds', '')
         _raw_args = request.data.get('args', '')
         _args = _raw_args.split(',')
         _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
         _raw_payload = _saltapi.ssh_execution(tgt='*', fun=_fun, arg=_args)
-        _payload = {_host: _ret['return'].replace('\n', '<br>').replace(' ', '&nbsp;')
-                    for _host, _ret in _raw_payload.items()}
+        _payload = {_host: text2html(_ret['return']) for _host, _ret in _raw_payload.items()}
+        return Response(_payload, status=status.HTTP_200_OK)
+
+
+class SlsApi(APIView):
+
+    def get(self, request, *args, **kwargs):
+        _pk = kwargs.get('pk', -1)
+        try:
+            _sls = Sls.objects.get(pk=_pk)
+        except ObjectDoesNotExist:
+            raise Response('sls does not exist', status=status.HTTP_400_BAD_REQUEST)
+        _payload = ["<h5>{}</h5>{}".format(_filename, text2html(_content)) for _filename, _content in
+                        from_dir_get_files(_sls.file.path)]
+        return Response(_payload, status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        _tgt = request.data.get('tgt', '')
+        _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
+        _raw_payload = _saltapi.remote_execution(tgt=_tgt, fun='state.apply')
+        _payload = {_host: text2html(_ret['return']) for _host, _ret in _raw_payload.items()}
         return Response(_payload, status=status.HTTP_200_OK)

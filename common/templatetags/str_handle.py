@@ -19,5 +19,5 @@ def index(value: list, idx):
     return value[idx]
 
 @register.simple_tag
-def retrieve_roster_name(path: str):
+def retrieve_file_name(path: str):
     return path.split('/')[1]

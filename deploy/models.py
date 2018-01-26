@@ -4,7 +4,8 @@ from django.utils import timezone
 from asset.models import Server
 from user.models.user import User
 
-__all__ = ['SaltMinion', 'Roster']
+__all__ = ['SaltMinion', 'Roster', 'Sls']
+
 
 class SaltMinion(models.Model):
     STATUS_CHOICE = (
@@ -37,7 +38,7 @@ class SaltMinion(models.Model):
     __str__ = __repr__
 
 
-class Roster(models.Model):
+class FileABC(models.Model):
     STATUS_CHOICE = (
         (0, 'Unknow'),
         (1, 'Normal'),
@@ -46,16 +47,30 @@ class Roster(models.Model):
 
     uuid = models.CharField(_('UUID'), max_length=100, blank=True)
     user = models.ForeignKey(User, blank=True, null=True)
-    file = models.FileField(_('File'), upload_to='roster/')
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=0, blank=True)
     create_time = models.DateTimeField(_('Create Time'), auto_now_add=True, null=True, blank=True)
     update_time = models.DateTimeField(_('Update Time'), default=timezone.now(), null=True, blank=True)
 
     class Meta:
-        db_table = 'deploy_roster'
-        ordering = ['file', ]
+        abstract = True
 
     def __repr__(self):
         return self.file.name
 
     __str__ = __repr__
+
+
+class Roster(FileABC):
+    file = models.FileField(_('File'), upload_to='roster/')
+
+    class Meta:
+        db_table = 'deploy_roster'
+        ordering = ['-create_time']
+
+
+class Sls(FileABC):
+    file = models.FileField(_('File'), upload_to='sls/')
+
+    class Meta:
+        db_table = 'deploy_sls'
+        ordering = ['-create_time']

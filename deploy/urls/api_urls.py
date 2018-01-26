@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^minion-cmd/$', api.MinionCmdApi.as_view(), name='minion-cmd'),
     url(r'^roster/(?P<pk>\d+)/$', api.RosterApi.as_view(), name='roster'),
     url(r'^install-minion/(?P<roster_id>\d+)/$', api.InstallMinionApi.as_view(), name='install-minion'),
-    url(r'^ssh-cmd/(?P<roster_id>\d+)/$', api.SSHCmdApi.as_view(), name='ssh-cmd'),
+    url(r'^ssh-cmd/$', api.SSHCmdApi.as_view(), name='ssh-cmd'),
+    url(r'^sls/(?P<pk>\d+)/$', api.SlsApi.as_view(), name='sls'),
 ]

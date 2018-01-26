@@ -60,11 +60,16 @@ function exec(ele, url, data, tab) {
     $.ajax({
         url: url,
         method: 'POST',
-        data: data
+        data: data,
+        beforeSend: function () {
+            $(ele).button('loading')
+        }
     }).done(function (data, status, xhr) {
         feedback(data, status, xhr, tab)
     }).fail(function (err) {
-        console.log(err)
+
+    }).always(function () {
+        $(ele).button('reset')
     })
 }
 

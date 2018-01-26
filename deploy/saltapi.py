@@ -165,14 +165,14 @@ class SaltAPI(object):
         '''
         异步执行远程命令、部署模块
         '''
-        data = {'client': 'local_async', 'tgt': tgt, 'fun': fun, 'arg': arg, 'expr_form': 'list', 'tgt_type': tgt_type}
+        data = {'client': 'local_async', 'tgt': tgt, 'fun': fun, 'arg': arg, 'tgt_type': tgt_type}
         self.token_id()
         content = self.post_request(data)
         jid = content['return'][0]['jid']
         return jid
 
     def remote_localexec(self, tgt, fun, arg):
-        data = {'client': 'local', 'tgt': tgt, 'fun': fun, 'arg': arg, 'expr_form': 'list'}
+        data = {'client': 'local', 'tgt': tgt, 'fun': fun, 'arg': arg, 'tgt_typetgt_type': 'list'}
         self.token_id()
         content = self.post_request(data)
         print(content)

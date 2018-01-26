@@ -9,7 +9,9 @@
     Using SaltStack to do the cluster-management.
     Integrete some others similar system.
     The code is simple, ha.
+    MiracleOps has its own manual in left sidebar, name doc.
     You can use it for free, and if you have any idea or question, please contact me.
+    
     
 ## Architecture
 
@@ -155,7 +157,7 @@ QQ group and email are in the below \#Author.
 
 ## Release Notes
 
-### version 1.1 release (2017.01.25)
+### version 1.1 release (2018.01.25)
 
 1. Complete SSH unit.
 2. Opitmize js.
@@ -163,7 +165,7 @@ QQ group and email are in the below \#Author.
 4. Improve installation step.
 5. Update Arch.
 
-### version 1.0 release (2017.01.22)
+### version 1.0 release (2018git .01.22)
 
 - User
     - User Login
