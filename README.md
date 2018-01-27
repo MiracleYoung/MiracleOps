@@ -37,13 +37,21 @@
 
 #### Salt SSH
 
-![execute_command_glob](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/ssh_roster_list_detail.png)
+![ssh roster list detail](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/ssh_roster_list_detail.png)
 
-![execute_command_glob](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/ssh_roster_upload.png)
+![ssh roster upload](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/ssh_roster_upload.png)
 
-![execute_command_glob](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/ssh_install_minion.png)
+![ssh install minion](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/ssh_install_minion.png)
 
-![execute_command_glob](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/ssh_cmd.png)
+![ssh cmd](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/ssh_cmd.png)
+
+#### Salt SLS
+
+![sls list](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/sls_list.png)
+
+![sls upload](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/sls_upload.png)
+
+![sls upload structure](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/sls_upload_structure.png)
 
 ## Installation
 

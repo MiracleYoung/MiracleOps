@@ -8,9 +8,12 @@
             <div class="x_panel">
                 {% include '_x_title.html' %}
                 <div class="x_content">
-                    {% with prefix=html_prefix %}
-                        {% include prefix %}
-                    {% endwith %}
+                    {% if html_prefix %}
+                        {% with prefix=html_prefix %}
+                            {% include prefix %}
+                        {% endwith %}
+                    {% endif %}
+                    {% block list %}{% endblock %}
                 </div>
             </div>
         </div>

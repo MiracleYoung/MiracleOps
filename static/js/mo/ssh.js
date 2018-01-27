@@ -1,5 +1,12 @@
 // salt_ssh.html
 
+// dropzone
+Dropzone.options.rosterdropzone = {
+    maxFiles: 10,
+    maxFilesize: 5120,
+    acceptedFiles: ".roster"
+}
+
 // button delete roster
 function delRoster(ele, url, fileName) {
     let modalBody = `<p>File Name: ${fileName}</p>`

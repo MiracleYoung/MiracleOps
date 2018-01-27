@@ -5,7 +5,7 @@
         <tbody>
         <tr>
             <td class="col-md-3">
-                {% trans 'Regular' %}
+                {% trans 'Regular Expression' %}
                 {% trans 'Example: "*"' %}
             </td>
             <td class="col-md-9">
@@ -45,7 +45,7 @@
                         <i class="ion ion-ios-loop-strong"></i> Reset
                     </button>
                     <button type="button" class="btn btn-danger" id="glob-execute"
-                            onclick='globExec(this, "{% url 'minion-cmd' %}")'>
+                            onclick='globExec(this, "{% url 'api-deploy:minion-cmd' %}")'>
                         <i class="fa fa-play"></i> Execute
                     </button>
                 </div>

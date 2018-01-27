@@ -2,7 +2,7 @@
 
 ### Roster List
 
-- You can click the roster file name to open the detail motal.
+- You can click the roster file name to open the detail modal.
 - You can delete the row roster, pay attention, this is a update status action, so you can not choose it in *Install Minion* unit and *Server List* unit.
 
 <img src="{% static 'images/doc/mo/ssh_roster_list_detail.png' %}" class="img-responsive">

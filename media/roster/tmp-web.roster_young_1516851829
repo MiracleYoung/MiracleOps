@@ -1,5 +1,0 @@
-web-pro.centos1.com:
-  host: web-pro.centos1.com
-  user: root
-  password: 123
-  sudo: True

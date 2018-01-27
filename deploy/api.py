@@ -10,7 +10,7 @@ from rest_framework import generics, status
 from django.conf import settings
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
-import json, os
+import json, os, shutil
 from common.str_parse import text2html
 from .models import *
 from .saltapi import SaltAPI
@@ -92,15 +92,26 @@ def sym_link_sls(pk):
         raise Response('sls does not exist', status=status.HTTP_400_BAD_REQUEST)
     # create symbol link from /media/sls/name/sls, /media/sls/name/top.sls to /etc/salt/sls/, /etc/salt/top.sls
     # _filepath = sls/biz_username_ts
-    _filepath = _sls.file.path
-    _slsdirpath = '/etc/salt/sls'
-    _topslspath = '/etc/salt/top.sls'
-    if os.path.exists(_slsdirpath):
-        os.remove(_slsdirpath)
-    os.symlink(os.path.join(_filepath, 'sls'), _slsdirpath)
-    if os.path.exists(_topslspath):
-        os.remove(_topslspath)
-    os.symlink(os.path.join(_filepath, 'top.sls'), _topslspath)
+    _filepath = _sls.file.path + '.dir'
+    _slsdir_srcpath = os.path.join(_filepath, 'sls')
+    _slsdir_dstpath = '/etc/salt/sls'
+    _topsls_srcpath = os.path.join(_filepath, 'top.sls')
+    _topsls_dstpath = '/etc/salt/top.sls'
+    # remove /etc/salt/sls, /etc/salt/top.sls
+    shutil.rmtree(_slsdir_dstpath, ignore_errors=True)
+    if os.path.exists(_slsdir_srcpath) and os.path.isdir(_slsdir_srcpath):
+        os.symlink(_slsdir_srcpath, _slsdir_dstpath)
+    else:
+        return False
+    try:
+        os.remove(_topsls_dstpath)
+    except:
+        pass
+    try:
+        os.symlink(_topsls_srcpath, _topsls_dstpath)
+    except:
+        return False
+    return True
 
 
 def from_dir_get_files(path: str):
@@ -108,8 +119,9 @@ def from_dir_get_files(path: str):
         for item in os.walk(path):
             if item[2]:
                 for file in item[2]:
-                    with open(file) as f:
-                        yield os.path.join(item[0], file), f.read()
+                    _filepath = os.path.join(item[0], file)
+                    with open(_filepath) as f:
+                        yield _filepath, f.read()
     else:
         with open(path) as f:
             yield path, f.read()
@@ -250,8 +262,7 @@ class SSHCmdApi(APIView):
         return Response(_payload, status=status.HTTP_200_OK)
 
 
-class SlsApi(APIView):
-
+class SLSApi(APIView):
     def get(self, request, *args, **kwargs):
         _pk = kwargs.get('pk', -1)
         try:
@@ -259,12 +270,28 @@ class SlsApi(APIView):
         except ObjectDoesNotExist:
             raise Response('sls does not exist', status=status.HTTP_400_BAD_REQUEST)
         _payload = ["<h5>{}</h5>{}".format(_filename, text2html(_content)) for _filename, _content in
-                        from_dir_get_files(_sls.file.path)]
+                    from_dir_get_files(_sls.file.path + '.dir')]
         return Response(_payload, status=status.HTTP_200_OK)
 
+    def delete(self, request, *args, **kwargs):
+        _pk = kwargs.get('pk', -1)
+        try:
+            _sls = Sls.objects.get(pk=_pk)
+        except ObjectDoesNotExist:
+            raise Response('sls does not exist', status=status.HTTP_404_NOT_FOUND)
+        _sls.status = 2
+        _sls.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class SLSCmdApi(APIView):
     def post(self, request, *args, **kwargs):
         _tgt = request.data.get('tgt', '')
-        _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
-        _raw_payload = _saltapi.remote_execution(tgt=_tgt, fun='state.apply')
-        _payload = {_host: text2html(_ret['return']) for _host, _ret in _raw_payload.items()}
-        return Response(_payload, status=status.HTTP_200_OK)
+        _sls_id = request.data.get('sls_id', -1)
+        # symlink /etc/salt/top.sls /etc/salt/sls/*
+        if sym_link_sls(_sls_id):
+            _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
+            _payload = _saltapi.remote_execution(tgt=_tgt, fun='state.apply')
+            return Response(_payload, status=status.HTTP_200_OK)
+        else:
+            raise Response('', status=status.HTTP_400_BAD_REQUEST)

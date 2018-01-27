@@ -5,8 +5,13 @@ __pycache__/
 
 # pycharm
 .idea/
+
+# custom
 migrations/
 sh.exe.stackdump
+media/roster/
+media/sls/
+
 
 # C extensions
 *.so

@@ -11,5 +11,5 @@ urlpatterns = [
     url(r'^minion-list/$', views.SaltMinionListView.as_view(), name='minion-list', kwargs={'path1': 'Minion List'}),
     url(r'^exec-cmd/$', views.SaltExecCmdView.as_view(), name='exec-cmd', kwargs={'path1': 'Execute Command'}),
     url(r'^ssh/$', views.SaltSSHView.as_view(), name='ssh', kwargs={'path1': 'SSH'}),
-    url(r'^sls/$', views.SaltSlsView.as_view(), name='sls', kwargs={'path1': 'Sls'}),
+    url(r'^sls/$', views.SaltSLSView.as_view(), name='sls', kwargs={'path1': 'SLS'}),
 ]

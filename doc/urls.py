@@ -14,6 +14,7 @@ mo_url_patterns = [
         url(r'^minion-list/$', views.DocDeployMinionListView.as_view(), name='minion-list'),
     ], namespace='deploy'), kwargs={'path2': 'Deploy'}),
     url(r'^ssh/', views.DocSSHView.as_view(), name='ssh', kwargs={'path2': 'SSH'}),
+    url(r'^sls/', views.DocSLSView.as_view(), name='sls', kwargs={'path2': 'SLS'}),
 ]
 
 urlpatterns = [

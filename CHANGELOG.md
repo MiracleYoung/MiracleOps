@@ -1,76 +1,85 @@
-## version 1.1.1 (2017.01.26)
+## version 1.2 release (2018.01.27)
 
-1. Add SlsApi, SaltSlsView and related templates.
-2. Add Sls model.
+1. Complete *SLSApi*, *SLSCmdApi*, *SaltSLSView*.
+2. Add `sls.js`.
+3. Fix some Bugs.
+4. Add *SLS* doc.
+5. Change *Doc* structure. Update `.html` to `.md` for detail docs.
+
+## version 1.1.1 (2018.01.26)
+
+1. Add *SLSApi*, *SaltSLSView* and related templates.
+2. Add *SLS* model.
 
 ## version 1.1 release (2018.01.25)
 
 1. Complete SSH unit.
-2. Opitmize g.js, ssh.js, execute-command.js, salt-minion-list.js.
+2. Opitmize `g.js`, `ssh.js`, `execute-command.js`, `salt-minion-list.js`.
 3. Fix some bugs.
 4. Improve installation step.
 5. Update Arch.
+6. Add *SSH* doc.
 
 ## version 1.0.3.2 (2018.01.25)
 
-1. Split deploy.js to ssh.js/execute-command.js/salt-minion-list.js
-2. Add InstallMinionApi, SSHCmdApi.
+1. Split deploy.js to `ssh.js`, `execute-command.js`, `salt-minion-list.js`.
+2. Add *InstallMinionApi*, *SSHCmdApi*.
 
 ## version 1.0.3.1 (2018.01.24)
 
-1. Optimize asset.js, ssh.js
-2. Complete RosterApi.
+1. Optimize `asset.js`, `ssh.js`.
+2. Complete *RosterApi*.
 
 ## version 1.0.2 (2018.01.24)
 
-1. Complete Roster List.
-2. Complete Roster Upload.
+1. Complete *Roster List*, *Roster Upload*.
 
 ## version 1.0.1 (2018.01.23)
 
-1. Add Roster model.
-2. Add Deploy SSH.
-3. Opitimize ssh.js call.
+1. Add *Roster* model.
+2. Add *Deploy SSH*.
+3. Opitimize `ssh.js` call.
 
-## version 0.5.2 (2018.01.22)
+## version 1.0 release (2018.01.22)
 
-1. Version 1.0.0 release.
+1. Add *Asset Doc*.
+2. Add *Salt Minion Execution*, *Salt Minion List* doc. 
 
 ## version 0.5.1 (2018.01.22)
 
-1. Add doc app.
+1. Add *doc* app.
 
 ## version 0.4.6 (2018.01.22)
 
-1. Complete deploy app v1.
+1. Complete *deploy* app v1.
 2. Add breadcrumbs nav.
 
 ## version 0.4.5 (2018.01.19)
 
-1. Complete MinionRefreshApi, MinionApi.
+1. Complete *MinionRefreshApi*, *MinionApi().
 2. Optimize `asset:server:list`, `asset:server:detail`, `asset:server:update`.
 3. Remove `asset:server:create` logic, by salt auto initial.
 4. Optimize some layout templates.
 
 ## version 0.4.4 (2018.01.19)
 
-1. Optimize MinionRefreshApi: auto fill out server info and create it.
-2. Complete ssh.js: deleteMinion, acceptMinion.
+1. Optimize *MinionRefreshApi*: auto fill out server info and create it.
+2. Complete `ssh.js`: *deleteMinion*, *acceptMinion*.
 
 ## version 0.4.3 (2018.01.18)
 
-1. Add saltapi.py include general salt api by rest-cherrypy.
-2. MinionImportApi, MinionCheckAliveApi, MinionApi.
-3. salt\_minion\_list.html.
+1. Add `saltapi.py` include general salt api by `rest-cherrypy`.
+2. *MinionImportApi*, *MinionCheckAliveApi*, *MinionApi*.
+3. `salt_minion_list.html`.
 
 ## version 0.4.2 (2018.01.18)
 
-1. Merge entity, server to server.
-2. Add SaltMinion model, SaltMinionView.
+1. Merge *entity*, *server* to server.
+2. Add *SaltMinion* model, *SaltMinionView*.
 
 ## version 0.4.1 (2018.01.16)
 
-1. Add deploy app.
+1. Add *deploy* app.
 2. Update Arch.
 
 ## version 0.3.1 (2018.01.15)
