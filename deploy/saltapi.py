@@ -213,11 +213,11 @@ class SaltAPI(object):
         ret = content['return'][0]
         return ret
 
-    def file_copy(self, tgt, fun, arg1, arg2, expr_form):
+    def file_copy(self, tgt, fun, arg1, arg2, tgt_type):
         '''
         文件上传、备份到minion、项目管理
         '''
-        data = {'client': 'local', 'tgt': tgt, 'fun': fun, 'arg': arg1, 'expr_form': expr_form}
+        data = {'client': 'local', 'tgt': tgt, 'fun': fun, 'arg': arg1, 'tgt_type': tgt_type}
         # 拼接url参数
         data2 = {'arg': arg2}
         arg_add = urllib.parse.urlencode(data2)

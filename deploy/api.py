@@ -127,6 +127,28 @@ def from_dir_get_files(path: str):
             yield path, f.read()
 
 
+# get directory tree
+# def get_tree(path='.', depth=0):
+#     _tree = ''
+#
+#     def inner(path, depth):
+#         nonlocal _tree
+#         if depth == 0:
+#             _tree += 'root:[' + path + ']'
+#
+#         for item in os.listdir(path):
+#             if item not in ('.git', '.idea', 'migrations', '__pycache__'):
+#                 _line = "|\t" * depth + "|--" + item + '\n'
+#                 print(_line)
+#                 _tree += _line
+#                 _newitem = path + '/' + item
+#                 if os.path.isdir(_newitem):
+#                     inner(_newitem, depth + 1)
+#         return _tree
+#
+#     return inner(path, depth)
+
+
 class MinionRefreshApi(APIView):
     def get(self, request, **kwargs):
         _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)

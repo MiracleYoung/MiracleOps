@@ -1,36 +1,59 @@
 - User
-    - [] Group
-    - [] Permission
-    - [] Reset Password
-    - [] Redo Register Flow
-    
+    - [x] Login
+    - [x] Register
+    - [ ] Group
+    - [ ] Permission
+    - [ ] Reset Password
+    - [ ] Redo Register Flow
     <img alt="user register flow" src="https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/todolist/user-register-flow.png" width="300">
+    - [ ] Key/Auth Method
 - Asset
-    - [] Export
-    - [] Import
-    - [] Bulk Export
-    - [] Bulk Import
+    - Server
+        - [x] List
+        - [x] Detail
+        - [x] Update
+        - [x] Auto Discovery
+    - IDC
+        - [x] Create
+        - [x] Update
+        - [x] Detail
+        - [x] Delete
+    - [ ] Export
+    - [ ] Import
+    - [ ] Bulk Export
+    - [ ] Bulk Import
 - Deploy
     - SSH
-        - [x] Roster
+        - Roster
+            - [x] Detail
+            - [x] List
+            - [x] Upload
         - [x] Execute
         - [x] Install Minion
     - State
-        - [] Single SLS
-        - [] Multi Level SLS 
-    - [] Pillar
+        - [ ] Single SLS
+        - [x] Multi Level SLS
+        - [x] Upload SLS
+        - [x] SLS Detail
+    - [ ] Pillar
     - Module
-        - [] Deploy
+        - [ ] Deploy
     - File
-        - [] Upload
-        - [] Download
-        - [] Rollback
-    - [] Job
+        - [ ] Upload(local -> multi-clients)
+        - [ ] Download(client -> local)
+        - [ ] Rollback
+        - Diff
+            - [ ] File(src <-> dst)
+            - [ ] Directory Structure(src <-> dst)
+    - Job
+        - [ ] Job List
+        - [ ] Active Job
+        - [ ] Job Detail
 - Monitor
     - DB
-        - [] MySQL
-        - [] MongoDB
-        - [] Redis
+        - [ ] MySQL
+        - [ ] MongoDB
+        - [ ] Redis
     - Web
-        - [] Nginx
+        - [ ] Nginx
         
