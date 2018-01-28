@@ -98,16 +98,13 @@ def sym_link_sls(pk):
     _topsls_srcpath = os.path.join(_filepath, 'top.sls')
     _topsls_dstpath = '/etc/salt/top.sls'
     # remove /etc/salt/sls, /etc/salt/top.sls
-    shutil.rmtree(_slsdir_dstpath, ignore_errors=True)
-    if os.path.exists(_slsdir_srcpath) and os.path.isdir(_slsdir_srcpath):
-        os.symlink(_slsdir_srcpath, _slsdir_dstpath)
-    else:
-        return False
     try:
+        os.remove(_slsdir_dstpath)
         os.remove(_topsls_dstpath)
     except:
         pass
     try:
+        os.symlink(_slsdir_srcpath, _slsdir_dstpath)
         os.symlink(_topsls_srcpath, _topsls_dstpath)
     except:
         return False
@@ -128,25 +125,25 @@ def from_dir_get_files(path: str):
 
 
 # get directory tree
-# def get_tree(path='.', depth=0):
-#     _tree = ''
-#
-#     def inner(path, depth):
-#         nonlocal _tree
-#         if depth == 0:
-#             _tree += 'root:[' + path + ']'
-#
-#         for item in os.listdir(path):
-#             if item not in ('.git', '.idea', 'migrations', '__pycache__'):
-#                 _line = "|\t" * depth + "|--" + item + '\n'
-#                 print(_line)
-#                 _tree += _line
-#                 _newitem = path + '/' + item
-#                 if os.path.isdir(_newitem):
-#                     inner(_newitem, depth + 1)
-#         return _tree
-#
-#     return inner(path, depth)
+def get_tree(path='.', depth=0):
+    _tree = ''
+
+    def inner(path, depth):
+        nonlocal _tree
+        if depth == 0:
+            _tree += 'root:[' + path + ']'
+
+        for item in os.listdir(path):
+            if item not in ('.git', '.idea', 'migrations', '__pycache__'):
+                _line = "|\t" * depth + "|--" + item + '\n'
+                print(_line)
+                _tree += _line
+                _newitem = path + '/' + item
+                if os.path.isdir(_newitem):
+                    inner(_newitem, depth + 1)
+        return _tree
+
+    return inner(path, depth)
 
 
 class MinionRefreshApi(APIView):
