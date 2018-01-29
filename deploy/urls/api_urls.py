@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^ssh-cmd/$', api.SSHCmdApi.as_view(), name='ssh-cmd'),
     url(r'^sls/(?P<pk>\d+)/$', api.SLSApi.as_view(), name='sls'),
     url(r'^sls/$', api.SLSCmdApi.as_view(), name='sls-cmd'),
+    url(r'^file-upload/$', api.FileUploadApi.as_view(), name='file-upload'),
 ]

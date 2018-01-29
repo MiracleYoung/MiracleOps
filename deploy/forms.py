@@ -7,14 +7,22 @@
 from django import forms
 from .models import *
 
-__all__ = ['RosterForm', 'SlsForm']
+__all__ = ['RosterForm', 'SlsForm', 'FileForm']
+
 
 class RosterForm(forms.ModelForm):
     class Meta:
         model = Roster
         fields = '__all__'
 
+
 class SlsForm(forms.ModelForm):
     class Meta:
         model = Sls
+        fields = '__all__'
+
+
+class FileForm(forms.ModelForm):
+    class Meta:
+        model = File
         fields = '__all__'

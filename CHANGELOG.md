@@ -1,3 +1,7 @@
+## version 1.2.1 (2018.01.29)
+
+1. Add *File Upload* unit.
+
 ## version 1.2 release (2018.01.27)
 
 1. Complete *SLSApi*, *SLSCmdApi*, *SaltSLSView*.
