@@ -11,6 +11,7 @@ migrations/
 sh.exe.stackdump
 media/roster/
 media/sls/
+media/file/
 .DS_Store
 
 

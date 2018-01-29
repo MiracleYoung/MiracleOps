@@ -1,0 +1,116 @@
+<table class="table">
+    <tbody>
+    <tr>
+        <td class="col-md-3">{% trans 'Upload your files' %}</td>
+        <td class="col-md-9">
+            <div id="actions" class="row">
+                <div class="col-md-8">
+                                                    <span class="btn btn-success btn-xs fileinput-button">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                        <span>Add files...</span>
+                                                    </span>
+                    <button type="submit" class="btn btn-primary btn-xs start">
+                        <i class="glyphicon glyphicon-upload"></i>
+                        <span>Start upload</span>
+                    </button>
+                    <button type="reset" class="btn btn-warning btn-xs cancel">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>Cancel upload</span>
+                    </button>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- The global file processing state -->
+                    <span class="fileupload-process">
+                                                        <div id="total-progress"
+                                                             class="progress progress-striped active"
+                                                             role="progressbar"
+                                                             aria-valuemin="0" aria-valuemax="100"
+                                                             aria-valuenow="0">
+                                                            <div class="progress-bar progress-bar-success"
+                                                                 style="width:0%;"
+                                                                 data-dz-uploadprogress></div>
+                                                        </div>
+                                                    </span>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td> {% trans 'Selected Files' %} </td>
+        <td>
+            <div class="table table-striped files" id="previews">
+                <div id="template" class="file-row">
+                    <div class="col-md-3">
+                        <span class="preview"><img data-dz-thumbnail/></span>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="name" data-dz-name></p>
+                        <strong class="error text-danger"
+                                data-dz-errormessage></strong>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="size" data-dz-size></p>
+                        <div class="progress progress-striped active"
+                             role="progressbar"
+                             aria-valuemin="0" aria-valuemax="100"
+                             aria-valuenow="0">
+                            <div class="progress-bar progress-bar-success"
+                                 style="width:0%;"
+                                 data-dz-uploadprogress></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-xs start">
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span>Start</span>
+                        </button>
+                        <button data-dz-remove
+                                class="btn btn-warning btn-xs cancel">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>Cancel</span>
+                        </button>
+                        <button data-dz-remove class="btn btn-danger btn-xs delete">
+                            <i class="glyphicon glyphicon-trash"></i>
+                            <span>Delete</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            {% trans 'Regular Expression' %}<br>
+            {% trans 'Example: "*"' %}
+        </td>
+        <td>
+            <input type="text" class="form-control" name="reg" id="reg"
+                   required="required">
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            {% trans 'Destination Directory' %}<br>
+            {% trans 'Please enter right dir to upload files.' %}
+        </td>
+        <td>
+            <input type="text" name="dst-dir" id="dst-dir" class="form-control"
+                   required="required">
+        </td>
+        <td>
+            <input type="submit" name="upload" id="upload" value="Upload" class="btn btn-info">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <form id="file-dropzone"></form>
+        </td>
+
+    </tr>
+
+    </tbody>
+</table>

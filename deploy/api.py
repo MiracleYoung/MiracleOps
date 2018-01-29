@@ -314,3 +314,10 @@ class SLSCmdApi(APIView):
             return Response(_payload, status=status.HTTP_200_OK)
         else:
             raise Response('', status=status.HTTP_400_BAD_REQUEST)
+
+
+class FileUploadApi(generics.CreateAPIView):
+    queryset = File
+    def post(self, request, *args, **kwargs):
+        self.request.data
+        return Response('', status=status.HTTP_200_OK)
