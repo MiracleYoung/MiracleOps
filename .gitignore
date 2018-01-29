@@ -11,6 +11,7 @@ migrations/
 sh.exe.stackdump
 media/roster/
 media/sls/
+.DS_Store
 
 
 # C extensions
