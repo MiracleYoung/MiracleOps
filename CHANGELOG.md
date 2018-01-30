@@ -1,3 +1,7 @@
+## version 1.2.2 (2018.01.30)
+
+1. Complete *File Upload*.
+
 ## version 1.2.1 (2018.01.29)
 
 1. Add *File Upload* unit.

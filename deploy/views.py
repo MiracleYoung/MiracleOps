@@ -96,22 +96,5 @@ class SaltSLSView(LoginRequiredMixin, FormView):
         return HttpResponseBadRequest()
 
 
-class FileUploadView(LoginRequiredMixin, FormView):
+class FileUploadView(LoginRequiredMixin, TemplateView):
     template_name = 'deploy/file_upload.html'
-    form_class = FileForm
-    success_url = reverse_lazy('deploy:file-upload')
-
-    def form_valid(self, form):
-        if form.is_valid():
-            _u = User.objects.get(pk=self.request.session['uid'])
-            _glob = self.request.POST.get('reg', '')
-            _dstdir = self.request.POST.get('dst-dir', '')
-            _f_name = self.request.FILES['file'].name
-            file_name = '{}_{}_{}'.format(_f_name, _u.username, int(timezone.now().timestamp()))
-            form.instance.file.name = file_name
-            form.instance.uuid = uuid.uuid4()
-            form.instance.user = _u
-            form.instance.status = 1
-            form.save()
-            return super(FileUploadView, self).form_valid(form)
-        return HttpResponseBadRequest()

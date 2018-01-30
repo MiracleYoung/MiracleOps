@@ -317,9 +317,7 @@ class SLSCmdApi(APIView):
             raise Response('', status=status.HTTP_400_BAD_REQUEST)
 
 
-class FileUploadApi(generics.CreateAPIView):
-    queryset = File
-
+class FileUploadApi(APIView):
     def post(self, request, *args, **kwargs):
         _glob = self.request.data.get('glob', '')
         _dst_dir = self.request.data.get('dst_dir', '')
@@ -327,11 +325,18 @@ class FileUploadApi(generics.CreateAPIView):
             _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
             _u = get_user(self.request)
             _dir = '{}.{}'.format(_u.username, int(timezone.now().timestamp()))
-            _srcdir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media/file', _dir)
+            # need to add a symbolic link from media to /etc/salt
+            _srcdir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media/file/', _dir)
+            _saltdir = 'salt://media/file/' + _dir
             os.makedirs(_srcdir)
             for k, v in self.request.FILES.items():
-                v.name = os.path.join(_srcdir, v.name)
-                File.objects.create(file=v, uuid=uuid.uuid4(), user=_u, status=1)
-            _payload = _saltapi.remote_execution(tgt=_glob, fun='cp.get_file', arg=_dst_dir)
+                _f = File(file=v, uuid=uuid.uuid4(), user=_u, status=1)
+                _f.save()
+                _origin_fpath = _f.file.path
+                _f.file.name = _f.file.name.replace('file/', 'file/{}/'.format(_dir))
+                _f.save()
+                shutil.move(_origin_fpath, _srcdir)
+                _saltapi.remote_execution(arg=['{}/{}'.format(_saltdir, v.name), '{}/{}'.format(_dst_dir, v.name)],
+                                          tgt=_glob, fun='cp.get_file')
             return Response('', status=status.HTTP_200_OK)
-        raise Response('glob and destination directory', status=status.HTTP_400_BAD_REQUEST)
+        return Response('Less glob and destination directory.', status=status.HTTP_400_BAD_REQUEST)

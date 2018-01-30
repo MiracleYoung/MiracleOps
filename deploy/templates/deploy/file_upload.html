@@ -13,56 +13,32 @@
             {% include '_x_title.html' %}
 
             <div class="x_content">
-                <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                        <li role="presentation" class="active">
-                            <a href="#tab_sls_upload" id="file-upload-tab" role="tab" data-toggle="tab"
-                               aria-expanded="true">
-                                File Upload
-                            </a>
-                        </li>
-                    </ul>
-                    <div id="myTabContent" class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade active in" id="tab_sls_upload"
-                             aria-labelledby="file-upload-tab">
-                            {% if form.errors %}
-                                <div class="alert alert-danger">
-                                    {% for field, error in form.errors.items %}
-                                        {{ field }}: {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                            <div class="form-horizontal">
-                                <div class="form-group">
 
-                                    <div class="col-md-3">
-                                        {% trans 'Regular Expression' %}<br>
-                                        {% trans 'Example: "*"' %}
-                                    </div>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" name="reg" id="reg"
-                                               required="required">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-3">
-                                        {% trans 'Destination Directory' %}<br>
-                                        {% trans 'Please enter right dir to upload files.' %}
-                                    </div>
-                                    <div class="col-md-8">
-                                        <input type="text" name="dst-dir" id="dst-dir" class="form-control"
-                                               required="required">
-                                    </div>
-                                    <div>
-                                        <input type="submit" name="upload" id="upload" value="Upload"
-                                               class="btn btn-info">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div id="file-dropzone" class="dropzone"></div>
-                                </div>
-                            </div>
+                <div class="form-horizontal">
+                    <div class="form-group">
+
+                        <div class="col-md-3">
+                            {% trans 'Regular Expression' %}<br>
+                            {% trans 'Example: "*"' %}
                         </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="reg" id="reg" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            {% trans 'Destination Directory' %}<br>
+                            {% trans 'Please enter right dir to upload files.' %}
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="dst-dir" id="dst-dir" class="form-control" required="required">
+                        </div>
+                        <div>
+                            <input type="submit" name="upload" id="upload" value="Upload" class="btn btn-info">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div id="file-dropzone" class="dropzone"></div>
                     </div>
                 </div>
             </div>
