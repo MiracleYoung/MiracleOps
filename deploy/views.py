@@ -44,7 +44,7 @@ class SaltSSHView(LoginRequiredMixin, FormView):
         if form.is_valid():
             _u = User.objects.get(pk=self.request.session['uid'])
             _f_name = self.request.FILES['file'].name
-            if os.path.splitext(_f_name) not in ('.roster'):
+            if os.path.splitext(_f_name)[1] not in ('.roster'):
                 return HttpResponseBadRequest('file must be like *.roster')
             file_name = '{}_{}_{}'.format(_f_name, _u.username, int(timezone.now().timestamp()))
             form.instance.file.name = file_name

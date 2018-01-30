@@ -1,3 +1,9 @@
+## version 1.3 release (2018.01.31)
+
+1. Optimize *File Upload*.
+2. Fix *SSH* bugs.
+3. Add *File Upload* doc.
+
 ## version 1.2.2 (2018.01.30)
 
 1. Complete *File Upload*.

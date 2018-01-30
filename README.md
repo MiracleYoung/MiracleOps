@@ -76,6 +76,8 @@ QQ group and email are in the below [#Author](https://github.com/MiracleYoung/Mi
         - SLS List/detail
         - Upload sls
         - Apply sls
+    - File
+        - Upload
     
 ## Change Logs
 

@@ -39,7 +39,7 @@
     - Module
         - [ ] Deploy
     - File
-        - [ ] Upload(local -> multi-clients)
+        - [x] Upload(local -> multi-clients)
         - [ ] Download(client -> local)
         - [ ] Rollback
         - Diff
@@ -49,6 +49,9 @@
         - [ ] Job List
         - [ ] Active Job
         - [ ] Job Detail
+- Web Terminal
+    - [ ] One
+    - [ ] Multi-Server
 - Monitor
     - DB
         - [ ] MySQL

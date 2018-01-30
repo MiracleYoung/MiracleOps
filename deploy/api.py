@@ -278,7 +278,9 @@ class SSHCmdApi(APIView):
         _args = _raw_args.split(',')
         _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
         _raw_payload = _saltapi.ssh_execution(tgt='*', fun=_fun, arg=_args)
-        _payload = {_host: text2html(_ret['return']) for _host, _ret in _raw_payload.items()}
+        _payload = {}
+        for _host, _ret in _raw_payload.items():
+            _payload[_host] = _ret if _ret.get('stderr') else text2html(_ret['return'])
         return Response(_payload, status=status.HTTP_200_OK)
 
 
@@ -329,6 +331,8 @@ class FileUploadApi(APIView):
             _srcdir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media/file/', _dir)
             _saltdir = 'salt://media/file/' + _dir
             os.makedirs(_srcdir)
+            if not os.path.exists('/etc/salt/media'):
+                os.symlink(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media'), '/etc/salt/media')
             for k, v in self.request.FILES.items():
                 _f = File(file=v, uuid=uuid.uuid4(), user=_u, status=1)
                 _f.save()
