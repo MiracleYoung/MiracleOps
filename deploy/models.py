@@ -51,6 +51,7 @@ class FileABC(models.Model):
     create_time = models.DateTimeField(_('Create Time'), auto_now_add=True, null=True, blank=True)
     update_time = models.DateTimeField(_('Update Time'), default=timezone.now(), null=True, blank=True)
 
+
     class Meta:
         abstract = True
 
@@ -77,7 +78,7 @@ class Sls(FileABC):
 
 
 class File(FileABC):
-    file = models.FileField(_('File'), upload_to='file/')
+    file = models.FileField(_('File'), upload_to='file')
 
     class Meta:
         db_table = 'deploy_file'

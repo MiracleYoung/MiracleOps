@@ -79,7 +79,7 @@ class SaltSLSView(LoginRequiredMixin, FormView):
             form.instance.status = 1
             form.save()
 
-            _file = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media/sls/{}'.format(file_name))
+            _file = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media/sls/', file_name)
             _dir = _file + '.dir'
             # whatever upload file type, mkdir <file>.dir, all in it
             if not (os.path.exists(_dir) and os.path.isdir(_dir)):

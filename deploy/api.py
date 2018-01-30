@@ -10,11 +10,12 @@ from rest_framework import generics, status
 from django.conf import settings
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
-import json, os, shutil
+import json, os, shutil, uuid
 from common.str_parse import text2html
 from .models import *
 from .saltapi import SaltAPI
 from asset.models import Server
+from user.authentication import get_user
 
 SALT_API_URL = settings.SALT_API_URL
 SALT_API_USERNAME = settings.SALT_API_USERNAME
@@ -318,6 +319,19 @@ class SLSCmdApi(APIView):
 
 class FileUploadApi(generics.CreateAPIView):
     queryset = File
+
     def post(self, request, *args, **kwargs):
-        self.request.data
-        return Response('', status=status.HTTP_200_OK)
+        _glob = self.request.data.get('glob', '')
+        _dst_dir = self.request.data.get('dst_dir', '')
+        if _glob and _dst_dir:
+            _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
+            _u = get_user(self.request)
+            _dir = '{}.{}'.format(_u.username, int(timezone.now().timestamp()))
+            _srcdir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media/file', _dir)
+            os.makedirs(_srcdir)
+            for k, v in self.request.FILES.items():
+                v.name = os.path.join(_srcdir, v.name)
+                File.objects.create(file=v, uuid=uuid.uuid4(), user=_u, status=1)
+            _payload = _saltapi.remote_execution(tgt=_glob, fun='cp.get_file', arg=_dst_dir)
+            return Response('', status=status.HTTP_200_OK)
+        raise Response('glob and destination directory', status=status.HTTP_400_BAD_REQUEST)
