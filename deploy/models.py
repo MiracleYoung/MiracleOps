@@ -4,7 +4,7 @@ from django.utils import timezone
 from asset.models import Server
 from user.models.user import User
 
-__all__ = ['SaltMinion', 'Roster', 'Sls']
+__all__ = ['SaltMinion', 'Roster', 'Sls', 'File']
 
 
 class SaltMinion(models.Model):
@@ -73,4 +73,12 @@ class Sls(FileABC):
 
     class Meta:
         db_table = 'deploy_sls'
+        ordering = ['-create_time']
+
+
+class File(FileABC):
+    file = models.FileField(_('File'), upload_to='file/')
+
+    class Meta:
+        db_table = 'deploy_file'
         ordering = ['-create_time']

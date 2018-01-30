@@ -20,3 +20,7 @@ class DocSSHView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
 
 class DocSLSView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
     template_name = 'doc/_doc.html'
+
+
+class DocFileUploadView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
+    template_name = 'doc/_doc.html'

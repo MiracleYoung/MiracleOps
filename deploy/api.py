@@ -10,11 +10,12 @@ from rest_framework import generics, status
 from django.conf import settings
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
-import json, os, shutil
+import json, os, shutil, uuid
 from common.str_parse import text2html
 from .models import *
 from .saltapi import SaltAPI
 from asset.models import Server
+from user.authentication import get_user
 
 SALT_API_URL = settings.SALT_API_URL
 SALT_API_USERNAME = settings.SALT_API_USERNAME
@@ -277,7 +278,9 @@ class SSHCmdApi(APIView):
         _args = _raw_args.split(',')
         _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
         _raw_payload = _saltapi.ssh_execution(tgt='*', fun=_fun, arg=_args)
-        _payload = {_host: text2html(_ret['return']) for _host, _ret in _raw_payload.items()}
+        _payload = {}
+        for _host, _ret in _raw_payload.items():
+            _payload[_host] = _ret if _ret.get('stderr') else text2html(_ret['return'])
         return Response(_payload, status=status.HTTP_200_OK)
 
 
@@ -314,3 +317,30 @@ class SLSCmdApi(APIView):
             return Response(_payload, status=status.HTTP_200_OK)
         else:
             raise Response('', status=status.HTTP_400_BAD_REQUEST)
+
+
+class FileUploadApi(APIView):
+    def post(self, request, *args, **kwargs):
+        _glob = self.request.data.get('glob', '')
+        _dst_dir = self.request.data.get('dst_dir', '')
+        if _glob and _dst_dir:
+            _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
+            _u = get_user(self.request)
+            _dir = '{}.{}'.format(_u.username, int(timezone.now().timestamp()))
+            # need to add a symbolic link from media to /etc/salt
+            _srcdir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media/file/', _dir)
+            _saltdir = 'salt://media/file/' + _dir
+            os.makedirs(_srcdir)
+            if not os.path.exists('/etc/salt/media'):
+                os.symlink(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media'), '/etc/salt/media')
+            for k, v in self.request.FILES.items():
+                _f = File(file=v, uuid=uuid.uuid4(), user=_u, status=1)
+                _f.save()
+                _origin_fpath = _f.file.path
+                _f.file.name = _f.file.name.replace('file/', 'file/{}/'.format(_dir))
+                _f.save()
+                shutil.move(_origin_fpath, _srcdir)
+                _saltapi.remote_execution(arg=['{}/{}'.format(_saltdir, v.name), '{}/{}'.format(_dst_dir, v.name)],
+                                          tgt=_glob, fun='cp.get_file')
+            return Response('', status=status.HTTP_200_OK)
+        return Response('Less glob and destination directory.', status=status.HTTP_400_BAD_REQUEST)

@@ -44,7 +44,7 @@ class SaltSSHView(LoginRequiredMixin, FormView):
         if form.is_valid():
             _u = User.objects.get(pk=self.request.session['uid'])
             _f_name = self.request.FILES['file'].name
-            if os.path.splitext(_f_name) not in ('.roster'):
+            if os.path.splitext(_f_name)[1] not in ('.roster'):
                 return HttpResponseBadRequest('file must be like *.roster')
             file_name = '{}_{}_{}'.format(_f_name, _u.username, int(timezone.now().timestamp()))
             form.instance.file.name = file_name
@@ -79,7 +79,7 @@ class SaltSLSView(LoginRequiredMixin, FormView):
             form.instance.status = 1
             form.save()
 
-            _file = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media/sls/{}'.format(file_name))
+            _file = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media/sls/', file_name)
             _dir = _file + '.dir'
             # whatever upload file type, mkdir <file>.dir, all in it
             if not (os.path.exists(_dir) and os.path.isdir(_dir)):
@@ -94,3 +94,7 @@ class SaltSLSView(LoginRequiredMixin, FormView):
                 return HttpResponseBadRequest()
             return super(SaltSLSView, self).form_valid(form)
         return HttpResponseBadRequest()
+
+
+class FileUploadView(LoginRequiredMixin, TemplateView):
+    template_name = 'deploy/file_upload.html'
