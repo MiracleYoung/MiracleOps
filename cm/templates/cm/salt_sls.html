@@ -53,7 +53,7 @@
                                         <td>
                                             <a id="sls-{{ sls.id }}" class="btn" data-toggle="modal"
                                                data-target="#modal-detail"
-                                               onclick='checkDetail(this, "{% url 'api-deploy:sls' sls.id %}")'>
+                                               onclick='checkDetail(this, "{% url 'api-cm:sls' sls.id %}")'>
                                                 {% retrieve_file_name sls.file.name %}
                                             </a>
                                         </td>
@@ -68,7 +68,7 @@
                                         <td>
                                             <button class="btn btn-danger btn-sm" id="del-{{ sls.id }}"
                                                     data-toggle="modal" data-target="#modal-del"
-                                                    onclick='delSls(this, "{% url 'api-deploy:sls' sls.id %}","{% retrieve_file_name sls.file.name %}")'>
+                                                    onclick='delSls(this, "{% url 'api-cm:sls' sls.id %}","{% retrieve_file_name sls.file.name %}")'>
                                                 <i class="fa fa-trash"></i>
                                                 {% trans 'Delete' %}
                                             </button>
@@ -89,7 +89,7 @@
                                 </div>
                             {% endif %}
 
-                            <form action="{% url 'deploy:sls' %}" class="dropzone" id="slsdropzone" method="post"
+                            <form action="{% url 'cm:sls' %}" class="dropzone" id="slsdropzone" method="post"
                                   enctype="multipart/form-data">
                                 {% csrf_token %}
                             </form>
@@ -129,7 +129,7 @@
                                             </button>
                                             <button type="button" class="btn btn-danger" id="sls-execute"
                                                     data-loading-text="<i class='fa fa-spinner fa-spin'></i> Executing"
-                                                    onclick='slsExec(this, "{% url 'api-deploy:sls-cmd' %}")'>
+                                                    onclick='slsExec(this, "{% url 'api-cm:sls-cmd' %}")'>
                                                 <i class="fa fa-play"></i> Execute
                                             </button>
                                         </div>

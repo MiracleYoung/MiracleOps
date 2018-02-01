@@ -13,7 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import json, os, shutil, uuid
 from common.str_parse import text2html
 from .models import *
-from .saltapi import SaltAPI
+from common.saltapi import SaltAPI
 from asset.models import Server
 from user.authentication import get_user
 
@@ -81,8 +81,10 @@ def sym_link_roster(pk):
     # create symbol link from roster to /etc/salt/roster
     _filepath = _roster.file.path
     _rosterpath = '/etc/salt/roster'
-    if os.path.exists(_rosterpath):
+    try:
         os.remove(_rosterpath)
+    except:
+        pass
     os.symlink(_filepath, _rosterpath)
 
 

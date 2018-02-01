@@ -1,31 +1,34 @@
 {% load i18n static %}
 
-<div role="tabpanel" class="tab-pane fade" id="tab_glob" aria-labelledby="glob-tab">
+<div role="tabpanel" class="tab-pane fade" id="tab_server"
+     aria-labelledby="server-tab">
     <table class="table">
         <tbody>
         <tr>
-            <td class="col-md-3">
-                {% trans 'Regular Expression' %}
-                {% trans 'Example: "*"' %}
-            </td>
+            <td class="col-md-3">{% trans 'Server' %}</td>
             <td class="col-md-9">
-                <input type="text" class="form-control" id="reg">
+                <select multiple="multiple" class="form-control" id="server">
+                    {% for minion in minion_list %}
+                        <option>{{ minion }}</option>
+                    {% endfor %}
+                </select>
+
             </td>
         </tr>
         <tr>
             <td>
                 {% trans 'Command' %}
-                <button class="btn btn-success btn-sm" id="glob-add"
-                        onclick='add(this, "glob")'>
+                <button class="btn btn-success btn-sm" id="server-add"
+                        onclick='add(this, "server")'>
                     <i class="fa fa-plus"></i>
                 </button>
-                <button class="btn btn-danger btn-sm" id="glob-minus"
-                        onclick='minus(this, "glob")'>
+                <button class="btn btn-danger btn-sm" id="server-minus"
+                        onclick='minus(this, "server")'>
                     <i class="fa fa-minus"></i>
                 </button>
             </td>
-            <td id="glob-cmd" data-count="1">
-                <input type="text" class="form-group form-control" id="glob-cmd-1">
+            <td id="server-cmd" data-count="1">
+                <input type="text" class="form-group form-control" id="server-cmd-1">
             </td>
         </tr>
         <tr>
@@ -33,8 +36,8 @@
                 {% trans 'Arguments (If no args, let it empty)' %}
                 {% trans '**Please take care the order' %}
             </td>
-            <td id="glob-arg">
-                <input type="text" class="form-group form-control" id="glob-arg-1">
+            <td id="server-arg">
+                <input type="text" class="form-group form-control" id="server-arg-1">
             </td>
         </tr>
         <tr>
@@ -44,8 +47,8 @@
                     <button type="reset" class="btn btn-info">
                         <i class="ion ion-ios-loop-strong"></i> Reset
                     </button>
-                    <button type="button" class="btn btn-danger" id="glob-execute"
-                            onclick='globExec(this, "{% url 'api-deploy:minion-cmd' %}")'>
+                    <button type="button" class="btn btn-danger" id="server-execute"
+                            onclick='serverExec(this, "{% url 'api-cm:minion-cmd' %}")'>
                         <i class="fa fa-play"></i> Execute
                     </button>
                 </div>
@@ -53,11 +56,10 @@
         </tr>
         <tr>
             <td>{% trans 'Feedback' %}</td>
-            <td id="glob-feedback">
+            <td id="server-feedback">
 
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-

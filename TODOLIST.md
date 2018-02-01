@@ -22,7 +22,7 @@
     - [ ] Import
     - [ ] Bulk Export
     - [ ] Bulk Import
-- Deploy
+- Cluster Management
     - SSH
         - Roster
             - [x] Detail
@@ -38,17 +38,29 @@
     - [ ] Pillar
     - Module
         - [ ] Deploy
-    - File
-        - [x] Upload(local -> multi-clients)
-        - [ ] Download(client -> local)
-        - [ ] Rollback
-        - Diff
-            - [ ] File(src <-> dst)
-            - [ ] Directory Structure(src <-> dst)
     - Job
         - [ ] Job List
         - [ ] Active Job
-        - [ ] Job Detail
+        - [ ] Job Detail    
+- File
+    - [x] Upload(local -> multi-clients)
+    - [ ] Download(client -> local)
+    - [ ] Rollback
+    - Diff
+        - [ ] File(src <-> dst)
+        - [ ] Directory Structure(src <-> dst)
+- Deploy
+    - DB
+        - [ ] MySQL
+        - [ ] MongoDB
+        - [ ] Redis
+    - Web
+        - [ ] Nginx
+        - [ ] Apache
+        - [ ] Tomcat
+    - Middleware
+        - [ ] MyCat
+    - Docker
 - Web Terminal
     - [ ] One
     - [ ] Multi-Server

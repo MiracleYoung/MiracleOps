@@ -23,12 +23,14 @@ urlpatterns = [
     url(r'^$', IndexView.as_view(), name='index', kwargs={'app': 'Dashboard'}),
     url(r'^user/', include('user.urls.views_urls', namespace='user')),
     url(r'^asset/', include('asset.urls.views_urls', namespace='asset'), kwargs={'app': 'Asset'}),
-    url(r'^deploy/', include('deploy.urls.views_urls', namespace='deploy'), kwargs={'app': 'Deploy'}),
+    url(r'^cm/', include('cm.urls.views_urls', namespace='cm'), kwargs={'app': 'Cluster Management'}),
+    url(r'^cm_bak/', include('cm.urls.views_urls', namespace='cm_bak'), kwargs={'app': 'Cluster Management'}),
+# url(r'^cm/', include('cm.urls.views_urls', namespace='cm'), kwargs={'app': 'Deploy'}),
     url(r'^doc/', include('doc.urls', namespace='doc'), kwargs={'app': 'Doc'}),
 
     url(r'^api/user/', include('user.urls.api_urls', namespace='api-user')),
     url(r'^api/asset/', include('asset.urls.api_urls', namespace='api-asset')),
-    url(r'^api/deploy/', include('deploy.urls.api_urls', namespace='api-deploy')),
+    url(r'^api/cm/', include('cm.urls.api_urls', namespace='api-cm')),
 
     url(r'test/long/url/', TestLongUrlView.as_view(), name='test-long-url'),
 

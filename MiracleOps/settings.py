@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'common.apps.CommonConfig',
     'user.apps.UserConfig',
     'asset.apps.AssetConfig',
-    'deploy.apps.DeployConfig',
     'doc.apps.DocConfig',
+    'cm.apps.CmConfig',
+    'terminal.apps.TerminalConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
