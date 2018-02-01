@@ -1,0 +1,65 @@
+{% load i18n static %}
+
+<div role="tabpanel" class="tab-pane fade" id="tab_server"
+     aria-labelledby="server-tab">
+    <table class="table">
+        <tbody>
+        <tr>
+            <td class="col-md-3">{% trans 'Server' %}</td>
+            <td class="col-md-9">
+                <select multiple="multiple" class="form-control" id="server">
+                    {% for minion in minion_list %}
+                        <option>{{ minion }}</option>
+                    {% endfor %}
+                </select>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% trans 'Command' %}
+                <button class="btn btn-success btn-sm" id="server-add"
+                        onclick='add(this, "server")'>
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button class="btn btn-danger btn-sm" id="server-minus"
+                        onclick='minus(this, "server")'>
+                    <i class="fa fa-minus"></i>
+                </button>
+            </td>
+            <td id="server-cmd" data-count="1">
+                <input type="text" class="form-group form-control" id="server-cmd-1">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% trans 'Arguments (If no args, let it empty)' %}
+                {% trans '**Please take care the order' %}
+            </td>
+            <td id="server-arg">
+                <input type="text" class="form-group form-control" id="server-arg-1">
+            </td>
+        </tr>
+        <tr>
+            <td>{% trans 'Action' %}</td>
+            <td>
+                <div class="form-group">
+                    <button type="reset" class="btn btn-info">
+                        <i class="ion ion-ios-loop-strong"></i> Reset
+                    </button>
+                    <button type="button" class="btn btn-danger" id="server-execute"
+                            onclick='serverExec(this, "{% url 'api-cm:minion-cmd' %}")'>
+                        <i class="fa fa-play"></i> Execute
+                    </button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>{% trans 'Feedback' %}</td>
+            <td id="server-feedback">
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

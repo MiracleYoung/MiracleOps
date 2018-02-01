@@ -13,7 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import json, os, shutil, uuid
 from common.str_parse import text2html
 from .models import *
-from .saltapi import SaltAPI
+from common.saltapi import SaltAPI
 from asset.models import Server
 from user.authentication import get_user
 

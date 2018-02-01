@@ -10,7 +10,7 @@ from user.models.user import User
 
 
 class SaltMinionListView(LoginRequiredMixin, TemplateView):
-    template_name = 'deploy/salt_minion_list.html'
+    template_name = 'cm/salt_minion_list.html'
 
     def get_context_data(self, **kwargs):
         _minion_accept = SaltMinion.objects.filter(status=1)
@@ -23,7 +23,7 @@ class SaltMinionListView(LoginRequiredMixin, TemplateView):
 
 
 class SaltExecCmdView(LoginRequiredMixin, ListView):
-    template_name = 'deploy/execute_command.html'
+    template_name = 'cm/execute_command.html'
     context_object_name = 'minion_list'
 
     def get_queryset(self):
@@ -31,9 +31,9 @@ class SaltExecCmdView(LoginRequiredMixin, ListView):
 
 
 class SaltSSHView(LoginRequiredMixin, FormView):
-    template_name = 'deploy/salt_ssh.html'
+    template_name = 'cm/salt_ssh.html'
     form_class = RosterForm
-    success_url = reverse_lazy('deploy:ssh')
+    success_url = reverse_lazy('cm:ssh')
 
     def get_context_data(self, **kwargs):
         _ctx = super(SaltSSHView, self).get_context_data(**kwargs)
@@ -57,9 +57,9 @@ class SaltSSHView(LoginRequiredMixin, FormView):
 
 
 class SaltSLSView(LoginRequiredMixin, FormView):
-    template_name = 'deploy/salt_sls.html'
+    template_name = 'cm/salt_sls.html'
     form_class = SlsForm
-    success_url = reverse_lazy('deploy:sls')
+    success_url = reverse_lazy('cm:sls')
 
     def get_context_data(self, **kwargs):
         _ctx = super(SaltSLSView, self).get_context_data(**kwargs)
@@ -97,4 +97,4 @@ class SaltSLSView(LoginRequiredMixin, FormView):
 
 
 class FileUploadView(LoginRequiredMixin, TemplateView):
-    template_name = 'deploy/file_upload.html'
+    template_name = 'cm/file_upload.html'

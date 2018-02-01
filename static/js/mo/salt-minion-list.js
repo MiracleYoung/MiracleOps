@@ -46,3 +46,9 @@ function acceptMinion() {
         $(this).button('reset')
     })
 }
+
+// delete minion
+function delMinion(ele, url, hostname) {
+    let modalBody = `<p>Hostname: ${hostname}</p>`
+    del(ele, url, modalBody)
+}

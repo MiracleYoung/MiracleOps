@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load i18n static bootstrap3 %}
+{% load str_handle url %}
+
+{% block css %}
+    <link href="{% static 'css/plugins/nprogress/nprogress.css' %}" rel="stylesheet">
+    <link href="{% static 'css/plugins/dropzone/dropzone.min.css' %}" rel="stylesheet">
+{% endblock css %}
+
+{% block main %}
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            {% include '_x_title.html' %}
+
+            <div class="x_content">
+                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#tab_sls_list" id="sls-list-tab" role="tab" data-toggle="tab"
+                               aria-expanded="true">
+                                SLS List
+                            </a>
+                        </li>
+                        <li role="presentation" class="">
+                            <a href="#tab_sls_upload" id="sls-upload-tab" role="tab" data-toggle="tab"
+                               aria-expanded="true">
+                                SLS Upload
+                            </a>
+                        </li>
+                        <li role="presentation" class="">
+                            <a href="#tab_sls_exec" id="sls-exec-tab" role="tab" data-toggle="tab"
+                               aria-expanded="true">
+                                SLS Execution </a>
+                        </li>
+                    </ul>
+
+                    <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="tab_sls_list"
+                             aria-labelledby="sls-list-tab">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>{% trans 'File' %}</th>
+                                    <th>{% trans 'Create Time' %}</th>
+                                    <th>{% trans 'Status' %}</th>
+                                    <th>{% trans 'Action' %}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for sls in slses %}
+                                    <tr>
+                                        <td>
+                                            <a id="sls-{{ sls.id }}" class="btn" data-toggle="modal"
+                                               data-target="#modal-detail"
+                                               onclick='checkDetail(this, "{% url 'api-deploy:sls' sls.id %}")'>
+                                                {% retrieve_file_name sls.file.name %}
+                                            </a>
+                                        </td>
+                                        <td>{{ sls.create_time }}</td>
+                                        <td>
+                                            {% if sls.status == 1 %}
+                                                Normal
+                                            {% elif sls.status == 2 %}
+                                                Deleted
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" id="del-{{ sls.id }}"
+                                                    data-toggle="modal" data-target="#modal-del"
+                                                    onclick='delSls(this, "{% url 'api-deploy:sls' sls.id %}","{% retrieve_file_name sls.file.name %}")'>
+                                                <i class="fa fa-trash"></i>
+                                                {% trans 'Delete' %}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane fade" id="tab_sls_upload"
+                             aria-labelledby="sls-upload-tab">
+                            {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    {% for field, error in form.errors.items %}
+                                        {{ field }}: {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <form action="{% url 'deploy:sls' %}" class="dropzone" id="slsdropzone" method="post"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+                            </form>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane fade" id="tab_sls_exec"
+                             aria-labelledby="sls-exec-tab">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td class="col-md-3">{% trans 'SLS' %}</td>
+                                    <td class="col-md-9">
+                                        <select class="form-control" id="sls-exec-list">
+                                            {% for sls in slses %}
+                                                {% if sls.status == 1 %}
+                                                    <option value="{{ sls.id }}">{% retrieve_file_name sls.file.name %}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-3">
+                                        {% trans 'Regular Expression' %}
+                                        {% trans 'Example: "*"' %}
+                                    </td>
+                                    <td class="col-md-9">
+                                        <input type="text" class="form-control" id="reg">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Action' %}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <button type="reset" class="btn btn-info">
+                                                <i class="ion ion-ios-loop-strong"></i> Reset
+                                            </button>
+                                            <button type="button" class="btn btn-danger" id="sls-execute"
+                                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Executing"
+                                                    onclick='slsExec(this, "{% url 'api-deploy:sls-cmd' %}")'>
+                                                <i class="fa fa-play"></i> Execute
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Feedback' %}</td>
+                                    <td id="sls-feedback">
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {% include '_modal_detail.html' %}
+    {% include '_modal_delete.html' %}
+{% endblock main %}
+
+{% block js %}
+    <script src="{% static 'js/plugins/nprogress/nprogress.js' %}"></script>
+    <script src="{% static 'js/plugins/dropzone/dropzone.min.js' %}"></script>
+    <script src="{% static 'js/mo/sls.js' %}"></script>
+{% endblock js %}

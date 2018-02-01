@@ -14,11 +14,11 @@
     <div class="col-md-12 col-sm-12 col-xs-12 ">
         <div class="x_panel">
             <button id="btn-refresh-minions" class="btn btn-info"
-                    onclick='importMinions(this, "{% url 'api-deploy:minion-refresh' %}")'
+                    onclick='importMinions(this, "{% url 'api-cm:minion-refresh' %}")'
                     data-loading-text="<i class='fa fa-spinner fa-spin'></i> Refreshing">{% trans 'Refresh Salt Minions' %}
             </button>
             <button id="btn-check-minions-health" class="btn btn-info"
-                    onclick='refreshMinionsHealth(this, "{% url 'api-deploy:minion-check-alive' %}")'
+                    onclick='refreshMinionsHealth(this, "{% url 'api-cm:minion-check-alive' %}")'
                     data-loading-text="<i class='fa fa-spinner fa-spin'></i> Checking">{% trans 'Check Salt Minions Health' %}
             </button>
         </div>
@@ -42,7 +42,7 @@
                     <tbody>
                     {% for minion in minion_accept %}
                         <tr>
-                            <input type="hidden" value="{% url 'api-deploy:minion' minion.id %}"/>
+                            <input type="hidden" value="{% url 'api-cm:minion' minion.id %}"/>
                             <td>
                                 <a href="{% url 'asset:server:detail' minion.server_id %}">
                                     {{ minion.hostname }}
@@ -52,7 +52,8 @@
                             <td>
                                 <a class="btn btn-danger btn-sm" id="a-delete-minion"
                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Deleting"
-                                   data-toggle="modal" data-target="#delete-danger">
+                                   data-toggle="modal" data-target="#modal-del"
+                                   onclick='delMinion(this, "{% url 'api-cm:minion' minion.id %}", "{{ minion.hostname }}")'>
                                     <i class="fa fa-trash"></i> {% trans 'Delete' %}
                                 </a>
                             </td>
@@ -98,11 +99,12 @@
                     <tbody>
                     {% for minion in minion_pre %}
                         <tr>
-                            <input type="hidden" value="{% url 'api-deploy:minion' minion.id %}"/>
+                            <input type="hidden" value="{% url 'api-cm:minion' minion.id %}"/>
                             <td>{{ minion.hostname }}</td>
                             <td>
                                 <button class="btn btn-danger btn-sm" id="btn-accept-minion"
-                                        data-loading-text="<i class='fa fa-spinner fa-spin'></i> Accepting">
+                                        data-loading-text="<i class='fa fa-spinner fa-spin'></i> Accepting"
+                                        onclick="acceptMinion()">
                                     <i class="fa fa-trash"></i> {% trans 'Accept' %}
                                 </button>
                             </td>
@@ -122,10 +124,4 @@
 
 {% block js %}
     <script src="{% static 'js/mo/salt-minion-list.js' %}"></script>
-    <script>
-        $('#a-delete-minion').click(del)
-        $('#confirm-delete').click(confirmDel)
-        // ajax: accept minion key
-        $('#btn-accept-minion').click(acceptMinion)
-    </script>
 {% endblock js %}
