@@ -1,3 +1,8 @@
+## version 1.3.1 (2018.02.01)
+
+1. Fix bugs.
+2. Change *Deploy* app to *CM* app.
+
 ## version 1.3 release (2018.01.31)
 
 1. Optimize *File Upload*.

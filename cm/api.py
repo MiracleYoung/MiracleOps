@@ -81,8 +81,10 @@ def sym_link_roster(pk):
     # create symbol link from roster to /etc/salt/roster
     _filepath = _roster.file.path
     _rosterpath = '/etc/salt/roster'
-    if os.path.exists(_rosterpath):
+    try:
         os.remove(_rosterpath)
+    except:
+        pass
     os.symlink(_filepath, _rosterpath)
 
 

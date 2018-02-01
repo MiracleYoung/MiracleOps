@@ -60,7 +60,7 @@
                                         <td>
                                             <a id="roster-{{ roster.id }}" class="btn" data-toggle="modal"
                                                data-target="#modal-detail"
-                                               onclick='checkDetail(this, "{% url 'api-deploy:roster' roster.id %}")'>
+                                               onclick='checkDetail(this, "{% url 'api-cm:roster' roster.id %}")'>
                                                 {% retrieve_file_name roster.file.name %}
                                             </a>
                                         </td>
@@ -75,7 +75,7 @@
                                         <td>
                                             <button class="btn btn-danger btn-sm" id="del-{{ roster.id }}"
                                                     data-toggle="modal" data-target="#modal-del"
-                                                    onclick='delRoster(this, "{% url 'api-deploy:roster' roster.id %}","{% retrieve_file_name roster.file.name %}")'>
+                                                    onclick='delRoster(this, "{% url 'api-cm:roster' roster.id %}","{% retrieve_file_name roster.file.name %}")'>
                                                 <i class="fa fa-trash"></i>
                                                 {% trans 'Delete' %}
                                             </button>
@@ -96,7 +96,7 @@
                                 </div>
                             {% endif %}
 
-                            <form action="{% url 'deploy:ssh' %}" class="dropzone" id="rosterdropzone" method="post"
+                            <form action="{% url 'cm:ssh' %}" class="dropzone" id="rosterdropzone" method="post"
                                   enctype="multipart/form-data">
                                 {% csrf_token %}
                             </form>
@@ -181,7 +181,7 @@
                                             </button>
                                             <button type="button" class="btn btn-danger" id="roster-execute"
                                                     data-loading-text="<i class='fa fa-spinner fa-spin'></i> Executing"
-                                                    onclick='rosterExec(this, "{% url 'api-deploy:ssh-cmd' %}")'>
+                                                    onclick='rosterExec(this, "{% url 'api-cm:ssh-cmd' %}")'>
                                                 <i class="fa fa-play"></i> Execute
                                             </button>
                                         </div>
