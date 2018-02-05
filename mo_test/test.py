@@ -5,7 +5,7 @@ import base64
 import hashlib
 import struct
 
-HOST = 'localhost'
+HOST = '0.0.0.0'
 PORT = 1235
 MAGIC_STRING = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
 HANDSHAKE_STRING = "HTTP/1.1 101 Switching Protocols\r\n" \
@@ -24,8 +24,10 @@ class Th(threading.Thread):
     def run(self):
         while True:
             try:
-                pass
-            except:
+                raw_data = self.recv_data(1024)
+                if not self.send_data(raw_data):
+                    break
+            except Exception as e:
                 self.con.close()
 
     def recv_data(self, num):
@@ -33,10 +35,10 @@ class Th(threading.Thread):
             all_data = self.con.recv(num)
             if not len(all_data):
                 return False
-        except:
+        except Exception as e:
             return False
         else:
-            code_len = ord(all_data[1]) & 127
+            code_len = all_data[1] & 127
             if code_len == 126:
                 masks = all_data[4:8]
                 data = all_data[8:]
@@ -48,7 +50,7 @@ class Th(threading.Thread):
                 data = all_data[6:]
             raw_str = ""
             for i, d in enumerate(data):
-                raw_str += chr(ord(d) ^ ord(masks[i % 4]))
+                raw_str += chr(d ^ masks[i % 4])
         return raw_str
 
     def send_data(self, data):
@@ -65,7 +67,7 @@ class Th(threading.Thread):
         else:
             token += struct.pack("!BQ", 127, length)
         # struct为Python中处理二进制数的模块，二进制流为C，或网络流的形式。
-        data = token + data
+        data = token + data.encode()
         self.con.send(data)
         return True
 
