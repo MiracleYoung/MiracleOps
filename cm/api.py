@@ -26,6 +26,7 @@ def init_server(saltapi, hostname):
     _payload = saltapi.remote_one_server(hostname, 'grains.items')
     _disk = saltapi.remote_one_server(hostname, 'status.diskusage')
     _server_info = {}
+    # print(_payload)
     _server_info['disk'] = json.dumps(_disk)
     _server_info['cpu'] = int(_payload['num_cpus']) * int(_payload['num_cpus'])
     _server_info['memory'] = round(int(_payload['mem_total']) / 1024)

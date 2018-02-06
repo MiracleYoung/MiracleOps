@@ -14,6 +14,9 @@ class IndexHandler(tornado.web.RequestHandler):
 class WSHandler(tornado.websocket.WebSocketHandler):
     clients = dict()
 
+    def check_origin(self, origin):
+        return True
+
     def get_client(self):
         return self.clients.get(self._id(), None)
 
@@ -44,6 +47,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, message):
         bridge = self.get_client()
         client_data = ClientData(message)
+        # TODO
+        # add client_data.data['secret']
         if self._is_init_data(client_data):
             if self._check_init_param(client_data.data):
                 bridge.open(client_data.data)

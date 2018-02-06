@@ -1,37 +1,14 @@
-import sys, os
-# sys.path.append(os.path.dirname(__file__))
+from tornado import ioloop, web, httpserver
+from tornado.options import options
+import os, sys
 
-
-import tornado.ioloop
-import tornado.web
-import tornado.httpserver
-import tornado.options
-import tornado.wsgi
-from tornado.options import options, parse_command_line
-from terminal import config, ioloop
-
-import django.core.handlers.wsgi
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(BASE_DIR))
+print(sys.path)
 
 from terminal.handlers import *
-
-wsgi_app = tornado.wsgi.WSGIContainer(django.core.handlers.wsgi.WSGIHandler())
-
-settings = dict(
-    template_path=os.path.join(os.path.dirname(__file__), "templates"),
-    static_path=os.path.join(os.path.dirname(__file__), "static"),
-)
-
-handlers = [
-    (r"/t/", IndexHandler),
-    (r"/t/login", IndexHandler),
-    (r"/t/ws", WSHandler),
-    ('.*', tornado.web.FallbackHandler, dict(fallback=wsgi_app)),
-]
-
-
-class Application(tornado.web.Application):
-    def __init__(self):
-        super(Application, self).__init__(handlers, **settings)
+from terminal.config import init_config
+from terminal.ioloop import IOLoop
 
 
 def welcome(port):
@@ -48,21 +25,33 @@ Please visit the localhost:%s from the explorer~
     ''' % port)
 
 
+settings = dict(
+    template_path=os.path.join(os.path.dirname(__file__), "templates"),
+    static_path=os.path.join(os.path.dirname(__file__), "static"),
+)
+
+handlers = [
+    (r"/", IndexHandler),
+    (r"/login", IndexHandler),
+    (r"/ws", WSHandler)
+]
+
+
+class Application(web.Application):
+    def __init__(self):
+        super(Application, self).__init__(handlers, **settings)
+
+
 def main():
-    parse_command_line()
+    init_config()
+    options.parse_config_file(os.path.join(BASE_DIR, "webssh.conf"))
 
-    config.init_config()
-    options.parse_config_file("webssh.conf")
-
-    http_server = tornado.httpserver.HTTPServer(Application())
-    http_server.listen(options.port)
-    ioloop.IOLoop.instance().start()
+    http_server = httpserver.HTTPServer(Application())
+    http_server.listen(options.port, address="0.0.0.0")
+    IOLoop.instance().start()
     welcome(options.port)
-    tornado.ioloop.IOLoop.instance().start()
+    ioloop.IOLoop.instance().start()
 
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MiracleOps.settings")
-    if django.VERSION[1] > 5:
-        django.setup()
     main()

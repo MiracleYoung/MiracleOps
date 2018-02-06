@@ -27,23 +27,23 @@ function refreshMinionsHealth(ele, url) {
 }
 
 // ajax: accept minion key
-function acceptMinion() {
-    var url = $(this).parent('td').siblings('input')[0].value
+function acceptMinion(ele) {
+    var url = $(ele).parent('td').siblings('input')[0].value
     $.ajax({
         url: url,
         beforeSend: function (xhr) {
-            $(this).button('loading');
+            $(ele).button('loading');
         },
         method: 'PUT'
     }).done(function (data, status, xhr) {
         if (xhr.status == 200) {
             alert('Accept Success.')
-            $(this).button('reset')
             window.location.reload()
         }
     }).fail(function (err) {
         alert('Oops, something wrong, please contact your Administrator.')
-        $(this).button('reset')
+    }).always(function () {
+        $(ele).button('reset')
     })
 }
 
