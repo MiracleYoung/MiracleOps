@@ -1,10 +1,7 @@
-__author__ = 'xsank'
-
 import json
 
 
 class BaseData(object):
-
     def __init__(self, data=""):
         self.from_json(data)
 
@@ -19,13 +16,11 @@ class BaseData(object):
 
 
 class ClientData(BaseData):
-
     def __init__(self, data=""):
         super(ClientData, self).__init__(data)
 
 
 class ServerData(BaseData):
-
     def __init__(self, data=""):
         self.tp = 'server'
         self.data = data

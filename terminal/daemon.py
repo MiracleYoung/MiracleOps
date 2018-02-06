@@ -1,15 +1,12 @@
-__author__ = 'xsank'
-
 import paramiko
 from paramiko.ssh_exception import AuthenticationException, SSHException
 from tornado.websocket import WebSocketClosedError
-
-from ioloop import IOLoop
+from .ioloop import IOLoop
 
 try:
     from cStringIO import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 
 class Bridge(object):

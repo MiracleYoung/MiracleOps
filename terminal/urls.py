@@ -1,9 +1,6 @@
-__author__ = 'xsank'
+from django.conf.urls import url
+from . import views
 
-from handlers import *
-
-handlers = [
-    (r"/", IndexHandler),
-    (r"/login", IndexHandler),
-    (r"/ws", WSHandler)
+urlpatterns = [
+    url(r'^$', views.IndexView.as_view(), name='index', kwargs={'path1': 'Index'}),
 ]

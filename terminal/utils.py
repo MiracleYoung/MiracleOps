@@ -1,15 +1,11 @@
-__author__ = 'xsank'
-
 import re
 import sys
-
 
 _PLATFORM = sys.platform
 
 
 def check_ip(ip):
-    pattern = re.compile(
-        '^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$')
+    pattern = re.compile('^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$')
     return True if pattern.match(ip) else False
 
 
@@ -21,7 +17,6 @@ def check_port(port):
 
 
 class Platform(object):
-
     @staticmethod
     def detail():
         return _PLATFORM

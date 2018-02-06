@@ -1,17 +1,14 @@
-__author__ = 'xsank'
-
 import logging
-
 import tornado.websocket
+from .daemon import Bridge
+from .data import ClientData
+from .utils import check_ip, check_port
 
-from daemon import Bridge
-from data import ClientData
-from utils import check_ip, check_port
-
+__all__ = ['IndexHandler', 'WSHandler']
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("index.html")
+        self.render("terminal/index.html")
 
 
 class WSHandler(tornado.websocket.WebSocketHandler):

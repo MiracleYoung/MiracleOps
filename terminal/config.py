@@ -1,5 +1,3 @@
-__author__ = 'xsank'
-
 from tornado.options import define
 
 

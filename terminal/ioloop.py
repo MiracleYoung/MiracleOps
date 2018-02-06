@@ -1,19 +1,15 @@
-__author__ = 'xsank'
-
 import select
 import socket
 import errno
 import logging
 from threading import Thread
 
-from utils import Platform
+from .utils import Platform
 
-
-MAX_DATA_BUFFER = 1024*1024
+MAX_DATA_BUFFER = 1024 * 1024
 
 
 class IOLoop(Thread):
-
     READ = 0x001
     WRITE = 0x004
     ERROR = 0x008 | 0x010
@@ -54,7 +50,6 @@ class IOLoop(Thread):
 
 
 class EPollIOLoop(IOLoop):
-
     def __init__(self):
         super(EPollIOLoop, self).__init__(impl=select.epoll())
 
@@ -88,7 +83,6 @@ class EPollIOLoop(IOLoop):
 
 
 class SelectIOLoop(IOLoop):
-
     def __init__(self):
         super(SelectIOLoop, self).__init__(impl=select.select)
         self.read_fds = set()
@@ -134,9 +128,8 @@ class SelectIOLoop(IOLoop):
 
 
 class KQueueIOLoop(IOLoop):
-
     def __init__(self):
-        super(KQueueIOLoop, self).__init__(impl=select.select())
+        super(KQueueIOLoop, self).__init__(impl=select.kqueue())
 
     def register(self, bridge):
         self._add_bridge(bridge)

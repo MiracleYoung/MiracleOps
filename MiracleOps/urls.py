@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^user/', include('user.urls.views_urls', namespace='user')),
     url(r'^asset/', include('asset.urls.views_urls', namespace='asset'), kwargs={'app': 'Asset'}),
     url(r'^cm/', include('cm.urls.views_urls', namespace='cm'), kwargs={'app': 'Cluster Management'}),
-    # url(r'^terminal/', include('terminal.urls', namespace='terminal'), kwargs={'app': 'Terminal'}),
+    url(r'^terminal/', include('terminal.urls', namespace='terminal'), kwargs={'app': 'Terminal'}),
     url(r'^doc/', include('doc.urls', namespace='doc'), kwargs={'app': 'Doc'}),
 
     url(r'^api/user/', include('user.urls.api_urls', namespace='api-user')),
