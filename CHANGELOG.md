@@ -1,3 +1,8 @@
+## version 1.3.2 (2018.02.07)
+
+1. Fix bugs.
+2. Go through the webssh data.
+
 ## version 1.3.1 (2018.02.01)
 
 1. Fix bugs.

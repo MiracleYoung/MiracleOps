@@ -42,7 +42,7 @@ class Bridge(object):
         self.ssh.set_missing_host_key_policy(
             paramiko.AutoAddPolicy())
         try:
-            if self.isPassword(data):
+            if self.isPassword(data).lower() == 'true':
                 self.ssh.connect(
                     hostname=data["host"],
                     port=int(data["port"]),

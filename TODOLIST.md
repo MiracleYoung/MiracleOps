@@ -63,7 +63,7 @@
     - Docker
 - Web Terminal
     - [ ] One
-    - [ ] Multi-Server
+    - ~~[ ] Multi-Server~~: Use MinionCmd module.
 - Monitor
     - DB
         - [ ] MySQL
@@ -72,3 +72,5 @@
     - Web
         - [ ] Nginx
         
+**Optimization**:
+- Table -> Dynamic Table
