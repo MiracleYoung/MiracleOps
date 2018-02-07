@@ -4,24 +4,28 @@
 # @Author  : Miracle Young
 # @File    : api.py
 
+import json, os, shutil
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics, status
 from django.conf import settings
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
-import json, os, shutil, uuid
+
 from common.str_parse import text2html
-from .models import *
 from common.saltapi import SaltAPI
 from asset.models import Server
 from user.authentication import get_user
+
+from .models import *
 
 SALT_API_URL = settings.SALT_API_URL
 SALT_API_USERNAME = settings.SALT_API_USERNAME
 SALT_API_PASSWORD = settings.SALT_API_PASSWORD
 
 
+# init asset_server table data
 def init_server(saltapi, hostname):
     _payload = saltapi.remote_one_server(hostname, 'grains.items')
     _disk = saltapi.remote_one_server(hostname, 'status.diskusage')
@@ -68,10 +72,18 @@ def init_server(saltapi, hostname):
 
     _server_info['remark'] = biz
     _server_info['hardware_version'] = _payload['manufacturer']
-    _server_info['uuid'] = _payload['uuid']
     _server = Server(**_server_info)
     _server.save()
     return _server
+
+
+# add master pub key to server auth file
+def add_authkey(saltapi, hostname):
+    with open('/root/.ssh/id_rsa.pub') as f:
+        _pubkey = f.read()
+    _arg = ['user=root', 'key=%s' % _pubkey.split()[1], 'enc=rsa']
+    _payload = saltapi.remote_execution(tgt=hostname, fun='ssh.set_auth_key', arg=_arg)
+    return False if 'invalid' in _payload.values() else True
 
 
 def sym_link_roster(pk):
@@ -103,8 +115,8 @@ def sym_link_sls(pk):
     _topsls_dstpath = '/etc/salt/top.sls'
     # remove /etc/salt/sls, /etc/salt/top.sls
     try:
-        os.remove(_slsdir_dstpath)
-        os.remove(_topsls_dstpath)
+        os.remove(_slsdir_dstpath) if os.path.islink(_slsdir_dstpath) else shutil.rmtree(_slsdir_dstpath)
+        os.remove(_topsls_dstpath) if os.path.islink(_topsls_dstpath) else shutil.rmtree(_topsls_dstpath)
     except:
         pass
     try:
@@ -173,10 +185,10 @@ class MinionRefreshApi(APIView):
 class MinionCheckAliveApi(APIView):
     def get(self, request):
         _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
-        _ret = _saltapi.salt_check_alive('*')
+        _ret = _saltapi.check_alive('*')
         for host, is_alive in _ret.items():
             SaltMinion.objects.filter(hostname=host).update(is_alive=is_alive, last_alive_time=timezone.now(),
-                                                            update_time=timezone.now())
+                                                            u_time=timezone.now())
         return Response('success')
 
 
@@ -204,12 +216,16 @@ class MinionApi(generics.RetrieveUpdateDestroyAPIView):
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         _ret = _saltapi.accept_key(_minion.hostname)
-        if _ret:
-            _minion.status = 1
-            _minion.server = init_server(_saltapi, _minion.hostname)
-            _minion.save()
-            return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        try:
+            if _ret:
+                _minion.status = 1
+                _minion.server = init_server(_saltapi, _minion.hostname)
+                _minion.save()
+                if add_authkey(_saltapi, _minion.hostname):
+                    return Response(status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class MinionCmdApi(APIView):
@@ -231,7 +247,7 @@ class RosterApi(generics.RetrieveUpdateDestroyAPIView):
     queryset = Roster.objects.all()
 
     def get(self, request, *args, **kwargs):
-        _pk = kwargs.get('pk', -1)
+        _pk = kwargs.get('pk', '')
         try:
             _roster = Roster.objects.get(pk=_pk)
         except ObjectDoesNotExist:
@@ -253,7 +269,7 @@ class RosterApi(generics.RetrieveUpdateDestroyAPIView):
 
 class InstallMinionApi(APIView):
     def get(self, request, *args, **kwargs):
-        _pk = self.kwargs.get('roster_id', -1)
+        _pk = self.kwargs.get('roster_id', '')
         sym_link_roster(_pk)
         # cp install_salt.sh from master to minion
         _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
@@ -312,7 +328,7 @@ class SLSApi(APIView):
 class SLSCmdApi(APIView):
     def post(self, request, *args, **kwargs):
         _tgt = request.data.get('tgt', '')
-        _sls_id = request.data.get('sls_id', -1)
+        _sls_id = request.data.get('sls_id', '')
         # symlink /etc/salt/top.sls /etc/salt/sls/*
         if sym_link_sls(_sls_id):
             _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
@@ -334,16 +350,18 @@ class FileUploadApi(APIView):
             _srcdir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media/file/', _dir)
             _saltdir = 'salt://media/file/' + _dir
             os.makedirs(_srcdir)
-            if not os.path.exists('/etc/salt/media'):
-                os.symlink(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media'), '/etc/salt/media')
+            _media = '/etc/salt/media'
+            os.remove(_media) if os.path.islink(_media) else shutil.rmtree(_media)
+            os.symlink(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media'), _media)
             for k, v in self.request.FILES.items():
-                _f = File(file=v, uuid=uuid.uuid4(), user=_u, status=1)
+                _f = File(file=v, user=_u, status=1)
                 _f.save()
                 _origin_fpath = _f.file.path
                 _f.file.name = _f.file.name.replace('file/', 'file/{}/'.format(_dir))
                 _f.save()
                 shutil.move(_origin_fpath, _srcdir)
-                _saltapi.remote_execution(arg=['{}/{}'.format(_saltdir, v.name), '{}/{}'.format(_dst_dir, v.name)],
-                                          tgt=_glob, fun='cp.get_file')
+                _ret = _saltapi.remote_execution(tgt=_glob, fun='cp.get_file',
+                                                 arg=['{}/{}'.format(_saltdir, v.name),
+                                                      '{}/{}'.format(_dst_dir, v.name)])
             return Response('', status=status.HTTP_200_OK)
         return Response('Less glob and destination directory.', status=status.HTTP_400_BAD_REQUEST)

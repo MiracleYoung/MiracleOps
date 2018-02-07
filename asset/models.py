@@ -4,6 +4,8 @@
 # @Author  : MiracleYoung
 # @File    : entity.py
 
+import uuid
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
@@ -17,14 +19,16 @@ class IDC(models.Model):
         (2, 'DELETED'),
         (3, 'Out of Service'),
     )
+
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     name = models.CharField(_('IDC Name'), max_length=100, default='')
     idc_user = models.CharField(_('IDC User'), max_length=100, default='')
     idc_user_tel = models.CharField(_('IDC User Phone'), max_length=100, default='')
     user = models.ForeignKey(User, verbose_name=_('Department User'))
     address = models.CharField(_('IDC Address'), max_length=200, default='')
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=1, blank=True)
-    create_time = models.DateTimeField(_('Create Time'), default=timezone.now(), blank=True)
-    update_time = models.DateTimeField(_('Update Time'), auto_now=True)
+    c_time = models.DateTimeField(_('Create Time'), default=timezone.now(), blank=True)
+    u_time = models.DateTimeField(_('Update Time'), auto_now=True)
 
     class Meta:
         db_table = 'asset_idc'
@@ -61,6 +65,7 @@ class Server(models.Model):
         (99, 'Other'),
     )
 
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     public_ip = models.GenericIPAddressField(_('Public IP'), default='0.0.0.0')
     # when first initial, if hostname is None or '', then hostname=public_ip
     hostname = models.CharField(_('Hostname'), max_length=100, default='', blank=True)
@@ -74,7 +79,6 @@ class Server(models.Model):
     type = models.SmallIntegerField(_('Server Type'), choices=TYPE_CHOICE, default=1)
 
     owner = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name=_('Owner'), null=True)
-    uuid = models.CharField(_('UUID'), max_length=100, default='', blank=True)
     # self related
     sn = models.CharField(_('Serial Number'), max_length=200, default='')
     cpu = models.SmallIntegerField(_('CPU'), default=0)
@@ -94,12 +98,12 @@ class Server(models.Model):
     oob_password = models.CharField(_('Out of Band Management Admin Password'), max_length=100, default='', blank=True)
 
     remark = models.CharField(_('Remark'), max_length=200, default='', blank=True)
-    create_time = models.DateTimeField(_('Create Time'), default=timezone.now(), blank=True)
-    update_time = models.DateTimeField(_('Update Time'), auto_now=True)
+    c_time = models.DateTimeField(_('Create Time'), default=timezone.now(), blank=True)
+    u_time = models.DateTimeField(_('Update Time'), auto_now=True)
 
     class Meta:
         db_table = 'asset_server'
-        ordering = ['create_time', ]
+        ordering = ['c_time', ]
 
     def __repr__(self):
         return self.hostname

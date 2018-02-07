@@ -8,6 +8,6 @@ from django.conf.urls import url, include
 from .. import api
 
 urlpatterns = [
-    url(r'^server/(?P<pk>\d+)/$', api.ServerApi.as_view(), name='server'),
-    url(r'^idc/(?P<pk>\d+)/$', api.IDCApi.as_view(), name='idc'),
+    url(r'^server/(?P<pk>[0-9a-f-]+)/$', api.ServerApi.as_view(), name='server'),
+    url(r'^idc/(?P<pk>[0-9a-f-]+)/$', api.IDCApi.as_view(), name='idc'),
 ]

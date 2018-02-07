@@ -109,7 +109,7 @@ class SaltAPI(object):
         ret = content['return'][0]
         return ret
 
-    def salt_check_alive(self, tgt):
+    def check_alive(self, tgt):
         '''
         salt主机存活检测
         '''

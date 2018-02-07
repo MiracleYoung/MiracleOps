@@ -10,7 +10,11 @@
                 <table class="table table-hover">
                     <tbody>
                     <tr class="no-borders-tr">
-                        <td class="col-md-4">{% trans 'IDC Name' %}:</td>
+                        <td class="col-md-4">{% trans 'IDC UUID' %}:</td>
+                        <td><b>{{ idc.id }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'IDC Name' %}:</td>
                         <td><b>{{ idc.name }}</b></td>
                     </tr>
                     <tr>

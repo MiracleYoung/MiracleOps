@@ -1,16 +1,16 @@
-from django.views.generic import ListView, TemplateView, FormView, DetailView
-from django.urls import reverse_lazy
+import os, zipfile
+
+from django.views.generic import ListView, TemplateView
 from django.utils import timezone
-from django.http import Http404, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponse
+
 from common.mixin import LoginRequiredMixin
-import uuid, os, zipfile, shutil
-from .models import *
-from .forms import *
 from user.models.user import User
+from .models import *
 
 
 class SaltMinionListView(LoginRequiredMixin, TemplateView):
-    template_name = 'cm/salt_minion_list.html'
+    template_name = 'cm/minion_list.html'
 
     def get_context_data(self, **kwargs):
         _minion_accept = SaltMinion.objects.filter(status=1)
@@ -30,70 +30,54 @@ class SaltExecCmdView(LoginRequiredMixin, ListView):
         return SaltMinion.objects.all()
 
 
-class SaltSSHView(LoginRequiredMixin, FormView):
+class SaltSSHView(LoginRequiredMixin, TemplateView):
     template_name = 'cm/salt_ssh.html'
-    form_class = RosterForm
-    success_url = reverse_lazy('cm:ssh')
 
     def get_context_data(self, **kwargs):
         _ctx = super(SaltSSHView, self).get_context_data(**kwargs)
         _ctx['rosters'] = Roster.objects.all()
         return _ctx
 
-    def form_valid(self, form):
-        if form.is_valid():
-            _u = User.objects.get(pk=self.request.session['uid'])
-            _f_name = self.request.FILES['file'].name
-            if os.path.splitext(_f_name)[1] not in ('.roster'):
-                return HttpResponseBadRequest('file must be like *.roster')
-            file_name = '{}_{}_{}'.format(_f_name, _u.username, int(timezone.now().timestamp()))
-            form.instance.file.name = file_name
-            form.instance.uuid = uuid.uuid4()
-            form.instance.user = _u
-            form.instance.status = 1
-            form.save()
-            return super(SaltSSHView, self).form_valid(form)
-        return HttpResponseBadRequest()
+    def post(self, request, *args, **kwargs):
+        _u = User.objects.get(pk=self.request.session['uid'])
+        _f = self.request.FILES['file']
+        if os.path.splitext(_f.name)[1] not in ('.roster'):
+            return HttpResponseBadRequest('file must be like *.roster')
+        _f.name = 'roster/{}_{}_{}'.format(_f.name, _u.username, int(timezone.now().timestamp()))
+        _roster = Roster(file=_f, user=_u, status=1)
+        _roster.save()
+        return HttpResponse('')
 
 
-class SaltSLSView(LoginRequiredMixin, FormView):
+class SaltSLSView(LoginRequiredMixin, TemplateView):
     template_name = 'cm/salt_sls.html'
-    form_class = SlsForm
-    success_url = reverse_lazy('cm:sls')
 
     def get_context_data(self, **kwargs):
         _ctx = super(SaltSLSView, self).get_context_data(**kwargs)
         _ctx['slses'] = Sls.objects.all()
         return _ctx
 
-    def form_valid(self, form):
-        if form.is_valid():
-            _u = User.objects.get(pk=self.request.session['uid'])
-            _f_name = self.request.FILES['file'].name
-            if os.path.splitext(_f_name)[1] not in ('.zip'):
-                return HttpResponseBadRequest('file must be like *.zip')
-            file_name = '{}_{}_{}'.format(_f_name, _u.username, int(timezone.now().timestamp()))
-            form.instance.file.name = file_name
-            form.instance.uuid = uuid.uuid4()
-            form.instance.user = _u
-            form.instance.status = 1
-            form.save()
-
-            _file = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media/sls/', file_name)
-            _dir = _file + '.dir'
-            # whatever upload file type, mkdir <file>.dir, all in it
-            if not (os.path.exists(_dir) and os.path.isdir(_dir)):
-                os.mkdir(_dir)
-            # if zip, extract into <file>.dir, then remove zip
-            if zipfile.is_zipfile(form.instance.file):
-                _z = zipfile.ZipFile(form.instance.file.path)
-                _z.extractall(_dir)
-                os.remove(_file)
-            # if .sls, move into <file>.dir
-            else:
-                return HttpResponseBadRequest()
-            return super(SaltSLSView, self).form_valid(form)
-        return HttpResponseBadRequest()
+    def post(self, request, *args, **kwargs):
+        _u = User.objects.get(pk=self.request.session['uid'])
+        _f = self.request.FILES['file']
+        if os.path.splitext(_f.name)[1] not in ('.zip'):
+            return HttpResponseBadRequest('file must be like *.zip')
+        _f.name = 'sls/{}_{}_{}'.format(_f.name, _u.username, int(timezone.now().timestamp()))
+        _sls = Sls(file=_f, user=_u, status=1)
+        _sls.save()
+        # whatever upload file type, mkdir <file>.dir, all in it
+        _dir = _sls.file.path + '.dir'
+        if not (os.path.exists(_dir) and os.path.isdir(_dir)):
+            os.mkdir(_dir)
+        # if zip, extract into <file>.dir, then remove zip
+        if zipfile.is_zipfile(_sls.file):
+            _z = zipfile.ZipFile(_sls.file.path)
+            _z.extractall(_dir)
+            os.remove(_sls.file.path)
+        # if .sls, move into <file>.dir
+        else:
+            return HttpResponseBadRequest()
+        return HttpResponse('')
 
 
 class FileUploadView(LoginRequiredMixin, TemplateView):

@@ -1,3 +1,9 @@
+## version 1.3.3 (2018.02.07)
+
+1. Fix bugs.
+2. Update all models' id from auto_increment to uuid.
+3. Do `terminal:list`.
+
 ## version 1.3.2 (2018.02.07)
 
 1. Fix bugs.

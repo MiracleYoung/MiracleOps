@@ -20,6 +20,10 @@
                     </thead>
                     <tbody>
                     <tr class="no-borders-tr">
+                        <td>{% trans 'UUID' %}:</td>
+                        <td><b>{{ server.id }}</b></td>
+                    </tr>
+                    <tr class="no-borders-tr">
                         <td class="col-md-4">{% trans 'Public IP' %}:</td>
                         <td><b>{{ server.public_ip }}</b></td>
                     </tr>
@@ -119,10 +123,6 @@
                                 {% endif %}
                             </b>
                         </td>
-                    </tr>
-                    <tr class="no-borders-tr">
-                        <td>{% trans 'UUID' %}:</td>
-                        <td><b>{{ server.uuid }}</b></td>
                     </tr>
                     <tr>
                         <td>{% trans 'Owner' %}:</td>

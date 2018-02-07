@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
@@ -17,6 +19,7 @@ class SaltMinion(models.Model):
         (5, 'Deleted'),
     )
 
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     hostname = models.CharField(_('Hostname'), max_length=100, default='')
     # when accept minion, need to initial server attr
     server = models.ForeignKey(Server, on_delete=models.DO_NOTHING, verbose_name=_('Server'), null=True)
@@ -26,10 +29,10 @@ class SaltMinion(models.Model):
     last_alive_time = models.DateTimeField(_('Last Alive Time'), null=True)
     # discover minion time
     discover_time = models.DateTimeField(_('Discover Time'), auto_now_add=True)
-    update_time = models.DateTimeField(_('Update Time'), auto_now=True)
+    u_time = models.DateTimeField(_('Update Time'), auto_now=True)
 
     class Meta:
-        db_table = 'cm_salt_minion'
+        db_table = 'cm_minion'
         ordering = ['discover_time', ]
 
     def __repr__(self):
@@ -45,11 +48,11 @@ class FileABC(models.Model):
         (2, 'Deleted'),
     )
 
-    uuid = models.CharField(_('UUID'), max_length=100, blank=True)
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     user = models.ForeignKey(User, blank=True, null=True)
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=0, blank=True)
-    create_time = models.DateTimeField(_('Create Time'), auto_now_add=True, null=True, blank=True)
-    update_time = models.DateTimeField(_('Update Time'), default=timezone.now(), null=True, blank=True)
+    c_time = models.DateTimeField(_('Create Time'), auto_now_add=True, null=True, blank=True)
+    u_time = models.DateTimeField(_('Update Time'), default=timezone.now(), null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -65,7 +68,7 @@ class Roster(FileABC):
 
     class Meta:
         db_table = 'cm_roster'
-        ordering = ['-create_time']
+        ordering = ['-c_time']
 
 
 class Sls(FileABC):
@@ -73,7 +76,7 @@ class Sls(FileABC):
 
     class Meta:
         db_table = 'cm_sls'
-        ordering = ['-create_time']
+        ordering = ['-c_time']
 
 
 class File(FileABC):
@@ -81,4 +84,4 @@ class File(FileABC):
 
     class Meta:
         db_table = 'cm_file'
-        ordering = ['-create_time']
+        ordering = ['-c_time']

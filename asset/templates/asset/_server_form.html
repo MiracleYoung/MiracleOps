@@ -3,6 +3,9 @@
 <form class="form-horizontal form-label-left" novalidate action="" method="post">
 
     {% csrf_token %}
+
+    {% bootstrap_field form.id layout="horizontal" %}
+
     <span class="section">{% trans 'Basic Info' %}</span>
     {% bootstrap_field form.sn layout="horizontal" %}
     {% bootstrap_field form.idc layout="horizontal" %}
@@ -24,7 +27,6 @@
     {% bootstrap_field form.oob_password layout="horizontal" %}
 
     <span class="section">{% trans 'Hardware Info' %}</span>
-    {% bootstrap_field form.uuid layout="horizontal" %}
     {% bootstrap_field form.public_ip layout="horizontal" %}
     {% bootstrap_field form.hostname layout="horizontal" %}
     {% bootstrap_field form.private_ip1 layout="horizontal" %}
