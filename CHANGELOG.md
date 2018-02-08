@@ -1,3 +1,8 @@
+## version 1.3.4 (2018.02.08)
+
+1. Fix bugs.
+2. `terminal:list` rc.
+
 ## version 1.3.3 (2018.02.07)
 
 1. Fix bugs.

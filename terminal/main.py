@@ -6,6 +6,12 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(BASE_DIR))
 print(sys.path)
 
+import django
+os.environ['DJANGO_SETTINGS_MODULE'] = 'MiracleOps.settings'  # 设置项目的配置文件
+django.setup()
+
+
+
 from terminal.handlers import *
 from terminal.config import init_config
 from terminal.ioloop import IOLoop

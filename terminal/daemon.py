@@ -2,6 +2,8 @@ import paramiko
 from paramiko.ssh_exception import AuthenticationException, SSHException
 from tornado.websocket import WebSocketClosedError
 from .ioloop import IOLoop
+from .models import *
+from asset.models import *
 
 try:
     from cStringIO import StringIO
@@ -15,6 +17,7 @@ class Bridge(object):
         self._shell = None
         self._id = 0
         self.ssh = paramiko.SSHClient()
+        self._t_id = ''
 
     @property
     def id(self):
@@ -42,29 +45,17 @@ class Bridge(object):
         self.ssh.set_missing_host_key_policy(
             paramiko.AutoAddPolicy())
         try:
-            if self.isPassword(data).lower() == 'true':
-                self.ssh.connect(
-                    hostname=data["host"],
-                    port=int(data["port"]),
-                    username=data["username"],
-                    password=data["secret"],
-                )
-
-            else:
-                self.ssh.connect(
-                    hostname=data["host"],
-                    port=int(data["port"]),
-                    username=data["username"],
-                    pkey=self.privaterKey(data["secret"], None)
-                )
-
+            self.ssh.connect(hostname=data["host"], port=int(data["port"]), username=data["username"])
         except AuthenticationException:
             raise Exception("auth failed user:%s ,passwd:%s" %
                             (data["username"], data["secret"]))
         except SSHException:
             raise Exception("could not connect to host:%s:%s" %
                             (data["hostname"], data["port"]))
-
+        # create one row to record terminal session
+        _server = Server.objects.get(pk=data['id'])
+        Terminal.objects.create(server=_server, status=1, t_id=data['t_id'])
+        self._t_id = data['t_id']
         self.establish()
 
     def establish(self, term="xterm"):
@@ -96,3 +87,4 @@ class Bridge(object):
     def destroy(self):
         self._websocket.close()
         self.ssh.close()
+        Terminal.objects.filter(t_id=self._t_id).update(status=0)

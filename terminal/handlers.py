@@ -1,8 +1,13 @@
 import logging
+
 import tornado.websocket
+from django.core.exceptions import ObjectDoesNotExist
+
+from asset.models import *
 from .daemon import Bridge
 from .data import ClientData
 from .utils import check_ip, check_port
+from .models import *
 
 __all__ = ['IndexHandler', 'WSHandler']
 
@@ -47,8 +52,22 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, message):
         bridge = self.get_client()
         client_data = ClientData(message)
-        # TODO
-        # add client_data.data['secret']
+        # add host, port, ip to client_data.data
+        try:
+            _id = client_data.data.get('id', '')
+            try:
+                _server = Server.objects.get(pk=_id)
+                client_data.data.update({
+                    'host': _server.public_ip,
+                    'port': '22',
+                    'username': 'root',
+                    't_id': self._id()
+                })
+            except:
+                raise ObjectDoesNotExist('server does not exist')
+        except:
+            pass
+
         if self._is_init_data(client_data):
             if self._check_init_param(client_data.data):
                 bridge.open(client_data.data)

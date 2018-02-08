@@ -16,7 +16,7 @@ function openTerminal(options) {
         },
         onConnect: function () {
             client.sendInitData(options);
-            client.sendClientData('\r');
+            // client.sendClientData('\r');
             console.debug('connection established');
         },
         onClose: function () {
@@ -31,55 +31,13 @@ function openTerminal(options) {
     })
 }
 
-var charWidth = 6.2;
-var charHeight = 15.2;
-
-/**
- * for full screen
- * @returns {{w: number, h: number}}
- */
-function getTerminalSize() {
-    var width = window.innerWidth;
-    var height = window.innerHeight;
-    return {
-        w: Math.floor(width / charWidth),
-        h: Math.floor(height / charHeight)
-    };
-}
-
-
-function store(options) {
-    window.localStorage.host = options.host
-    window.localStorage.port = options.port
-    window.localStorage.username = options.username
-    window.localStorage.ispwd = options.ispwd;
-    window.localStorage.secret = options.secret
-}
-
-function check() {
-    return validResult["host"] && validResult["port"] && validResult["username"];
-}
-
 function connect() {
-    var remember = $("#remember").is(":checked")
     var options = {
-        host: $("#host").val(),
-        port: $("#port").val(),
-        username: $("#username").val(),
-        ispwd: $("input[name=ispwd]:checked").val(),
-        secret: $("#secret").val(),
+        id: window.location.pathname.split('/')[3],
     }
-    if (remember) {
-        store(options)
-    }
-    if (check()) {
-        openTerminal(options)
-    } else {
-        for (var key in validResult) {
-            if (!validResult[key]) {
-                alert(errorMsg[key]);
-                break;
-            }
-        }
-    }
+    openTerminal(options)
 }
+
+$(function () {
+    connect()
+})

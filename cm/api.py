@@ -79,7 +79,7 @@ def init_server(saltapi, hostname):
 
 # add master pub key to server auth file
 def add_authkey(saltapi, hostname):
-    with open('/root/.ssh/id_rsa.pub') as f:
+    with open(os.path.join(os.environ['HOME'], '.ssh/id_rsa.pub')) as f:
         _pubkey = f.read()
     _arg = ['user=root', 'key=%s' % _pubkey.split()[1], 'enc=rsa']
     _payload = saltapi.remote_execution(tgt=hostname, fun='ssh.set_auth_key', arg=_arg)

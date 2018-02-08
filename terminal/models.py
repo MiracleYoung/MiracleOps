@@ -20,7 +20,8 @@ class Terminal(models.Model):
     server = models.ForeignKey(Server, verbose_name=_('Server'), db_constraint=False)
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=0)
     ssh_port = models.SmallIntegerField(_('SSH Port'), default=22)
-    user = models.ForeignKey(User, verbose_name=_('User'), db_constraint=False)
+    user = models.ForeignKey(User, verbose_name=_('User'), db_constraint=False, null=True)
+    t_id = models.CharField(_('Thread ID'), max_length=100, default='')
 
     class Meta:
         db_table = 'terminal'

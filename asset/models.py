@@ -78,7 +78,7 @@ class Server(models.Model):
     env = models.SmallIntegerField(_('Environment'), choices=ENV_CHOICE, default=1)
     type = models.SmallIntegerField(_('Server Type'), choices=TYPE_CHOICE, default=1)
 
-    owner = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name=_('Owner'), null=True)
+    owner = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name=_('Owner'), null=True, db_constraint=False)
     # self related
     sn = models.CharField(_('Serial Number'), max_length=200, default='')
     cpu = models.SmallIntegerField(_('CPU'), default=0)
@@ -86,7 +86,7 @@ class Server(models.Model):
     disk = models.CharField(_('Disk'), max_length=1000, default='')
     hardware_version = models.CharField(_('Hardware Version'), max_length=200, default='', blank=True)
     # machined related
-    idc = models.ForeignKey(IDC, on_delete=models.DO_NOTHING, verbose_name=_('IDC'), null=True)
+    idc = models.ForeignKey(IDC, on_delete=models.DO_NOTHING, verbose_name=_('IDC'), null=True, db_constraint=False)
     cabinet = models.CharField(_('Cabinet'), max_length=100, default='', blank=True)
     cab_u = models.CharField(_('Cabinet U'), max_length=100, default='', blank=True)
     interface1 = models.SmallIntegerField(_('Network Interface 1'), default=0, blank=True)
