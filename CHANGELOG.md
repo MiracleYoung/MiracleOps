@@ -1,3 +1,10 @@
+## version 1.4 release (2018.02.08)
+
+1. Fix bugs.
+2. Complete *Terminal* module.
+3. Add *Terminal* doc.
+4. Update Arch.
+
 ## version 1.3.4 (2018.02.08)
 
 1. Fix bugs.

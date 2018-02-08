@@ -62,7 +62,7 @@
         - [ ] MyCat
     - Docker
 - Web Terminal
-    - [ ] One
+    - [x] One
     - ~~[ ] Multi-Server~~: Use MinionCmd module.
 - Monitor
     - DB

@@ -24,3 +24,6 @@ class DocCMSLSView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
 
 class DocCMFileUploadView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
     template_name = 'doc/_doc.html'
+
+class DocTerminalView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
+    template_name = 'doc/_doc.html'

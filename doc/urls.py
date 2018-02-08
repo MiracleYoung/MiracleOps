@@ -17,6 +17,8 @@ mo_url_patterns = [
         url(r'^sls/', views.DocCMSLSView.as_view(), name='sls'),
         url(r'^file-upload/$', views.DocCMFileUploadView.as_view(), name='file-upload'),
     ], namespace='cm'), kwargs={'path2': 'Cluster Management'}),
+
+    url(r'^terminal/', views.DocTerminalView.as_view(), name='terminal', kwargs={'path2': 'Terminal'}),
 ]
 
 urlpatterns = [

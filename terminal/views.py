@@ -3,7 +3,6 @@ from django.db.models import Count
 
 from common.mixin import LoginRequiredMixin
 from asset.models import *
-from .models import *
 
 
 class TerminalListView(LoginRequiredMixin, ListView):

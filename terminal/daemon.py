@@ -17,6 +17,7 @@ class Bridge(object):
         self._shell = None
         self._id = 0
         self.ssh = paramiko.SSHClient()
+        # record every session id
         self._t_id = ''
 
     @property
@@ -87,4 +88,4 @@ class Bridge(object):
     def destroy(self):
         self._websocket.close()
         self.ssh.close()
-        Terminal.objects.filter(t_id=self._t_id).update(status=0)
+        Terminal.objects.filter(t_id=self._t_id).delete()

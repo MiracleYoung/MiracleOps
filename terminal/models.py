@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from asset.models import *
 from user.models import *
 
@@ -22,6 +23,8 @@ class Terminal(models.Model):
     ssh_port = models.SmallIntegerField(_('SSH Port'), default=22)
     user = models.ForeignKey(User, verbose_name=_('User'), db_constraint=False, null=True)
     t_id = models.CharField(_('Thread ID'), max_length=100, default='')
+    c_time = models.DateTimeField(_('Create Time'), default=timezone.now())
+    u_time = models.DateTimeField(_('Update Time'), auto_now=True)
 
     class Meta:
         db_table = 'terminal'
