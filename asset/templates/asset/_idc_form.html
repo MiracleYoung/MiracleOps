@@ -4,6 +4,7 @@
 
     {% csrf_token %}
     <hr>
+    {% bootstrap_field form.id layout="horizontal" %}
     {% bootstrap_field form.name layout="horizontal" %}
     {% bootstrap_field form.address layout="horizontal" %}
     {% bootstrap_field form.idc_user layout="horizontal" %}

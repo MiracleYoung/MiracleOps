@@ -11,6 +11,7 @@
 
     {% include "_head_css_js.html" %}
     {% block css %}{% endblock css %}
+    <!-- Custom Theme Style -->
     <link href="{% static 'css/custom.min.css' %}" rel="stylesheet">
 </head>
 <body>
@@ -20,5 +21,6 @@
 
 {% block js %}{% endblock js %}
 
+<script src="{% static 'js/custom.min.js' %}"></script>
 </body>
 </html>

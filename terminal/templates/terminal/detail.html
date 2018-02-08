@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/mo/tooltip.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/mo/terminal.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock css %}
+
+{% block main %}
+
+    <div id="term" align="center"></div>
+
+{% endblock main %}
+
+{% block js %}
+    <script src="{% static 'js/mo/term.js' %}"></script>
+    <script src="{% static 'js/mo/ws.js' %}"></script>
+    <script src="{% static 'js/mo/formvalid.js' %}"></script>
+    <script src="{% static 'js/mo/terminal.js' %}"></script>
+
+{% endblock js %}

@@ -6,21 +6,24 @@ class DocMOListView(LoginRequiredMixin, TemplateView):
     template_name = 'doc/doc_mo_list.html'
 
 
-class DocDeployExecCmdView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
+class DocCMExecCmdView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
     template_name = 'doc/_doc.html'
 
 
-class DocDeployMinionListView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
+class DocCMMinionListView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
     template_name = 'doc/_doc.html'
 
 
-class DocSSHView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
+class DocCMSSHView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
     template_name = 'doc/_doc.html'
 
 
-class DocSLSView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
+class DocCMSLSView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
     template_name = 'doc/_doc.html'
 
 
-class DocFileUploadView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
+class DocCMFileUploadView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
+    template_name = 'doc/_doc.html'
+
+class DocTerminalView(LoginRequiredMixin, GetHtmlPrefixMixin, TemplateView):
     template_name = 'doc/_doc.html'

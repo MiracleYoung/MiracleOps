@@ -16,9 +16,10 @@ function delRoster(ele, url, fileName) {
 
 // button install minion
 function installMinion(ele, tab) {
+    $(`#${tab}-feedback`).empty()
     let _pk = $('#roster-install-list').val()
     $.ajax({
-        url: `/api/deploy/install-minion/${_pk}/`,
+        url: `/api/cm/install-minion/${_pk}/`,
         method: 'GET',
         beforeSend: function () {
             $(ele).button('loading')

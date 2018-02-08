@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block main %}
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            {% include '_x_title.html' %}
+
+            <div class="x_content">
+                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#tab_server" id="server-tab" role="tab" data-toggle="tab" aria-expanded="true">
+                                Server List </a>
+                        </li>
+                        <li role="presentation" class="">
+                            <a href="#tab_glob" role="tab" id="glob-tab" data-toggle="tab" aria-expanded="false">
+                                Glob Expression</a>
+                        </li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content">
+                        {% include 'cm/_server_execute.html' %}
+                        {% include 'cm/_glob_execute.html' %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock main %}
+
+{% block js %}
+    <script src="{% static 'js/mo/execute-command.js' %}"></script>
+{% endblock js %}

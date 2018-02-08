@@ -2,7 +2,7 @@ Dropzone.autoDiscover = false;
 
 
 let dropz = new Dropzone("#file-dropzone", {
-    url: '/api/deploy/file-upload/',
+    url: '/api/cm/file-upload/',
     uploadMultiple: true,
     maxFiles: 10,
     parallelUploads: 10,

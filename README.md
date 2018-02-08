@@ -9,7 +9,7 @@
     Using SaltStack to do the cluster-management.
     Integrete some others similar system.
     The code is simple, ha.
-    MiracleOps has its own manual in left sidebar, name doc.
+    MiracleOps has its own manual in left sidebar, name doc, so that you can kickoff from it.
     You can use it for free, and if you have any idea or question, please contact me.
     
     
@@ -38,6 +38,10 @@
 #### Salt SLS
 
 ![sls list](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/sls_list.png)
+
+#### Web Terminal
+
+![web terminal](https://github.com/MiracleYoung/MiracleOps/raw/master/static/images/doc/mo/terminal_detail.png)
 
 ## Installation
 
@@ -78,6 +82,8 @@ QQ group and email are in the below [#Author](https://github.com/MiracleYoung/Mi
         - Apply sls
     - File
         - Upload
+- Terminal
+    - Web Terminal
     
 ## Change Logs
 

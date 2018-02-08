@@ -1,3 +1,6 @@
+// global var
+let ws_port = '8002'
+
 // _modal_detail.html
 function checkDetail(ele, url) {
     $('.modal-title').empty()
