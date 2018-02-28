@@ -1,6 +1,27 @@
 // global var
 let ws_port = '8002'
 
+// api url route
+let apiUrl = {
+    prefix: '/api/v1/',
+    cm: {}
+
+}
+
+
+apiUrl.cm.g = apiUrl.prefix + 'cm/';
+apiUrl.cm.minionRefresh = apiUrl.cm.g + 'minion-refresh/';
+apiUrl.cm.minionRefresh = apiUrl.cm.g + 'minion-refresh/';
+apiUrl.cm.minionCheckAlive = apiUrl.cm.g + 'minion-check-alive/';
+apiUrl.cm.minion = apiUrl.cm.g + 'minion/'; // <id>
+apiUrl.cm.minionCmd = apiUrl.cm.g + 'minion-cmd/';
+apiUrl.cm.roster = apiUrl.cm.g + 'roster/'; // <id>
+apiUrl.cm.installMinion = apiUrl.cm.g + 'install-minion/'; // <roster_id>
+apiUrl.cm.sshCmd = apiUrl.cm.g + 'ssh-cmd/';
+apiUrl.cm.sls = apiUrl.cm.g + 'sls/'; // <id>
+apiUrl.cm.sls = apiUrl.cm.g + 'sls/';
+apiUrl.cm.fileUpload = apiUrl.cm.g + 'file-upload/';
+
 // _modal_detail.html
 function checkDetail(ele, url) {
     $('.modal-title').empty()
@@ -78,7 +99,8 @@ function exec(ele, url, data, tab) {
 
 
 // button add
-function add(ele, tab) {
+function add(e) {
+    let tab = e.data.tab
     $(`#${tab}-cmd`).data({'count': $(`#${tab}-cmd`).data().count + 1})
     let count = $(`#${tab}-cmd`).data('count')
     $(`#${tab}-cmd`).append(`<input type='text' class='form-group form-control' id='${tab}-cmd-${count}' />`)
@@ -86,7 +108,8 @@ function add(ele, tab) {
 }
 
 // button minus
-function minus(ele, tab) {
+function minus(e) {
+    let tab = e.data.tab
     let count = $(`#${tab}-cmd`).data('count')
     if (count > 1) {
         $(`#${tab}-cmd-${count}`).remove()

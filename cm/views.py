@@ -23,7 +23,7 @@ class SaltMinionListView(LoginRequiredMixin, TemplateView):
 
 
 class SaltExecCmdView(LoginRequiredMixin, ListView):
-    template_name = 'cm/execute_command.html'
+    template_name = 'cm/exec_cmd.html'
     context_object_name = 'minion_list'
 
     def get_queryset(self):

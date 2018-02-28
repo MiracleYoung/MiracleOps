@@ -14,11 +14,9 @@
     <div class="col-md-12 col-sm-12 col-xs-12 ">
         <div class="x_panel">
             <button id="btn-refresh-minions" class="btn btn-info"
-                    onclick='importMinions(this, "{% url 'api-cm:minion-refresh' %}")'
                     data-loading-text="<i class='fa fa-spinner fa-spin'></i> Refreshing">{% trans 'Refresh Salt Minions' %}
             </button>
             <button id="btn-check-minions-health" class="btn btn-info"
-                    onclick='refreshMinionsHealth(this, "{% url 'api-cm:minion-check-alive' %}")'
                     data-loading-text="<i class='fa fa-spinner fa-spin'></i> Checking">{% trans 'Check Salt Minions Health' %}
             </button>
         </div>
@@ -51,7 +49,6 @@
                                 <a class="btn btn-danger btn-sm" id="a-delete-minion"
                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Deleting"
                                    data-toggle="modal" data-target="#modal-del"
-                                   onclick='delMinion(this, "{% url 'api-cm:minion' minion.id %}", "{{ minion.hostname }}")'>
                                     <i class="fa fa-trash"></i> {% trans 'Delete' %}
                                 </a>
                             </td>
@@ -121,5 +118,5 @@
 {% endblock main %}
 
 {% block js %}
-    <script src="{% static 'js/mo/salt-minion-list.js' %}"></script>
+    <script src="{% static 'js/mo/cm.js' %}"></script>
 {% endblock js %}

@@ -31,6 +31,8 @@ urlpatterns = [
     url(r'^api/asset/', include('asset.urls.api_urls', namespace='api-asset')),
     url(r'^api/cm/', include('cm.urls.api_urls', namespace='api-cm')),
 
+    url(r'^api/v1/', include('api.urls.v1', namespace='api-v1')),
+
     url(r'test/long/url/', TestLongUrlView.as_view(), name='test-long-url'),
 
 ] + static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

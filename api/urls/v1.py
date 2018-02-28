@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 1/18/18 11:24 AM
+# @Time    : 2/28/18 9:24 AM
 # @Author  : Miracle Young
-# @File    : api_urls.py
+# @File    : v1.py
 
-from django.conf.urls import url
-from api.views.v1 import cm
+from django.conf.urls import url, include
 
-urlpatterns = [
+from ..views.v1 import cm
+
+
+cm_patterns = [
     url(r'^minion-refresh/$', cm.MinionRefreshApi.as_view(), name='minion-refresh'),
     url(r'^minion-check-alive/$', cm.MinionCheckAliveApi.as_view(), name='minion-check-alive'),
     url(r'^minion/(?P<pk>[0-9a-f-]+)/$', cm.MinionApi.as_view(), name='minion'),
@@ -18,4 +20,10 @@ urlpatterns = [
     url(r'^sls/(?P<pk>[0-9a-f-]+)/$', cm.SLSApi.as_view(), name='sls'),
     url(r'^sls/$', cm.SLSCmdApi.as_view(), name='sls-cmd'),
     url(r'^file-upload/$', cm.FileUploadApi.as_view(), name='file-upload'),
+]
+
+
+
+urlpatterns = [
+    url(r'^cm/', include(cm_patterns, namespace='cm')),
 ]

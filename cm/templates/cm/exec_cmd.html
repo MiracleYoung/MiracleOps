@@ -20,8 +20,8 @@
                         </li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
-                        {% include 'cm/_server_execute.html' %}
-                        {% include 'cm/_glob_execute.html' %}
+                        {% include 'cm/_server_exec.html' %}
+                        {% include 'cm/_glob_exec.html' %}
                     </div>
                 </div>
 
@@ -31,5 +31,5 @@
 {% endblock main %}
 
 {% block js %}
-    <script src="{% static 'js/mo/execute-command.js' %}"></script>
+    <script src="{% static 'js/mo/cm.js' %}"></script>
 {% endblock js %}

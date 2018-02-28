@@ -2,7 +2,7 @@
 # encoding: utf-8
 # @Time    : 2018/1/22 上午6:42
 # @Author  : MiracleYoung
-# @File    : urls.py
+# @File    : v1.py
 
 from django.conf.urls import url, include
 from . import views
