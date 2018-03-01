@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'doc.apps.DocConfig',
     'cm.apps.CmConfig',
     'terminal.apps.TerminalConfig',
+    'api.apps.ApiConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',

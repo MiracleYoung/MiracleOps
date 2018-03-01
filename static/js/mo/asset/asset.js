@@ -3,7 +3,10 @@ function delServer(ele, url, hostname) {
     del(ele, url, modalBody)
 }
 
-function delIdc(ele, url, idcname) {
+function delIdc(e) {
+    let ele = e.data.ele
+    let url = e.data.url
+    let idcname = e.data.idcname
     let modalBody = `<p>IDC Name: ${idcname}</p>`
     del(ele, url, modalBody)
 }

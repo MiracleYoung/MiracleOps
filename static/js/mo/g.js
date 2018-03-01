@@ -4,10 +4,10 @@ let ws_port = '8002'
 // api url route
 let apiUrl = {
     prefix: '/api/v1/',
-    cm: {}
+    cm: {},
+    asset: {}
 
 }
-
 
 apiUrl.cm.g = apiUrl.prefix + 'cm/';
 apiUrl.cm.minionRefresh = apiUrl.cm.g + 'minion-refresh/';
@@ -19,8 +19,12 @@ apiUrl.cm.roster = apiUrl.cm.g + 'roster/'; // <id>
 apiUrl.cm.installMinion = apiUrl.cm.g + 'install-minion/'; // <roster_id>
 apiUrl.cm.sshCmd = apiUrl.cm.g + 'ssh-cmd/';
 apiUrl.cm.sls = apiUrl.cm.g + 'sls/'; // <id>
-apiUrl.cm.sls = apiUrl.cm.g + 'sls/';
+apiUrl.cm.slsCmd = apiUrl.cm.g + 'sls-cmd/';
 apiUrl.cm.fileUpload = apiUrl.cm.g + 'file-upload/';
+
+apiUrl.asset.g = apiUrl.prefix + 'asset/';
+apiUrl.asset.server = apiUrl.asset.g + 'server/'; //<id>
+apiUrl.asset.idc = apiUrl.asset.g + 'idc/'; // <id>
 
 // _modal_detail.html
 function checkDetail(ele, url) {
@@ -39,7 +43,8 @@ function checkDetail(ele, url) {
 }
 
 // _modal_delete.html
-function del(ele, url, modalBody) {
+function del(url, modalBody) {
+    $('.modal-body').empty()
     $('.modal-body').append(modalBody)
     $('#confirm-delete').data({"del-url": url})
 }

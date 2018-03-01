@@ -283,8 +283,9 @@ class InstallMinionApi(APIView):
         _payload = {}
         # dump payload
         for _host, _ret in _cp_payload.items():
-            _payload[_host] = _sh_payload[_host] if _ret['return'] else _cp_payload[_host]
+            _payload[_host] = _sh_payload[_host] if _ret.get('return', '') else _cp_payload[_host]
         # whatever return payload
+        print(_payload)
         return Response(_payload, status=status.HTTP_200_OK)
 
 
@@ -347,12 +348,13 @@ class FileUploadApi(APIView):
             _u = get_user(self.request)
             _dir = '{}.{}'.format(_u.username, int(timezone.now().timestamp()))
             # need to add a symbolic link from media to /etc/salt
-            _srcdir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media/file/', _dir)
+            _basedir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+            _srcdir = os.path.join(_basedir, 'media/file/', _dir)
             _saltdir = 'salt://media/file/' + _dir
             os.makedirs(_srcdir)
             _media = '/etc/salt/media'
             os.remove(_media) if os.path.islink(_media) else shutil.rmtree(_media)
-            os.symlink(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'media'), _media)
+            os.symlink(os.path.join(_basedir, 'media'), _media)
             for k, v in self.request.FILES.items():
                 _f = File(file=v, user=_u, status=1)
                 _f.save()

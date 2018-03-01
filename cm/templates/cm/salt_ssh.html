@@ -124,8 +124,7 @@
                                     <td>
                                         <div class="form-group">
                                             <button type="button" class="btn btn-info" id="minion-install"
-                                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Installing"
-                                                    onclick='installMinion(this, "install")'>
+                                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Installing">
                                                 <i class="fa fa-play"></i> Install
                                             </button>
                                         </div>
@@ -180,8 +179,7 @@
                                                 <i class="ion ion-ios-loop-strong"></i> Reset
                                             </button>
                                             <button type="button" class="btn btn-danger" id="roster-execute"
-                                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Executing"
-                                                    onclick='rosterExec(this, "{% url 'api-cm:ssh-cmd' %}")'>
+                                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Executing">
                                                 <i class="fa fa-play"></i> Execute
                                             </button>
                                         </div>
@@ -211,5 +209,5 @@
 {% block js %}
     {#    <script src="{% static 'js/plugins/nprogress/nprogress.js' %}"></script>#}
     <script src="{% static 'js/plugins/dropzone/dropzone.min.js' %}"></script>
-    <script src="{% static 'js/mo/ssh.js' %}"></script>
+    <script src="{% static 'js/mo/cm/ssh.js' %}"></script>
 {% endblock js %}

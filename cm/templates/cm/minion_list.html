@@ -24,6 +24,7 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
+
             {% include '_x_title.html' %}
 
             <div class="x_content">
@@ -49,6 +50,7 @@
                                 <a class="btn btn-danger btn-sm" id="a-delete-minion"
                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Deleting"
                                    data-toggle="modal" data-target="#modal-del"
+                                   data-hostname="{{ minion.hostname }}" data-id="{{ minion.id }}">
                                     <i class="fa fa-trash"></i> {% trans 'Delete' %}
                                 </a>
                             </td>
@@ -63,26 +65,9 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-            <div class="x_title">
-                <h2>Unaccepted Keys</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Settings 1</a>
-                            </li>
-                            <li><a href="#">Settings 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
+
+            {% include '_x_title.html' %}
+
             <div class="x_content">
                 <table id="datatable-accepted" class="table table-striped table-bordered">
                     <thead>
@@ -98,8 +83,7 @@
                             <td>{{ minion.hostname }}</td>
                             <td>
                                 <button class="btn btn-danger btn-sm" id="btn-accept-minion"
-                                        data-loading-text="<i class='fa fa-spinner fa-spin'></i> Accepting"
-                                        onclick="acceptMinion(this)">
+                                        data-loading-text="<i class='fa fa-spinner fa-spin'></i> Accepting">
                                     <i class="fa fa-trash"></i> {% trans 'Accept' %}
                                 </button>
                             </td>
@@ -118,5 +102,5 @@
 {% endblock main %}
 
 {% block js %}
-    <script src="{% static 'js/mo/cm.js' %}"></script>
+    <script src="{% static 'js/mo/cm/minion_list.js' %}"></script>
 {% endblock js %}

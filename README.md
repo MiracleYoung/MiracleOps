@@ -1,6 +1,6 @@
-# MiracleOps
-
 [TOC]
+
+# MiracleOps
 
 ## Overview
 
@@ -45,13 +45,13 @@
 
 ## Installation
 
-[Install Manual](https://github.com/MiracleYoung/MiracleOps/raw/master/utils/INSTALL_MANUAL.md)
+See [Install Manual](https://github.com/MiracleYoung/MiracleOps/raw/master/utils/INSTALL_MANUAL.md)
 
 **Important Advice**: Do not use DEBUG schema in production.
 
 If you like it, please star it, and can also join us by QQ, email.
 
-QQ group and email are in the below [#Author](https://github.com/MiracleYoung/MiracleOps#author).
+QQ group and email are in the below [## Author](https://github.com/MiracleYoung/MiracleOps#author).
 
 ## Features
 
@@ -84,6 +84,10 @@ QQ group and email are in the below [#Author](https://github.com/MiracleYoung/Mi
         - Upload
 - Terminal
     - Web Terminal
+    
+## Version 1.4.1
+
+
     
 ## Change Logs
 

@@ -15,11 +15,13 @@ function delRoster(ele, url, fileName) {
 
 
 // button install minion
-function installMinion(ele, tab) {
+function installMinion(e) {
+    let ele = e.data.ele
+    let tab = e.data.tab
     $(`#${tab}-feedback`).empty()
     let _pk = $('#roster-install-list').val()
     $.ajax({
-        url: `/api/cm/install-minion/${_pk}/`,
+        url: apiUrl.cm.installMinion + _pk + '/',
         method: 'GET',
         beforeSend: function () {
             $(ele).button('loading')
@@ -34,7 +36,9 @@ function installMinion(ele, tab) {
 }
 
 // roster execution tab
-function rosterExec(ele, url) {
+function rosterExec(e) {
+    let ele = e.data.ele
+    let url = e.data.url
     let _roster_id = $('#roster-exec-list').val()
     let tab = 'roster'
     $(`#${tab}-feedback`).empty()
@@ -47,3 +51,16 @@ function rosterExec(ele, url) {
     }
     exec(ele, url, data, tab)
 }
+
+
+// ssh install minion button
+$('#minion-install').on('click', {
+    ele: '#minion-install',
+    tab: 'install'
+}, installMinion)
+
+// roster execute button
+$('#roster-execute').on('click', {
+    ele: '#roster-execute',
+    url: apiUrl.cm.sshCmd
+}, rosterExec)

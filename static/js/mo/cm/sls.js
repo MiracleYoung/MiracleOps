@@ -23,3 +23,9 @@ function slsExec(ele, url) {
     }
     exec(ele, url, data, tab)
 }
+
+$('#sls-execute').on('click', {
+    ele: '#sls-execute',
+    url: apiUrl.cm.slsCmd
+}, slsExec)
+

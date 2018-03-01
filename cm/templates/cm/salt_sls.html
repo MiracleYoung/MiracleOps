@@ -11,6 +11,7 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
+
             {% include '_x_title.html' %}
 
             <div class="x_content">
@@ -128,8 +129,7 @@
                                                 <i class="ion ion-ios-loop-strong"></i> Reset
                                             </button>
                                             <button type="button" class="btn btn-danger" id="sls-execute"
-                                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Executing"
-                                                    onclick='slsExec(this, "{% url 'api-cm:sls-cmd' %}")'>
+                                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Executing">
                                                 <i class="fa fa-play"></i> Execute
                                             </button>
                                         </div>
@@ -159,5 +159,5 @@
 {% block js %}
 {#    <script src="{% static 'js/plugins/nprogress/nprogress.js' %}"></script>#}
     <script src="{% static 'js/plugins/dropzone/dropzone.min.js' %}"></script>
-    <script src="{% static 'js/mo/sls.js' %}"></script>
+    <script src="{% static 'js/mo/cm/sls.js' %}"></script>
 {% endblock js %}

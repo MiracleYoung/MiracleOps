@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # encoding: utf-8
-# @Time    : 2018/1/9 下午10:13
+# @Time    : 2018/3/1 上午7:20
 # @Author  : MiracleYoung
-# @File    : entity.py
+# @File    : asset.py
+
 
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
+
 from asset.serializer import *
 from asset.models import *
 
