@@ -5,7 +5,7 @@
 # @File    : serializers.py
 
 from rest_framework.serializers import ModelSerializer
-from .models.user import User
+from user.models import User
 
 
 class UserSerializer(ModelSerializer):

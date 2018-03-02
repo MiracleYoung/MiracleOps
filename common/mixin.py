@@ -7,7 +7,7 @@
 from django.shortcuts import redirect, reverse
 from django.conf import settings
 import datetime
-from user.models.user import User
+from user.models import User
 
 
 class LoginRequiredMixin:

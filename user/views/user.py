@@ -2,7 +2,7 @@
 # encoding: utf-8
 # @Time    : 2018/1/7 下午3:43
 # @Author  : MiracleYoung
-# @File    : user.py
+# @File    : models.py
 
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
@@ -11,7 +11,7 @@ from django.shortcuts import redirect, reverse, render
 from django import forms
 from django.utils import timezone
 from user.forms import UserLoginForm, UserCreateForm
-from ..models.user import User
+from user.models import User
 from common.utils import gen_token
 import datetime
 

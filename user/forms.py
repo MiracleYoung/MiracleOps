@@ -6,8 +6,7 @@
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from .models.user import User
-from common.error import f_valid_required_err
+from user.models import User
 
 
 class UserCreateForm(forms.ModelForm):

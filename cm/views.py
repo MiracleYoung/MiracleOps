@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.http import HttpResponseBadRequest, HttpResponse
 
 from common.mixin import LoginRequiredMixin
-from user.models.user import User
+from user.models import User
 from .models import *
 
 

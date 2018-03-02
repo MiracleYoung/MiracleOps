@@ -2,13 +2,15 @@
 # encoding: utf-8
 # @Time    : 1/5/2018 4:57 PM
 # @Author  : Miracle Young
-# @File    : user.py
+# @File    : models.py
+
+import random, hashlib, os, base64
 
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
-from django.utils.timezone import now
-from .group import Group
+
+
 
 __all__ = ['User']
 
@@ -43,26 +45,29 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     JOB_TITLE_CHOICE = (
-        ('DBA', 'Database Administrator'),
-        ('SA', 'System Administrator'),
-        ('NA', 'Network Administrator'),
-        ('IT', 'Help Desk/IT'),
-        ('Director', 'Director'),
-        ('Manager', 'Manager'),
-        ('TL', 'Tech Leader'),
-        ('DEV', 'DEVOLOPER'),
+        (1, 'Database Administrator'),
+        (2, 'System Administrator'),
+        (3, 'Network Administrator'),
+        (4, 'Help Desk/IT'),
+        (5, 'Director'),
+        (6, 'Manager'),
+        (7, 'Tech Leader'),
+        (8, 'Developer'),
+        (9, 'Tester'),
     )
 
     email = models.EmailField(_('Email Address'), max_length=128, unique=True)
     username = models.CharField(_('User Name'), max_length=32)
     wechat = models.CharField(_('WeChat Account'), max_length=32, blank=True)
     avatar = models.ImageField(_('Avatar'), upload_to='avatar', null=True, blank=True, default='avatar/default_avatar.jpeg')
-    job_title = models.CharField(_('Job Title'), max_length=32, choices=JOB_TITLE_CHOICE, default='', blank=True)
-    reg_time = models.DateTimeField(_('Register Time'), auto_now_add=True)
-    group = models.ForeignKey(Group, verbose_name=_('Group'), null=True)
+    job_title = models.SmallIntegerField(_('Job Title'), max_length=32, choices=JOB_TITLE_CHOICE, default=0, blank=True)
+
     is_active = models.BooleanField(_('Is Active'), default=True)
-    is_admin = models.BooleanField(_('Is Admin'), default=False)
-    is_staff = models.BooleanField(_('Is Staff'), default=True)
+    is_staff = models.BooleanField(_('Is Staff'), default=False)
+    is_superuser = models.BooleanField(_('Is SuperUser'), default=False)
+
+    reg_time = models.DateTimeField(_('Register Time'), auto_now_add=True)
+    login_time = models.DateTimeField(_('Login Time'), auto_now=True)
 
     class Meta:
         indexes = [
@@ -80,6 +85,21 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         return self.username
+
+    def set_password(self, raw_password):
+        # 8 length salt
+        _salt = base64.b64encode(os.urandom(8))
+        _m = hashlib.md5()
+        _m.update(_salt + raw_password.encode())
+        self.password = '{}${}'.format(_salt.decode(), _m.hexdigest())
+
+    def check_password(self, raw_password):
+        _salt, _password = self.password.split('$')
+        _m = hashlib.md5()
+        return _m.update(_salt + raw_password.encode()).hexdigest() == _password
+
+
+
 
     def __str__(self):
         return self.email

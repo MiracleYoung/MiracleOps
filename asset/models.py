@@ -9,7 +9,7 @@ import uuid
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from user.models import User, Group
+from user.models import User
 
 __all__ = ['IDC', 'Server']
 

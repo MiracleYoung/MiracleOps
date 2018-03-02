@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from asset.models import Server
-from user.models.user import User
+from user.models import User
 
 __all__ = ['SaltMinion', 'Roster', 'Sls', 'File']
 
