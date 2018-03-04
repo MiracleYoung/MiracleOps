@@ -9,8 +9,8 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from asset.serializer import *
-from asset.models import *
+from assets.serializer import *
+from assets.models import *
 
 __all__ = ['ServerApi', 'IDCApi']
 

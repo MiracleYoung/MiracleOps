@@ -16,9 +16,9 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from common.str_parse import text2html
 from common.saltapi import SaltAPI
-from asset.models import Server
-from user.authentication import get_user
-from cm.models import *
+from assets.models import Server
+from users.authentication import get_user
+from cms.models import *
 
 SALT_API_URL = settings.SALT_API_URL
 SALT_API_USERNAME = settings.SALT_API_USERNAME

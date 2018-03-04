@@ -35,11 +35,11 @@ INSTALLED_APPS = [
 
     # 'rest_framework.authtoken',
     'common.apps.CommonConfig',
-    'user.apps.UserConfig',
-    'asset.apps.AssetConfig',
-    'doc.apps.DocConfig',
-    'cm.apps.CmConfig',
-    'terminal.apps.TerminalConfig',
+    'users.apps.UserConfig',
+    'assets.apps.AssetConfig',
+    'docs.apps.DocConfig',
+    'cms.apps.CmConfig',
+    'terminals.apps.TerminalConfig',
     'api.apps.ApiConfig',
 
     'django.contrib.admin',
@@ -153,7 +153,7 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = 'users.User'
 
 APPEND_SLASH = True
 LOGIN_URL = 'user:login'

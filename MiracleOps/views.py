@@ -5,7 +5,8 @@
 # @File    : views.py
 
 from django.views.generic.base import TemplateView
-from common.mixin import LoginRequiredMixin
+from users.mixins import LoginRequiredMixin
+
 
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
