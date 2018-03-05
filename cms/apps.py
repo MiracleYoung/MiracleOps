@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class CmConfig(AppConfig):
+class CmsConfig(AppConfig):
     name = 'cms'

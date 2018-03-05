@@ -4,10 +4,10 @@
 # @Author  : Miracle Young
 # @File    : models.py
 
-import hashlib, os, base64, time
+import hashlib, os, base64, time, uuid
 
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, GroupManager, Permission
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
@@ -15,29 +15,29 @@ __all__ = ['User', 'Role', 'Token']
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, username, wechat, password=None):
+    def create_user(self, email, name, wechat, password=None):
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
             email=self.normalize_email(email),
-            username=username,
-            wechat=wechat
+            name=name,
+            wechat=wechat,
+            role=Role.objects.get(name='UnVerified')
         )
-
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, wechat=None, password=None):
+    def create_superuser(self, email, name, wechat=None, password=None):
         user = self.create_user(
             email=self.normalize_email(email),
-            username=username,
+            name=name,
             wechat=wechat,
             password=password
         )
-
         user.is_admin = True
+        user.role = Role.objects.get(name='Admin')
         user.save(using=self._db)
         return user
 
@@ -57,8 +57,9 @@ class User(AbstractBaseUser):
 
     )
 
+    id = models.UUIDField(_('ID'), default=uuid.uuid4, primary_key=True)
     email = models.EmailField(_('Email Address'), max_length=128, unique=True)
-    username = models.CharField(_('User Name'), max_length=32)
+    name = models.CharField(_('Name'), max_length=32)
     wechat = models.CharField(_('WeChat Account'), max_length=32, blank=True)
     avatar = models.ImageField(_('Avatar'), upload_to='avatar', null=True, blank=True,
                                default='avatar/default_avatar.jpeg')
@@ -71,11 +72,10 @@ class User(AbstractBaseUser):
     role = models.ForeignKey('Role', verbose_name=_('Role'))
 
     reg_time = models.DateTimeField(_('Register Time'), auto_now_add=True)
-    login_time = models.DateTimeField(_('Login Time'), default=timezone.now)
 
     class Meta:
         indexes = [
-            models.Index(fields=['email', ], name='u_email_idx'),
+            models.Index(fields=['email', ], name='u_user_email'),
         ]
         db_table = 'user'
 
@@ -100,10 +100,11 @@ class User(AbstractBaseUser):
     def check_password(self, raw_password):
         _salt, _password = self.password.split('$')
         _m = hashlib.md5()
-        return _m.update(_salt + raw_password.encode()).hexdigest() == _password
+        _m.update((_salt + str(raw_password)).encode())
+        return _m.hexdigest() == _password
 
     def __str__(self):
-        return self.email
+        return '<User email: {}>'.format(self.email)
 
     __repr__ = __str__
 
@@ -116,13 +117,14 @@ class User(AbstractBaseUser):
 
 class Role(models.Model):
     id = models.AutoField(_('ID'), primary_key=True)
-    role_name = models.CharField(_('Role Name'), max_length=100, default='')
+    name = models.CharField(_('Role Name'), max_length=100, default='')
+    c_time = models.DateTimeField(_('Create Time'), auto_now_add=True)
 
     class Meta:
         db_table = 'role'
 
     def __str__(self):
-        return 'Role: <{}>'.format(self.role_name)
+        return 'Role: <{}>'.format(self.name)
 
     __repr__ = __str__
 
@@ -139,5 +141,35 @@ class Token(models.Model):
 
     def __str__(self):
         return 'Token: <{}>'.format(self.token)
+
+    __repr__ = __str__
+
+
+class Group(models.Model):
+    id = models.AutoField(_('ID'), primary_key=True)
+    name = models.CharField(_('name'), max_length=80, unique=True)
+    c_time = models.DateTimeField(_('Create Time'), auto_now_add=True)
+
+    class Meta:
+        db_table = 'group'
+
+    objects = GroupManager()
+
+    def __str__(self):
+        return '<Group: {}>'.format(self.name)
+
+    __repr__ = __str__
+
+
+class UserGroup(models.Model):
+    id = models.AutoField(_('ID'), primary_key=True)
+    user = models.ForeignKey(User, verbose_name=_('User'))
+    group = models.ForeignKey(Group, verbose_name=_('Group'))
+
+    class Meta:
+        db_table = 'user_group'
+
+    def __str__(self):
+        return '<User: {}>: <Group: {}>'.format(self.user.name, self.group.name)
 
     __repr__ = __str__

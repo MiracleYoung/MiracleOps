@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class TerminalConfig(AppConfig):
+class TerminalsConfig(AppConfig):
     name = 'terminals'

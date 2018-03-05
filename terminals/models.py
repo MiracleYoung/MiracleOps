@@ -18,7 +18,7 @@ class Terminal(models.Model):
         (2, 'ERROR'),
     )
 
-    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
+    id = models.UUIDField(_('ID'), default=uuid.uuid4, primary_key=True)
     server = models.ForeignKey(Server, verbose_name=_('Server'), db_constraint=False)
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=0)
     ssh_port = models.SmallIntegerField(_('SSH Port'), default=22)

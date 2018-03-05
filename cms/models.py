@@ -19,7 +19,7 @@ class SaltMinion(models.Model):
         (5, 'Deleted'),
     )
 
-    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
+    id = models.UUIDField(_('ID'), default=uuid.uuid4, primary_key=True)
     hostname = models.CharField(_('Hostname'), max_length=100, default='')
     # when accept minion, need to initial server attr
     server = models.ForeignKey(Server, on_delete=models.DO_NOTHING, verbose_name=_('Server'), null=True)
@@ -49,7 +49,7 @@ class FileABC(models.Model):
         (2, 'Deleted'),
     )
 
-    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
+    id = models.UUIDField(_('ID'), default=uuid.uuid4, primary_key=True)
     user = models.ForeignKey(User, blank=True, null=True)
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=0, blank=True)
     c_time = models.DateTimeField(_('Create Time'), auto_now_add=True, null=True, blank=True)

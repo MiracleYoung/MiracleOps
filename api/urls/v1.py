@@ -6,9 +6,9 @@
 
 from django.conf.urls import url, include
 
-from ..views.v1 import cm, asset
+from ..views.v1 import cm, asset, auth
 
-cm_patterns = [
+cms_patterns = [
     url(r'^minion-refresh/$', cm.MinionRefreshApi.as_view(), name='minion-refresh'),
     url(r'^minion-check-alive/$', cm.MinionCheckAliveApi.as_view(), name='minion-check-alive'),
     url(r'^minion/(?P<pk>[0-9a-f-]+)/$', cm.MinionApi.as_view(), name='minion'),
@@ -21,12 +21,17 @@ cm_patterns = [
     url(r'^file-upload/$', cm.FileUploadApi.as_view(), name='file-upload'),
 ]
 
-asset_patterns = [
+assets_patterns = [
     url(r'^server/(?P<pk>[0-9a-f-]+)/$', asset.ServerApi.as_view(), name='server'),
     url(r'^idc/(?P<pk>[0-9a-f-]+)/$', asset.IDCApi.as_view(), name='idc'),
 ]
 
+users_patterns = [
+    url(r'^login/$', auth.UserLoginApiView.as_view(), name='login'),
+]
+
 urlpatterns = [
-    url(r'^cm/', include(cm_patterns, namespace='cm')),
-    url(r'^asset/', include(asset_patterns, namespace='asset')),
+    url(r'^cms/', include(cms_patterns, namespace='cms')),
+    url(r'^assets/', include(assets_patterns, namespace='assets')),
+    url(r'^users/', include(users_patterns, namespace='users')),
 ]

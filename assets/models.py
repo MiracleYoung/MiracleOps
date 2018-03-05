@@ -20,7 +20,7 @@ class IDC(models.Model):
         (3, 'Out of Service'),
     )
 
-    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
+    id = models.UUIDField(_('ID'), default=uuid.uuid4, primary_key=True)
     name = models.CharField(_('IDC Name'), max_length=100, default='')
     idc_user = models.CharField(_('IDC User'), max_length=100, default='')
     idc_user_tel = models.CharField(_('IDC User Phone'), max_length=100, default='')
@@ -65,7 +65,7 @@ class Server(models.Model):
         (99, 'Other'),
     )
 
-    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
+    id = models.UUIDField(_('ID'), default=uuid.uuid4, primary_key=True)
     public_ip = models.GenericIPAddressField(_('Public IP'), default='0.0.0.0')
     # when first initial, if hostname is None or '', then hostname=public_ip
     hostname = models.CharField(_('Hostname'), max_length=100, default='', blank=True)

@@ -1,8 +1,8 @@
-#!/usr/bin/env pythonAdd
+#!/usr/bin/env python
 # encoding: utf-8
 # @Time    : 2018/1/6 上午7:55
 # @Author  : MiracleYoung
-# @File    : mixin.py
+# @File    : mixin.py_now
 
 import datetime
 
@@ -19,13 +19,13 @@ class CookieMixin:
     def get_cookies(self):
         return self._cookies
 
-    def add_cookie(self, *args, **kwargs):
-        self._cookies.append((*args, kwargs))
+    def add_cookie(self, **kwargs):
+        self._cookies.append(kwargs)
 
     def dispatch(self, request, *args, **kwargs):
         _res = super(CookieMixin, self).dispatch(request, *args, **kwargs)
-        for _args, _kwargs in self.get_cookies():
-            _res.set_cookie(*_args, **_kwargs)
+        for _item in self.get_cookies():
+            _res.set_cookie(**_item)
         return _res
 
 

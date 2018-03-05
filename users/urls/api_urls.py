@@ -5,7 +5,7 @@
 # @File    : views_urls.py
 
 from django.conf.urls import url
-from users.authentication import UserRetrieveUpdateDestroyApi
+from api.views.v1.auth import UserRetrieveUpdateDestroyApi
 
 app_name = 'user'
 

@@ -8,13 +8,12 @@ import datetime
 
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.shortcuts import redirect, reverse, render
 from django import forms
 
 from .forms import UserCreateForm, UserLoginForm
 from .models import User
-from .authentication import gen_login_token
+from api.views.v1.auth import gen_login_token
 from common.mixins import CookieMixin
 
 
@@ -25,23 +24,25 @@ class UserLoginView(CookieMixin, FormView):
 
     def form_valid(self, form):
         if form.is_valid():
+            _email = form.cleaned_data.get('email', '')
             try:
-                u = User.objects.get(email=form.cleaned_data['email'])
-            except ObjectDoesNotExist:
-                raise ValidationError('email does not exist')
+                _user = User.objects.get(_email)
+            except User.DoesNotExist:
+                return render(self.request, 'user/login.html', {'message': 'Email {} does not exist.'.format(_email)})
             else:
-                if u.check_password(form.cleaned_data['password']) and u.is_authenticated:
+                _password = form.cleaned_data.get('password', '')
+                if _user.check_password(_password) and _user.is_authenticated:
                     # get token and set token to cookie
                     _ret, _payload = gen_login_token(u)
                     _now = datetime.datetime.now()
                     if _ret:
                         self.add_cookie(
                             {'key': 'jwt', 'value': _payload, 'max_age': 86400 * 7, 'expires': _now, 'httponly': True})
-                    u.last_login = _now
-                    u.save()
+                    _user.last_login = _now
+                    _user.save()
                     return super(UserLoginView, self).form_valid(form)
                 else:
-                    raise ValidationError('password is incorrect.')
+                    return render(self.request, 'user/login.html', {'message': 'Incorrect email and password.'})
 
     def get_success_url(self):
         _referer = self.request.META.get('HTTP_REFERER', '')
@@ -59,10 +60,9 @@ class UserCreateView(FormView):
             try:
                 User.objects.get(email=form.cleaned_data['email'])
                 raise forms.ValidationError('Email exist, please change another one.')
-            except ObjectDoesNotExist:
-
+            except User.ObjectDoesNotExist:
                 form.save()
-                return render(self.request, 'user/login.html', {'message': 'Register successful, please login.'})
+                return form
 
 
 class UserLogoutView(TemplateView):

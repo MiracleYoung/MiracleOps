@@ -4,11 +4,16 @@
 # @Author  : MiracleYoung
 # @File    : serializers.py
 
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from .models import *
 
 
-class UserSerializer(ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'email', 'username', 'job_title', 'is_active', 'is_superuser', 'role', 'login_time',]
+
+class UserLoginSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        exclude = ('password', )

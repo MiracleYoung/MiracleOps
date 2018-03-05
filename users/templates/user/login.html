@@ -1,11 +1,6 @@
 {% extends '_base.html' %}
-{% load bootstrap3 %}
+{% load static bootstrap3 %}
 
-{% block js %}
-    <script>
-        $('body').addClass('login');
-    </script>
-{% endblock js %}
 
 {% block html_body %}
     <div>
@@ -15,36 +10,26 @@
         <div class="login_wrapper">
             <div class="animate form login_form">
                 <section class="login_content">
-                    {% if message %}
-                        <p class="text-danger">{{ message }}</p>
-                    {% endif %}
 
-                    {% if form.errors %}
-                        {% for field, error in form.errors.items %}
-                            <p class="text-danger">{{ field }} : {{ error.0 }}</p>
-                        {% endfor %}
-                    {% endif %}
+                    <p class="text-danger"></p>
 
-                    <form action="{% url 'user:login' %}" method="post">
-                        {% csrf_token %}
+                    <form action="#">
                         <h1>MO Login Form</h1>
 
                         <div class="form-group has-feedback">
-                            <input type="email" class="form-control" placeholder="Email" name="email">
+                            <input type="email" class="form-control" placeholder="Email" name="email" id="email">
                             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                         </div>
-
                         <div class="form-group has-feedback">
-                            <input type="password" class="form-control" placeholder="Password" name="password">
+                            <input type="password" class="form-control" placeholder="Password" name="password"
+                                   id="password">
                             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
-
-
                         <div class="row">
                             <div class="col-xs-4">
-                                <button type="submit" class="btn btn-primary btn-block btn-flat">Log In</button>
+                                <button type="button" class="btn btn-primary btn-block btn-flat" id="login">Log In
+                                </button>
                             </div>
-
                             <a class="reset_pass" href="#">Lost your password?</a>
                         </div>
 
@@ -52,7 +37,7 @@
 
                         <div class="separator">
                             <p class="change_link">New to site?
-                                <a href="{% url 'user:register' %}" class="to_register"> Create Account </a>
+                                <a href="{% url 'user:register' %}" class="to_register"> Register Account </a>
                             </p>
 
                             <div class="clearfix"></div>
@@ -71,3 +56,10 @@
     </div>
 
 {% endblock html_body %}
+
+{% block js %}
+    <script>
+        $('body').addClass('login');
+    </script>
+    <script src="{% static 'js/mo/auth/auth.js' %}"></script>
+{% endblock js %}

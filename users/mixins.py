@@ -5,8 +5,6 @@
 # @File    : mixins.py
 
 
-import datetime
-
 from rest_framework import status
 from django.shortcuts import redirect, reverse
 from django.conf import settings
@@ -14,7 +12,7 @@ from django.http import HttpResponse
 
 
 from .models import User, Token
-from .authentication import verify_login_token
+from api.views.v1.auth import verify_login_token
 
 
 
