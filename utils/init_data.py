@@ -4,10 +4,10 @@
 # @Author  : Miracle Young
 # @File    : init_data.py
 
-import pymysql, uuid, datetime
+import pymysql, uuid, datetime, platform
 
 conn_str = {
-    'host': 'localhost',
+    'host': '127.0.0.1' if 'linux' in platform.platform().lower() else '172.16.46.182',
     'port': 3306,
     'user': 'root',
     'password': '',

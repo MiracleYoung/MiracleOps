@@ -15,6 +15,13 @@ function login() {
             }).then((result) => {
                 window.location = '/'
             })
+        } else if (data.code == 404) {
+            swal({
+                title: data.msg,
+                type: 'error',
+                showCancelButton: false,
+                confirmButtonColor: '#d33',
+            })
         }
     })
 }

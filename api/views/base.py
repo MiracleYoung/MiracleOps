@@ -10,5 +10,4 @@ from rest_framework import views, response
 
 class BaseAPIView(views.APIView):
     def json_response(self, code, data, msg):
-        return response.Response(data={'code': code, 'data': data, 'msg': msg}, status=code,
-                                 content_type='application/json')
+        return response.Response(data={'code': code, 'data': data, 'msg': msg}, content_type='application/json')

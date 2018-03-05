@@ -48,7 +48,7 @@ class UserLoginApiView(CookieMixin, BaseAPIView):
         try:
             _user = User.objects.get(email=_email)
         except User.DoesNotExist:
-            return self.json_response(status.HTTP_404_NOT_FOUND, '', 'User does not exist.')
+            return self.json_response(1001, '', 'User does not exist.')
         else:
             if _user.check_password(_password) and _user.is_authenticated:
                 # get token and set token to cookie
@@ -58,9 +58,9 @@ class UserLoginApiView(CookieMixin, BaseAPIView):
                     self.add_cookie(**{'key': 'jwt', 'value': _payload, 'max_age': 86400 * 7, 'expires': _now})
                 _user.last_login = _now
                 _user.save()
-                return self.json_response(status.HTTP_200_OK, '', 'Login success.')
+                return self.json_response(0, '', 'Login success.')
             else:
-                return self.json_response(status.HTTP_400_BAD_REQUEST, '', 'Incorrect username and password.')
+                return self.json_response(1002, '', 'Incorrect username and password.')
 
 
 class UserRetrieveUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):

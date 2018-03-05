@@ -9,9 +9,23 @@ import hashlib, os, base64, time, uuid
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, GroupManager, Permission
 from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
+# from django.contrib.sessions import models
 
-__all__ = ['User', 'Role', 'Token']
+__all__ = ['User', 'Role', 'Token', 'Group', 'UserGroup']
+
+
+class Role(models.Model):
+    id = models.AutoField(_('ID'), primary_key=True)
+    name = models.CharField(_('Role Name'), max_length=100, default='')
+    c_time = models.DateTimeField(_('Create Time'), auto_now_add=True)
+
+    class Meta:
+        db_table = 'role'
+
+    def __str__(self):
+        return 'Role: <{}>'.format(self.name)
+
+    __repr__ = __str__
 
 
 class UserManager(BaseUserManager):
@@ -69,7 +83,7 @@ class User(AbstractBaseUser):
     is_staff = models.BooleanField(_('Is Staff'), default=True)
     is_superuser = models.BooleanField(_('Is SuperUser'), default=False)
 
-    role = models.ForeignKey('Role', verbose_name=_('Role'))
+    role = models.ForeignKey('Role', verbose_name=_('Role'), db_constraint=False)
 
     reg_time = models.DateTimeField(_('Register Time'), auto_now_add=True)
 
@@ -115,23 +129,9 @@ class User(AbstractBaseUser):
         return True
 
 
-class Role(models.Model):
-    id = models.AutoField(_('ID'), primary_key=True)
-    name = models.CharField(_('Role Name'), max_length=100, default='')
-    c_time = models.DateTimeField(_('Create Time'), auto_now_add=True)
-
-    class Meta:
-        db_table = 'role'
-
-    def __str__(self):
-        return 'Role: <{}>'.format(self.name)
-
-    __repr__ = __str__
-
-
 class Token(models.Model):
     id = models.AutoField(_('ID'), primary_key=True)
-    user = models.ForeignKey('User', verbose_name=_('User'))
+    user = models.ForeignKey('User', verbose_name=_('User'), db_constraint=False)
     token = models.CharField(_('Token'), max_length=1024, default='')
     c_time = models.IntegerField(_('Create Time'), default=int(time.time()))
     e_time = models.IntegerField(_('Expire Time'), default=int(time.time()) + 86400 * 7)
@@ -163,8 +163,8 @@ class Group(models.Model):
 
 class UserGroup(models.Model):
     id = models.AutoField(_('ID'), primary_key=True)
-    user = models.ForeignKey(User, verbose_name=_('User'))
-    group = models.ForeignKey(Group, verbose_name=_('Group'))
+    user = models.ForeignKey(User, verbose_name=_('User'), db_constraint=False)
+    group = models.ForeignKey(Group, verbose_name=_('Group'), db_constraint=False)
 
     class Meta:
         db_table = 'user_group'

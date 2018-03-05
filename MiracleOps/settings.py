@@ -29,7 +29,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'corsheaders',
     'rest_framework',
     'bootstrap3',
 
@@ -52,11 +51,11 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework.authentication.BasicAuthentication',
-    #     'rest_framework.authentication.SessionAuthentication',
-    #     # 'rest_framework.authentication.TokenAuthentication',
-    # ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+    ),
     # 'DEFAULT_PERMISSION_CLASSES': (
     #     'rest_framework.permissions.IsAuthenticated',
     # )
@@ -157,9 +156,6 @@ AUTH_USER_MODEL = 'users.User'
 
 APPEND_SLASH = True
 LOGIN_URL = 'user:login'
-
-# CORS setting
-CORS_ORIGIN_ALLOW_ALL = True
 
 # django bootstrap3 docs https://django-bootstrap3.readthedocs.io/en/latest/settings.html
 BOOTSTRAP3 = {
