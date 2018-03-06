@@ -37,8 +37,8 @@
                             <i class="fa fa-inbox"></i> Asset <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a href="{% url 'asset:idc:list' %}"> IDC </a></li>
-                            <li><a href="{% url 'asset:server:list' %}"> Server Machine </a></li>
+                            <li><a href="{% url 'assets:idc:list' %}"> IDC </a></li>
+                            <li><a href="{% url 'assets:server:list' %}"> Server Machine </a></li>
                         </ul>
                     </li>
                     <li>
@@ -46,11 +46,11 @@
                             <i class="fa fa-cubes"></i> Cluster Management <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a href="{% url 'cm:minion-list' %}"> Minions List </a></li>
-                            <li><a href="{% url 'cm:exec-cmd' %}"> Execute Command </a></li>
-                            <li><a href="{% url 'cm:ssh' %}"> SSH </a></li>
-                            <li><a href="{% url 'cm:sls' %}"> SLS </a></li>
-                            <li><a href="{% url 'cm:file-upload' %}"> File </a></li>
+                            <li><a href="{% url 'cms:minion-list' %}"> Minions List </a></li>
+                            <li><a href="{% url 'cms:exec-cmd' %}"> Execute Command </a></li>
+                            <li><a href="{% url 'cms:ssh' %}"> SSH </a></li>
+                            <li><a href="{% url 'cms:sls' %}"> SLS </a></li>
+                            <li><a href="{% url 'cms:file-upload' %}"> File </a></li>
                         </ul>
                     </li>
                     <li>
@@ -58,7 +58,7 @@
                             <i class="fa fa-cubes"></i> Terminal <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a href="{% url 'terminal:list' %}"> Terminal List </a></li>
+                            <li><a href="{% url 'terminals:list' %}"> Terminal List </a></li>
 
                         </ul>
                     </li>
@@ -67,7 +67,7 @@
                             <i class="fa fa-file-text"></i> Doc <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a href="{% url 'doc:mo:list' %}"> MO Tutorial </a></li>
+                            <li><a href="{% url 'docs:mo:list' %}"> MO Tutorial </a></li>
                             <li><a href="#"> DB Standard </a></li>
                             <li><a href="#"> Web Standard </a></li>
                             <li><a href="#"> Dev Standard </a></li>
@@ -80,7 +80,7 @@
         <!-- /sidebar menu -->
 
         <div class="sidebar-footer hidden-small">
-            <a data-toggle="tooltip" data-placement="top" title="Logout" href="{% url 'user:logout' %}">
+            <a data-toggle="tooltip" data-placement="top" title="Logout" href="{% url 'users:logout' %}">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </a>
         </div>

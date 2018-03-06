@@ -13,7 +13,7 @@ function login() {
                 showCancelButton: false,
                 confirmButtonColor: '#3085d6',
             }).then((result) => {
-                window.location = data.data
+                window.location = data.data.url
             })
         } else if ([1001, 1002].includes(data.code)) {
             swal(data.msg, '', 'error')

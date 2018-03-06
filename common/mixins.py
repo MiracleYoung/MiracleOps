@@ -40,6 +40,8 @@ class CookieMixin:
 class LoginRequiredMixin(CookieMixin, JsonResponseMixin):
 
     def dispatch(self, request, *args, **kwargs):
+        if request.is_ajax():
+            _token = request.META.headers.get('')
         _token = request.COOKIES.get('jwt', '')
         _ret, _payload = verify_token(_token)
         if _ret:

@@ -17,10 +17,10 @@ def gen_token(user: User):
     _now = int(time.time())
     _expire_time = _now + 86400 * 7
     _payload = {
-        "iss": "miracle",
+        "iss": user.id.hex,
         "iat": _now,
         "exp": _expire_time,
-        "sub": user.id.hex,
+        "sub": "login",
         "role": user.role.name,
         "username": user.name
     }

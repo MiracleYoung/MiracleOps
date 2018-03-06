@@ -29,6 +29,9 @@ apiUrl.assets.g = apiUrl.prefix + 'assets/';
 apiUrl.assets.server = apiUrl.assets.g + 'server/'; //<id>
 apiUrl.assets.idc = apiUrl.assets.g + 'idc/'; // <id>
 
+
+// ajax add auth header
+
 // _modal_detail.html
 function checkDetail(ele, url) {
     $('.modal-title').empty()
