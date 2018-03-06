@@ -4,7 +4,7 @@ from django.views.generic import ListView, TemplateView
 from django.utils import timezone
 from django.http import HttpResponseBadRequest, HttpResponse
 
-from users.mixins import LoginRequiredMixin
+from common.mixins import LoginRequiredMixin
 from users.models import User
 from .models import SaltMinion, Roster, Sls
 

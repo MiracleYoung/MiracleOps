@@ -8,14 +8,13 @@
 import json, os, shutil
 
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework import generics, status
+from rest_framework import generics, status, views
 from django.conf import settings
 from django.utils import timezone
-from django.core.exceptions import ObjectDoesNotExist
 
 from common.str_parse import text2html
 from common.saltapi import SaltAPI
+from common.mixins import LoginRequiredMixin
 from assets.models import Server
 from cms.models import *
 
@@ -161,7 +160,7 @@ def get_tree(path='.', depth=0):
     return inner(path, depth)
 
 
-class MinionRefreshApi(APIView):
+class MinionRefreshApi(views.APIView):
     def get(self, request, **kwargs):
         _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
         _minions = _saltapi.list_all_key()[0]
@@ -181,7 +180,7 @@ class MinionRefreshApi(APIView):
         return Response('success', status=status.HTTP_200_OK)
 
 
-class MinionCheckAliveApi(APIView):
+class MinionCheckAliveApi(LoginRequiredMixin, views.APIView):
     def get(self, request):
         _saltapi = SaltAPI(url=SALT_API_URL, username=SALT_API_USERNAME, password=SALT_API_PASSWORD)
         _ret = _saltapi.check_alive('*')
@@ -227,7 +226,7 @@ class MinionApi(generics.RetrieveUpdateDestroyAPIView):
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class MinionCmdApi(APIView):
+class MinionCmdApi(views.APIView):
     def post(self, request, *args, **kwargs):
         _type = request.data.get('type', '')
         if _type == 'glob':
@@ -249,7 +248,7 @@ class RosterApi(generics.RetrieveUpdateDestroyAPIView):
         _pk = kwargs.get('pk', '')
         try:
             _roster = Roster.objects.get(pk=_pk)
-        except ObjectDoesNotExist:
+        except Roster.DoesNotExist:
             raise Response('roster does not exist', status=status.HTTP_404_NOT_FOUND)
         with open(_roster.file.path, 'r') as f:
             _content = f.read()
@@ -259,14 +258,14 @@ class RosterApi(generics.RetrieveUpdateDestroyAPIView):
         _pk = kwargs.get('pk', -1)
         try:
             _roster = Roster.objects.get(pk=_pk)
-        except ObjectDoesNotExist:
+        except Roster.DoesNotExist:
             raise Response('roster does not exist', status=status.HTTP_404_NOT_FOUND)
         _roster.status = 2
         _roster.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class InstallMinionApi(APIView):
+class InstallMinionApi(views.APIView):
     def get(self, request, *args, **kwargs):
         _pk = self.kwargs.get('roster_id', '')
         sym_link_roster(_pk)
@@ -288,7 +287,7 @@ class InstallMinionApi(APIView):
         return Response(_payload, status=status.HTTP_200_OK)
 
 
-class SSHCmdApi(APIView):
+class SSHCmdApi(views.APIView):
     def post(self, request, *args, **kwargs):
         _pk = request.data.get('roster_id', -1)
         sym_link_roster(_pk)
@@ -303,12 +302,12 @@ class SSHCmdApi(APIView):
         return Response(_payload, status=status.HTTP_200_OK)
 
 
-class SLSApi(APIView):
+class SLSApi(views.APIView):
     def get(self, request, *args, **kwargs):
         _pk = kwargs.get('pk', -1)
         try:
             _sls = Sls.objects.get(pk=_pk)
-        except ObjectDoesNotExist:
+        except Sls.DoesNotExist:
             raise Response('sls does not exist', status=status.HTTP_400_BAD_REQUEST)
         _payload = ["<h5>{}</h5>{}".format(_filename, text2html(_content)) for _filename, _content in
                     from_dir_get_files(_sls.file.path + '.dir')]
@@ -318,14 +317,14 @@ class SLSApi(APIView):
         _pk = kwargs.get('pk', -1)
         try:
             _sls = Sls.objects.get(pk=_pk)
-        except ObjectDoesNotExist:
+        except Sls.DoesNotExist:
             raise Response('sls does not exist', status=status.HTTP_404_NOT_FOUND)
         _sls.status = 2
         _sls.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class SLSCmdApi(APIView):
+class SLSCmdApi(views.APIView):
     def post(self, request, *args, **kwargs):
         _tgt = request.data.get('tgt', '')
         _sls_id = request.data.get('sls_id', '')
@@ -338,7 +337,7 @@ class SLSCmdApi(APIView):
             raise Response('', status=status.HTTP_400_BAD_REQUEST)
 
 
-class FileUploadApi(APIView):
+class FileUploadApi(views.APIView):
     def post(self, request, *args, **kwargs):
         _glob = self.request.data.get('glob', '')
         _dst_dir = self.request.data.get('dst_dir', '')

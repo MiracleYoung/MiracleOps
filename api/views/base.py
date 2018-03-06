@@ -4,10 +4,3 @@
 # @Author  : Miracle Young
 # @File    : base.py
 
-
-from rest_framework import views, response
-
-
-class BaseAPIView(views.APIView):
-    def json_response(self, code, data, msg):
-        return response.Response(data={'code': code, 'data': data, 'msg': msg}, content_type='application/json')

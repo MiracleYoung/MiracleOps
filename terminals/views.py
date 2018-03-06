@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView, ListView
 from django.db.models import Count
 
-from users.mixins import LoginRequiredMixin
+from common.mixins import LoginRequiredMixin
 from assets.models import Server
 
 

@@ -6,8 +6,7 @@
 
 from django.views.generic import TemplateView
 
-from users.mixins import LoginRequiredMixin
-from common.mixins import GetHtmlPrefixMixin
+from common.mixins import LoginRequiredMixin, GetHtmlPrefixMixin
 
 
 class DocMOListView(LoginRequiredMixin, TemplateView):

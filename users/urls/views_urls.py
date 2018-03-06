@@ -8,8 +8,6 @@ from django.conf.urls import url
 
 from users.views import UserLoginView, UserCreateView, UserLogoutView
 
-app_name = 'user'
-
 urlpatterns = [
     url(r'^login/$', UserLoginView.as_view(), name='login'),
     url(r'^logout/$', UserLogoutView.as_view(), name='logout'),

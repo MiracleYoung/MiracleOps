@@ -6,22 +6,17 @@ function login() {
         data: {email: email, password: password},
         method: 'POST'
     }).done(function (data, status, xhr) {
-        if (data.code == 200) {
+        if (data.code == 0) {
             swal({
                 title: data.msg,
                 type: 'success',
                 showCancelButton: false,
                 confirmButtonColor: '#3085d6',
             }).then((result) => {
-                window.location = '/'
+                window.location = data.data
             })
-        } else if (data.code == 404) {
-            swal({
-                title: data.msg,
-                type: 'error',
-                showCancelButton: false,
-                confirmButtonColor: '#d33',
-            })
+        } else if ([1001, 1002].includes(data.code)) {
+            swal(data.msg, '', 'error')
         }
     })
 }

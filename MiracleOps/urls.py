@@ -21,13 +21,11 @@ from .views import IndexView, TestLongUrlView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', IndexView.as_view(), name='index', kwargs={'app': 'Dashboard'}),
-    url(r'^user/', include('users.urls.views_urls', namespace='user')),
-    url(r'^asset/', include('assets.urls.views_urls', namespace='asset'), kwargs={'app': 'Asset'}),
-    url(r'^cm/', include('cms.urls.views_urls', namespace='cm'), kwargs={'app': 'Cluster Management'}),
-    url(r'^terminal/', include('terminals.urls', namespace='terminal'), kwargs={'app': 'Terminal'}),
-    url(r'^doc/', include('docs.urls', namespace='doc'), kwargs={'app': 'Doc'}),
-
-    url(r'^api/user/', include('users.urls.api_urls', namespace='api-user')),
+    url(r'^users/', include('users.urls.views_urls', namespace='users')),
+    url(r'^assets/', include('assets.urls.views_urls', namespace='assets'), kwargs={'app': 'Asset'}),
+    url(r'^cms/', include('cms.urls.views_urls', namespace='cms'), kwargs={'app': 'Cluster Management'}),
+    url(r'^terminals/', include('terminals.urls', namespace='terminals'), kwargs={'app': 'Terminal'}),
+    url(r'^docs/', include('docs.urls', namespace='docs'), kwargs={'app': 'Doc'}),
 
     url(r'^api/v1/', include('api.urls.v1', namespace='api-v1')),
 

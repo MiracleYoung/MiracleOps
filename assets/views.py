@@ -6,7 +6,7 @@
 
 from django.views.generic import ListView, FormView, DetailView, UpdateView
 from django.urls import reverse_lazy
-from users.mixins import LoginRequiredMixin
+from common.mixins import LoginRequiredMixin
 from assets.models import IDC, Server
 from assets.forms import ServerForm, IDCForm
 

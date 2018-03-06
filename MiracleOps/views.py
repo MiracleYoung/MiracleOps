@@ -5,7 +5,8 @@
 # @File    : views.py
 
 from django.views.generic.base import TemplateView
-from users.mixins import LoginRequiredMixin
+
+from common.mixins import LoginRequiredMixin
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
