@@ -17,8 +17,7 @@
                     {% endfor %}
                 {% endif %}
 
-                <form action="{% url 'user:register' %}" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
+                <form action="#" method="post" enctype="multipart/form-data">
                     <h1>Create Account</h1>
                     {% bootstrap_field form.username layout='horizontal' %}
                     
