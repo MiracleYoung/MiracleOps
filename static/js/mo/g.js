@@ -9,8 +9,9 @@ let apiUrl = {
     users: {}
 }
 
-apiUrl.users.g = apiUrl.prefix + 'users/';
+apiUrl.users.g = apiUrl.prefix + 'user/';
 apiUrl.users.login = apiUrl.users.g + 'login/';
+apiUrl.users.userDetail = apiUrl.users.g;
 
 apiUrl.cms.g = apiUrl.prefix + 'cms/';
 apiUrl.cms.minionRefresh = apiUrl.cms.g + 'minion-refresh/';
@@ -29,27 +30,88 @@ apiUrl.assets.g = apiUrl.prefix + 'assets/';
 apiUrl.assets.server = apiUrl.assets.g + 'server/'; //<id>
 apiUrl.assets.idc = apiUrl.assets.g + 'idc/'; // <id>
 
+function userDetail(uid) {
+    $.ajax({
+        url: apiUrl.users.userDetail + uid + '/',
+        method: 'GET'
+    }).done(function (data, status, xhr) {
+        Cookies.set(uid, JSON.stringify(data))
+    })
+}
 
-var csrftoken = Cookies.get('csrftoken');
+function loadUserInfo(uid) {
+    let data = JSON.parse(Cookies.get(uid))
+    $('.mo-user-name').text(data.name)
+    $('.mo-user-avatar').attr('src', data.avatar)
+    switch (data.job_title) {
+        case 0:
+            $('.mo-user-jobtitle').text('Undefined');
+            break;
+        case 1:
+            $('.mo-user-jobtitle').text('Database Administrator');
+            break;
+        case 2:
+            $('.mo-user-jobtitle').text('System Administrator');
+            break;
+        case 3:
+            $('.mo-user-jobtitle').text('Network Administrator');
+            break;
+        case 4:
+            $('.mo-user-jobtitle').text('Help Desk/IT');
+            break;
+        case 5:
+            $('.mo-user-jobtitle').text('Developer');
+            break;
+        case 6:
+            $('.mo-user-jobtitle').text('Tester');
+            break;
+        case 101:
+            $('.mo-user-jobtitle').text('Director');
+            break;
+        case 102:
+            $('.mo-user-jobtitle').text('Manager');
+            break;
+        case 103:
+            $('.mo-user-jobtitle').text('Tech Leader');
+            break;
+    }
+    $('.mo-user-email').text(data.email)
+
+}
+
 
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 
-$.ajaxSetup({
-    beforeSend: function (xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-        // ajax add auth header
-        if (document.cookie.jwt) {
-            xhr.setRequestHeader("ACCESS-TOKEN", document.cookie.jwt);
-        }
-    }
-});
 
-$('body').addClass('nav-md');
+$(function () {
+    var csrftoken = Cookies.get('csrftoken');
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+            // ajax add user header
+            if (document.cookie.jwt) {
+                xhr.setRequestHeader("ACCESS-TOKEN", document.cookie.jwt);
+            }
+        }
+    });
+
+    $('body').addClass('nav-md');
+
+
+    let uid = Cookies.get('uid')
+    if (window.location.pathname != '/users/login/'){
+        if (!Cookies.get(uid)) {
+            userDetail(uid)
+        }
+        loadUserInfo(uid)
+    }
+
+})
 
 
 // _modal_detail.html

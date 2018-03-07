@@ -2,7 +2,7 @@
 # encoding: utf-8
 # @Time    : 2018/1/3 下午9:11
 # @Author  : MiracleYoung
-# @File    : auth.py
+# @File    : user.py
 
 import datetime
 
@@ -28,6 +28,7 @@ class UserLoginApiView(CookieMixin, JsonResponseMixin, views.APIView):
                 _ret, _t = Token.gen_token(_user)
                 _now = datetime.datetime.now()
                 self.add_cookie(**{'key': 'jwt', 'value': _t.token, 'expires': datetime.datetime.fromtimestamp(_t.e_time)})
+                self.add_cookie(**{'key': 'uid', 'value': _user.id, 'expires': datetime.datetime.fromtimestamp(_t.e_time)})
                 _user.last_login = _now
                 _user.save()
                 _success_url = self.get_success_url()

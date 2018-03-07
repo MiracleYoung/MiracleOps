@@ -11,4 +11,5 @@ from .models import *
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'username', 'job_title', 'is_active', 'is_superuser', 'role', 'login_time',]
+        fields = ('id', 'email', 'name', 'job_title', 'is_active', 'is_superuser', 'role', 'last_login', 'reg_time',
+                  'avatar',)
