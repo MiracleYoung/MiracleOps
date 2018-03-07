@@ -27,14 +27,12 @@ class SaltMinion(models.Model):
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=0)
     is_alive = models.BooleanField(_('Is Alive'))
     last_alive_time = models.DateTimeField(_('Last Alive Time'), null=True)
-    # discover minion time
-    discover_time = models.DateTimeField(_('Discover Time'), auto_now_add=True)
     c_time = models.DateTimeField(_('Create Time'), auto_now_add=True, null=True, blank=True)
     u_time = models.DateTimeField(_('Update Time'), default=timezone.now, null=True, blank=True)
 
     class Meta:
         db_table = 'cm_minion'
-        ordering = ['discover_time', ]
+        ordering = ('c_time',)
 
     def __repr__(self):
         return self.hostname
@@ -69,7 +67,7 @@ class Roster(FileABC):
 
     class Meta:
         db_table = 'cm_roster'
-        ordering = ['-c_time']
+        ordering = ('-c_time',)
 
 
 class Sls(FileABC):
@@ -77,7 +75,7 @@ class Sls(FileABC):
 
     class Meta:
         db_table = 'cm_sls'
-        ordering = ['-c_time']
+        ordering = ('-c_time',)
 
 
 class File(FileABC):
@@ -85,4 +83,4 @@ class File(FileABC):
 
     class Meta:
         db_table = 'cm_file'
-        ordering = ['-c_time']
+        ordering = ('-c_time',)

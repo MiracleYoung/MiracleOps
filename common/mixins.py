@@ -11,7 +11,6 @@ from django.shortcuts import redirect, reverse
 from django.conf import settings
 from django.http import HttpResponse
 
-from common.token import verify_token, token_is_expire
 from users.models import User, Token
 
 
@@ -40,23 +39,20 @@ class CookieMixin:
 class LoginRequiredMixin(CookieMixin, JsonResponseMixin):
 
     def dispatch(self, request, *args, **kwargs):
-        if request.is_ajax():
-            _token = request.META.headers.get('')
-        _token = request.COOKIES.get('jwt', '')
-        _ret, _payload = verify_token(_token)
+        _token = request.META.get('HTTP_X_ACCESS_TOKEN', '') or request.COOKIES.get('jwt', '')
+        _ret, _payload = Token.verify_token(_token)
         if _ret:
-            _uid = _payload.get('sub', '')
+            _uid = _payload.get('iss', '')
 
             if hasattr(request, 'user'):
                 request.user = User.objects.get(id=_uid)
 
             _t = Token.objects.get(token=_token)
             # prevent cookie exp time updated by others.
-            if not token_is_expire(_t):
+            if Token.token_is_expire(_t):
                 return self._res_token_error(request)
             return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
         else:
-            # self._res_token_error(request)
             return self._res_token_error(request)
             # try:
             #     self.context = self.get_context_data(**kwargs)

@@ -190,7 +190,7 @@ class MinionCheckAliveApi(LoginRequiredMixin, views.APIView):
         return Response('success')
 
 
-class MinionApi(generics.RetrieveUpdateDestroyAPIView):
+class MinionApi(LoginRequiredMixin, generics.RetrieveUpdateDestroyAPIView):
     queryset = SaltMinion
 
     def delete(self, request, *args, **kwargs):
@@ -226,7 +226,7 @@ class MinionApi(generics.RetrieveUpdateDestroyAPIView):
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class MinionCmdApi(views.APIView):
+class MinionCmdApi(LoginRequiredMixin, views.APIView):
     def post(self, request, *args, **kwargs):
         _type = request.data.get('type', '')
         if _type == 'glob':
@@ -241,7 +241,7 @@ class MinionCmdApi(views.APIView):
         return Response(_payload, status=status.HTTP_200_OK)
 
 
-class RosterApi(generics.RetrieveUpdateDestroyAPIView):
+class RosterApi(LoginRequiredMixin, generics.RetrieveUpdateDestroyAPIView):
     queryset = Roster.objects.all()
 
     def get(self, request, *args, **kwargs):
@@ -265,7 +265,7 @@ class RosterApi(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class InstallMinionApi(views.APIView):
+class InstallMinionApi(LoginRequiredMixin, views.APIView):
     def get(self, request, *args, **kwargs):
         _pk = self.kwargs.get('roster_id', '')
         sym_link_roster(_pk)
@@ -287,7 +287,7 @@ class InstallMinionApi(views.APIView):
         return Response(_payload, status=status.HTTP_200_OK)
 
 
-class SSHCmdApi(views.APIView):
+class SSHCmdApi(LoginRequiredMixin, views.APIView):
     def post(self, request, *args, **kwargs):
         _pk = request.data.get('roster_id', -1)
         sym_link_roster(_pk)
@@ -302,7 +302,7 @@ class SSHCmdApi(views.APIView):
         return Response(_payload, status=status.HTTP_200_OK)
 
 
-class SLSApi(views.APIView):
+class SLSApi(LoginRequiredMixin, views.APIView):
     def get(self, request, *args, **kwargs):
         _pk = kwargs.get('pk', -1)
         try:
@@ -324,7 +324,7 @@ class SLSApi(views.APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class SLSCmdApi(views.APIView):
+class SLSCmdApi(LoginRequiredMixin, views.APIView):
     def post(self, request, *args, **kwargs):
         _tgt = request.data.get('tgt', '')
         _sls_id = request.data.get('sls_id', '')

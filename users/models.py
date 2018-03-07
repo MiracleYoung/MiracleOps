@@ -9,7 +9,8 @@ import hashlib, os, base64, time, uuid
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, GroupManager, Permission
 from django.utils.translation import ugettext_lazy as _
-# from django.contrib.sessions import models
+from django.conf import settings
+import jwt
 
 __all__ = ['User', 'Role', 'Token', 'Group', 'UserGroup']
 
@@ -143,6 +144,50 @@ class Token(models.Model):
         return 'Token: <{}>'.format(self.token)
 
     __repr__ = __str__
+
+    @staticmethod
+    def gen_token(user: User):
+        # generate login token
+        try:
+            _t = Token.objects.get(user=user)
+            if not Token.token_is_expire(_t):
+                # login token exist, then do not need to generate new token
+                # return False
+                return False, _t
+        except Token.DoesNotExist:
+            pass
+        _now = int(time.time())
+        _expire_time = _now + 86400 * 7
+        _payload = {
+            "iss": user.id.hex,
+            "iat": _now,
+            "exp": _expire_time,
+            "sub": "login",
+            "role": user.role.name,
+            "username": user.name
+        }
+        _token = jwt.encode(_payload, settings.SECRET_KEY, algorithm='HS256')
+        _t = Token.objects.create(user=user, token=_token, e_time=_expire_time)
+        return True, _t
+
+    @staticmethod
+    def token_is_expire(token):
+        # True => not expire
+        # False => expire => delete
+        if token.e_time > int(time.time()):
+            return False
+        else:
+            token.delete()
+            return True
+
+    @staticmethod
+    def verify_token(token):
+        # verify token compliance
+        try:
+            _payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+            return True, _payload
+        except jwt.exceptions.DecodeError:
+            return False, {}
 
 
 class Group(models.Model):

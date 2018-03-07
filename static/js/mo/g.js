@@ -30,7 +30,27 @@ apiUrl.assets.server = apiUrl.assets.g + 'server/'; //<id>
 apiUrl.assets.idc = apiUrl.assets.g + 'idc/'; // <id>
 
 
-// ajax add auth header
+var csrftoken = Cookies.get('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+        // ajax add auth header
+        if (document.cookie.jwt) {
+            xhr.setRequestHeader("ACCESS-TOKEN", document.cookie.jwt);
+        }
+    }
+});
+
+$('body').addClass('nav-md');
+
 
 // _modal_detail.html
 function checkDetail(ele, url) {

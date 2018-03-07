@@ -1,3 +1,6 @@
+## version 1.4.2 (2018.03.07)
+1. Upgrade user auth logic by JWT auth. If using ajax, then return a json message, other way, redirect login view or correct view. 
+
 ## version 1.4.1 (2018.03.01)
 1. Change partial htmljs to js. Ready to do front-backend separation.
 2. Change js files directory.

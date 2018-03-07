@@ -9,10 +9,9 @@ import datetime
 from rest_framework import generics, views
 from django.shortcuts import reverse
 
-from users.models import User
+from users.models import User, Token
 from users.serializers import UserSerializer
 from common.mixins import CookieMixin, JsonResponseMixin
-from common.token import gen_token
 
 
 class UserLoginApiView(CookieMixin, JsonResponseMixin, views.APIView):
@@ -26,14 +25,13 @@ class UserLoginApiView(CookieMixin, JsonResponseMixin, views.APIView):
         else:
             if _user.check_password(_password) and _user.is_authenticated:
                 # get token and set token to cookie
-                _ret, _token = gen_token(_user)
+                _ret, _t = Token.gen_token(_user)
                 _now = datetime.datetime.now()
-                if _ret:
-                    self.add_cookie(**{'key': 'jwt', 'value': _token, 'max_age': 86400 * 7, 'expires': _now})
+                self.add_cookie(**{'key': 'jwt', 'value': _t.token, 'expires': datetime.datetime.fromtimestamp(_t.e_time)})
                 _user.last_login = _now
                 _user.save()
                 _success_url = self.get_success_url()
-                return self.json_response(0, {'url': _success_url, 'token': _token}, 'Login success.')
+                return self.json_response(0, {'url': _success_url, 'token': _t.token}, 'Login success.')
             else:
                 return self.json_response(1002, '', 'Incorrect username and password.')
 
