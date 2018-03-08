@@ -9,8 +9,9 @@ let apiUrl = {
     users: {}
 }
 
-apiUrl.users.g = apiUrl.prefix + 'user/';
+apiUrl.users.g = apiUrl.prefix + 'users/';
 apiUrl.users.login = apiUrl.users.g + 'login/';
+apiUrl.users.register = apiUrl.users.g;
 apiUrl.users.userDetail = apiUrl.users.g;
 
 apiUrl.cms.g = apiUrl.prefix + 'cms/';

@@ -37,5 +37,5 @@ users_patterns = [
 urlpatterns = [
     url(r'^cms/', include(cms_patterns, namespace='cms')),
     url(r'^assets/', include(assets_patterns, namespace='assets')),
-    url(r'^user/', include(users_patterns, namespace='user')),
+    url(r'^users/', include(users_patterns, namespace='users')),
 ]

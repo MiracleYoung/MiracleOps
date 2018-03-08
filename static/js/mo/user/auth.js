@@ -1,6 +1,6 @@
 function login() {
-    let email = $('#email').val()
-    let password = $('#password').val()
+    let email = $('#mo-login-email').val()
+    let password = $('#mo-login-password').val()
     $.ajax({
         url: apiUrl.users.login,
         data: {email: email, password: password},
@@ -16,9 +16,41 @@ function login() {
                 window.location = data.data.url
             })
         } else if ([1001, 1002].includes(data.code)) {
-            swal(data.msg, '', 'error')
+            swal('Login Failed', data.msg, 'error')
         }
     })
 }
 
-$('#login').on('click', login)
+function register() {
+    let email = $('#mo-register-email').val()
+    let password = $('#mo-register-password').val()
+    let password2 = $('#mo-register-password2').val()
+    if (password !== password2){
+        swal('Password are different. Please confirm.', '', 'error')
+        return
+    }
+    $.ajax({
+        url: apiUrl.users.register,
+        data: {email: email, password: password},
+        method: 'POST'
+    }).done(function (data, status, xhr) {
+        if (data.code == 0) {
+            swal({
+                title: data.msg,
+                type: 'success',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+            }).then((result) => {
+                window.location = data.data.url
+            })
+        } else if ([1004].includes(data.code)) {
+            swal(data.msg, '', 'error')
+        }
+    }).fail(function (err) {
+        console.log(err)
+    })
+}
+
+$('#mo-login-login').on('click', login)
+
+$('#mo-register-register').on('click', register)

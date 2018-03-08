@@ -48,15 +48,3 @@ function loadUserInfo(uid) {
 
 }
 
-
-$(function () {
-    let uid = Cookies.get('uid')
-    if (window.location.pathname != '/users/login/') {
-        if (!Cookies.get(uid)) {
-            userDetail(uid)
-        } else {
-            loadUserInfo(uid)
-        }
-
-    }
-})

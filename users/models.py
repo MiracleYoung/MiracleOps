@@ -30,25 +30,21 @@ class Role(models.Model):
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, name, wechat, password=None):
+    def create_user(self, email, password=None):
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
             email=self.normalize_email(email),
-            name=name,
-            wechat=wechat,
             role=Role.objects.get(name='UnVerified')
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, name, wechat=None, password=None):
+    def create_superuser(self, email, password=None):
         user = self.create_user(
             email=self.normalize_email(email),
-            name=name,
-            wechat=wechat,
             password=password
         )
         user.is_admin = True
@@ -74,17 +70,17 @@ class User(AbstractBaseUser):
 
     id = models.UUIDField(_('ID'), default=uuid.uuid4, primary_key=True)
     email = models.EmailField(_('Email Address'), max_length=128, unique=True)
-    name = models.CharField(_('Name'), max_length=32)
-    wechat = models.CharField(_('WeChat Account'), max_length=32, blank=True)
-    avatar = models.ImageField(_('Avatar'), upload_to='avatar', null=True, blank=True,
-                               default='avatar/default_avatar.jpeg')
-    job_title = models.SmallIntegerField(_('Job Title'), choices=JOB_TITLE_CHOICE, default=0, blank=True)
+    phone = models.CharField(_('Mobile Phone Number'), max_length=20, default='')
+    name = models.CharField(_('Name'), max_length=32, default='')
+    wechat = models.CharField(_('WeChat Account'), max_length=32, default='')
+    avatar = models.ImageField(_('Avatar'), upload_to='avatar', default='avatar/default_avatar.jpeg')
+    job_title = models.SmallIntegerField(_('Job Title'), choices=JOB_TITLE_CHOICE, default=0)
 
-    is_active = models.BooleanField(_('Is Active'), default=True)
-    is_staff = models.BooleanField(_('Is Staff'), default=True)
+    is_active = models.BooleanField(_('Is Active'), default=False)
+    is_staff = models.BooleanField(_('Is Staff'), default=False)
     is_superuser = models.BooleanField(_('Is SuperUser'), default=False)
 
-    role = models.ForeignKey('Role', verbose_name=_('Role'), db_constraint=False)
+    role = models.ForeignKey('Role', verbose_name=_('Role'))
 
     reg_time = models.DateTimeField(_('Register Time'), auto_now_add=True)
 
@@ -132,7 +128,7 @@ class User(AbstractBaseUser):
 
 class Token(models.Model):
     id = models.AutoField(_('ID'), primary_key=True)
-    user = models.ForeignKey('User', verbose_name=_('User'), db_constraint=False)
+    user = models.ForeignKey('User', verbose_name=_('User'))
     token = models.CharField(_('Token'), max_length=1024, default='')
     c_time = models.IntegerField(_('Create Time'), default=int(time.time()))
     e_time = models.IntegerField(_('Expire Time'), default=int(time.time()) + 86400 * 7)
@@ -208,8 +204,8 @@ class Group(models.Model):
 
 class UserGroup(models.Model):
     id = models.AutoField(_('ID'), primary_key=True)
-    user = models.ForeignKey(User, verbose_name=_('User'), db_constraint=False)
-    group = models.ForeignKey(Group, verbose_name=_('Group'), db_constraint=False)
+    user = models.ForeignKey(User, verbose_name=_('User'))
+    group = models.ForeignKey(Group, verbose_name=_('Group'))
 
     class Meta:
         db_table = 'user_group'

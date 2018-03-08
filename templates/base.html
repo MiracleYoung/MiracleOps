@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block html_body %}
-
+    <body>
     <div class="container body">
         <div class="main_container">
 
@@ -19,5 +19,11 @@
 
         </div>
     </div>
+    </body>
+    {% include '_footer_js.html' %}
 
+    {% block js %}{% endblock js %}
+
+    <script src="{% static 'js/custom.min.js' %}"></script>
 {% endblock html_body %}
+

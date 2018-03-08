@@ -9,9 +9,9 @@ from django.views.generic.base import TemplateView
 from common.mixins import LoginRequiredMixin
 
 
-class IndexView(LoginRequiredMixin, TemplateView):
+class IndexView(TemplateView):
     template_name = "index.html"
 
 
-class TestLongUrlView(LoginRequiredMixin, TemplateView):
+class TestLongUrlView(TemplateView):
     template_name = 'test_long_url.html'
