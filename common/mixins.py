@@ -2,14 +2,11 @@
 # encoding: utf-8
 # @Time    : 2018/1/6 上午7:55
 # @Author  : MiracleYoung
-# @File    : mixin.py_now
-
-import datetime
+# @File    : mixins.py
 
 from rest_framework import response
 from django.shortcuts import redirect, reverse
 from django.conf import settings
-from django.http import HttpResponse
 
 from users.models import User, Token
 
@@ -37,16 +34,10 @@ class CookieMixin:
 
 
 class LoginRequiredMixin(CookieMixin, JsonResponseMixin):
-
     def dispatch(self, request, *args, **kwargs):
         _token = request.META.get('HTTP_X_ACCESS_TOKEN', '') or request.COOKIES.get('jwt', '')
         _ret, _payload = Token.verify_token(_token)
         if _ret:
-            _uid = _payload.get('iss', '')
-
-            if hasattr(request, 'user'):
-                request.user = User.objects.get(id=_uid)
-
             _t = Token.objects.get(token=_token)
             # prevent cookie exp time updated by others.
             if Token.token_is_expire(_t):
@@ -54,12 +45,6 @@ class LoginRequiredMixin(CookieMixin, JsonResponseMixin):
             return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
         else:
             return self._res_token_error(request)
-            # try:
-            #     self.context = self.get_context_data(**kwargs)
-            # except:
-            #     self.context = {}
-            # self.context['user'] = u
-            # kwargs.update(self.context)
 
     def retrieve_redirect_url(self, path, login_url=settings.LOGIN_URL):
         _login_url = reverse(login_url)
@@ -69,13 +54,13 @@ class LoginRequiredMixin(CookieMixin, JsonResponseMixin):
         if request.is_ajax():
             return self.json_response(1003, '', 'token error.')
         else:
-            return redirect('users:login')
+            return redirect(self.retrieve_redirect_url(request.path))
 
-    # def get(self, request, *args, **kwargs):
-    #     _g = super().get(request, *args, **kwargs)
-    #     _g.context_data.update(kwargs)
-    #     context = _g.context_data
-    #     return self.render_to_response(context)
+            # def get(self, request, *args, **kwargs):
+            #     _g = super().get(request, *args, **kwargs)
+            #     _g.context_data.update(kwargs)
+            #     context = _g.context_data
+            #     return self.render_to_response(context)
 
 
 class GetHtmlPrefixMixin:

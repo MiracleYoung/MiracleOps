@@ -32,6 +32,10 @@ class UserLoginApiView(CookieMixin, JsonResponseMixin, views.APIView):
                 _user.last_login = _now
                 _user.save()
                 _success_url = self.get_success_url()
+
+                if hasattr(request, 'user'):
+                    request.user = _user
+
                 return self.json_response(0, {'url': _success_url, 'token': _t.token}, 'Login success.')
             else:
                 return self.json_response(1002, '', 'Incorrect username and password.')

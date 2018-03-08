@@ -18,6 +18,8 @@ function login() {
         } else if ([1001, 1002].includes(data.code)) {
             swal('Login Failed', data.msg, 'error')
         }
+    }).fail(function (err) {
+        console.log(err)
     })
 }
 
