@@ -20,15 +20,6 @@ $(function () {
 
     $('body').addClass('nav-md');
 
-    // load user info
-    let uid = Cookies.get('uid')
-    if (uid != undefined) {
-        if (!Cookies.get(uid)) {
-            userDetail(uid)
-        } else {
-            loadUserInfo(uid)
-        }
-    }
 })
 
 

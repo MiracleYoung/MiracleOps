@@ -54,12 +54,6 @@ class LoginRequiredMixin(CookieMixin, JsonResponseMixin):
             return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
         else:
             return self._res_token_error(request)
-            # try:
-            #     self.context = self.get_context_data(**kwargs)
-            # except:
-            #     self.context = {}
-            # self.context['user'] = u
-            # kwargs.update(self.context)
 
     def retrieve_redirect_url(self, path, login_url=settings.LOGIN_URL):
         _login_url = reverse(login_url)

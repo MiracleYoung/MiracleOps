@@ -9,7 +9,7 @@ from django.views.generic.base import TemplateView
 from common.mixins import LoginRequiredMixin
 
 
-class IndexView(TemplateView):
+class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
 
 

@@ -11,12 +11,12 @@
                 <li class="">
                     <a href="javascript:void(0)" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img class="mo-user-avatar" src="" alt="User Avatar">
-                        <span class="mo-user-email"></span>
-                        <span class=" fa fa-angle-down"></span>
+                        <img class="mo-user-avatar" src="{{ user.get_avatar_url }}" alt="User Avatar">
+                        {{ user.get_full_name }}
+                        <span class="fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a href="javascript:void(0)" class="mo-user-jobtitle"></a></li>
+                        <li><a href="javascript:void(0)">{{ user.get_job_title_display }}</a></li>
 {#                        <li>#}
 {#                            <a href="javascript:;">#}
 {#                                <span class="badge bg-red pull-right">50%</span>#}

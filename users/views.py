@@ -20,7 +20,7 @@ class UserLoginView(TemplateView):
 
 
 class UserCreateView(FormView):
-    template_name = "user/register.html"
+    template_name = "user/register_step.html"
     form_class = UserCreateForm
     success_url = reverse_lazy('user:login')
 

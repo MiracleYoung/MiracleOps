@@ -34,6 +34,12 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError('Users must have an email address')
 
+        try:
+            User.objects.get(email=email)
+            raise ValueError('Email exist, please use another email.')
+        except User.DoesNotExist:
+            pass
+
         user = self.model(
             email=self.normalize_email(email),
             role=Role.objects.get(name='UnVerified')
@@ -80,7 +86,7 @@ class User(AbstractBaseUser):
     is_staff = models.BooleanField(_('Is Staff'), default=False)
     is_superuser = models.BooleanField(_('Is SuperUser'), default=False)
 
-    role = models.ForeignKey('Role', verbose_name=_('Role'))
+    role = models.ForeignKey('Role', verbose_name=_('Role'), null=True)
 
     reg_time = models.DateTimeField(_('Register Time'), auto_now_add=True)
 
@@ -99,7 +105,10 @@ class User(AbstractBaseUser):
         return self.email
 
     def get_short_name(self):
-        return self.username
+        return self.name
+
+    def get_avatar_url(self):
+        return self.avatar.url
 
     def set_password(self, raw_password):
         # 8 length salt

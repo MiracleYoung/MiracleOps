@@ -10,7 +10,6 @@ from rest_framework import generics, views
 from django.shortcuts import reverse
 
 from users.models import User, Token
-from users.serializers import UserSerializer
 from common.mixins import CookieMixin, JsonResponseMixin
 
 
@@ -44,12 +43,12 @@ class UserLoginApiView(CookieMixin, JsonResponseMixin, views.APIView):
 
 class UserRetrieveUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    # serializer_class = UserSerializer
 
 
 class UserCreateApi(generics.CreateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    # serializer_class = UserSerializer
 
     def post(self, request, *args, **kwargs):
         # request.data['password'] = make_password(request.data['password'])
