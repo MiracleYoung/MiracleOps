@@ -19,7 +19,6 @@ $(function () {
     });
 
     $('body').addClass('nav-md');
-
 })
 
 

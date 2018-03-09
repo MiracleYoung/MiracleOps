@@ -155,7 +155,7 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'users.User'
 
 APPEND_SLASH = True
-LOGIN_URL = 'user:login'
+LOGIN_URL = 'users:login'
 
 # django bootstrap3 docs https://django-bootstrap3.readthedocs.io/en/latest/settings.html
 BOOTSTRAP3 = {
