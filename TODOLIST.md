@@ -71,6 +71,7 @@
         - [ ] Redis
     - Web
         - [ ] Nginx
+- SQL Review Platform
         
 **Optimization**:
 - Table -> Dynamic Table

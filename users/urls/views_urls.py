@@ -6,10 +6,8 @@
 
 from django.conf.urls import url
 
-from users.views import UserLoginView, UserCreateView, UserLogoutView
+from users.views import UserLoginView
 
 urlpatterns = [
     url(r'^login/$', UserLoginView.as_view(), name='login'),
-    url(r'^logout/$', UserLogoutView.as_view(), name='logout'),
-    url(r'^register/$', UserCreateView.as_view(), name='register'),
 ]

@@ -61,6 +61,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     JOB_TITLE_CHOICE = (
+        (0, 'Undefined'),
         (1, 'Database Administrator'),
         (2, 'System Administrator'),
         (3, 'Network Administrator'),

@@ -49,10 +49,11 @@ function register() {
             swal(data.msg, '', 'error')
         }
     }).fail(function (err) {
-        console.log(err)
+        swal('Oops, something wrong with server.', '', 'error')
     })
 }
 
 $('#mo-login-login').on('click', login)
 
 $('#mo-register-register').on('click', register)
+

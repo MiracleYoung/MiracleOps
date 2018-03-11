@@ -5,9 +5,8 @@
 # @File    : v1.py
 
 from django.conf.urls import url, include
-from rest_framework.routers import DefaultRouter
 
-from api.views.v1 import cm, asset, auth, users
+from api.views.v1 import cm, asset, users
 
 cms_patterns = [
     url(r'^minion-refresh/$', cm.MinionRefreshApi.as_view(), name='minion-refresh'),
@@ -28,7 +27,8 @@ assets_patterns = [
 ]
 
 users_patterns = [
-    url(r'^login/$', auth.UserLoginApiView.as_view(), name='login'),
+    url(r'^login/$', users.UserLoginApiView.as_view(), name='login'),
+    url(r'^logout/$', users.UserLogoutApi.as_view(), name='logout'),
     url('^$', users.UserListApi.as_view(), name='list'),
     url('^(?P<pk>[0-9a-f-]+)/$', users.UserDetailApi.as_view(), name='detail'),
 ]

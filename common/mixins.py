@@ -38,15 +38,19 @@ class LoginRequiredMixin(CookieMixin, JsonResponseMixin):
         _token = request.META.get('HTTP_X_ACCESS_TOKEN', '') or request.COOKIES.get('jwt', '')
         _ret, _payload = Token.verify_token(_token)
         if _ret:
-            _t = Token.objects.get(token=_token)
-            # prevent cookie exp time updated by others.
-            if Token.token_is_expire(_t):
+            try:
+                _t = Token.objects.get(token=_token)
+            except Token.DoesNotExist:
                 return self._res_token_error(request)
+            else:
+                # prevent cookie exp time updated by others.
+                if Token.token_is_expire(_t):
+                    return self._res_token_error(request)
 
-            if hasattr(request, 'user'):
-                request.user = User.objects.get(id=_payload.get('iss'))
+                if hasattr(request, 'user'):
+                    request.user = User.objects.get(id=_payload.get('iss'))
 
-            return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
+                return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
         else:
             return self._res_token_error(request)
 
