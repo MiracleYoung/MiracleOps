@@ -224,3 +224,25 @@ class UserGroup(models.Model):
         return '<User: {}>: <Group: {}>'.format(self.user.name, self.group.name)
 
     __repr__ = __str__
+
+
+class VerifiedCode(models.Model):
+    TYPE_CHOICE = (
+        (0, 'Undefined'),
+        (1, 'Register Verified Code'),
+    )
+
+    id = models.AutoField(_('ID'), primary_key=True)
+    user = models.ForeignKey(User, verbose_name=_('User'))
+    code = models.CharField(_('Code'), max_length=200, default='')
+    type = models.SmallIntegerField(_('Type'), choices=TYPE_CHOICE, default=0)
+    c_time = models.DateTimeField(_('Create Time'), auto_now_add=True)
+    u_time = models.DateTimeField(_('Update Time'), auto_now=True)
+
+    class Meta:
+        db_table = 'verified_code'
+
+    def __str__(self):
+        return '<{}: {}>'.format(self.user.name, self.code)
+
+    __repr__ = __str__

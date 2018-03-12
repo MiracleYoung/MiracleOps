@@ -13,6 +13,7 @@ from users.models import User
 
 __all__ = ['IDC', 'Server']
 
+
 class IDC(models.Model):
     STATUS_CHOICE = (
         (1, 'NORMAL'),
@@ -27,8 +28,8 @@ class IDC(models.Model):
     user = models.ForeignKey(User, verbose_name=_('Department User'))
     address = models.CharField(_('IDC Address'), max_length=200, default='')
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICE, default=1, blank=True)
-    c_time = models.DateTimeField(_('Create Time'), default=timezone.now, blank=True)
-    u_time = models.DateTimeField(_('Update Time'), auto_now=True)
+    c_time = models.DateTimeField(_('Create Time'), auto_now_add=True, blank=True)
+    u_time = models.DateTimeField(_('Update Time'), default=timezone.now)
 
     class Meta:
         db_table = 'asset_idc'
@@ -78,7 +79,8 @@ class Server(models.Model):
     env = models.SmallIntegerField(_('Environment'), choices=ENV_CHOICE, default=1)
     type = models.SmallIntegerField(_('Server Type'), choices=TYPE_CHOICE, default=1)
 
-    owner = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name=_('Owner'), null=True, db_constraint=False)
+    owner = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name=_('Owner'), null=True,
+                              db_constraint=False)
     # self related
     sn = models.CharField(_('Serial Number'), max_length=200, default='')
     cpu = models.SmallIntegerField(_('CPU'), default=0)
@@ -98,8 +100,8 @@ class Server(models.Model):
     oob_password = models.CharField(_('Out of Band Management Admin Password'), max_length=100, default='', blank=True)
 
     remark = models.CharField(_('Remark'), max_length=200, default='', blank=True)
-    c_time = models.DateTimeField(_('Create Time'), default=timezone.now, blank=True)
-    u_time = models.DateTimeField(_('Update Time'), auto_now=True)
+    c_time = models.DateTimeField(_('Create Time'), auto_now_add=True, blank=True)
+    u_time = models.DateTimeField(_('Update Time'), default=timezone.now)
 
     class Meta:
         db_table = 'asset_server'
@@ -109,6 +111,3 @@ class Server(models.Model):
         return self.hostname
 
     __str__ = __repr__
-
-
-

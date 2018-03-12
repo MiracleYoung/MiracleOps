@@ -21,7 +21,7 @@ from .views import IndexView, TestLongUrlView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', IndexView.as_view(), name='index', kwargs={'app': 'Dashboard'}),
-    url(r'^users/', include('users.urls.views_urls', namespace='users')),
+    url(r'^users/', include('users.urls', namespace='users')),
     url(r'^assets/', include('assets.urls.views_urls', namespace='assets'), kwargs={'app': 'Asset'}),
     url(r'^cms/', include('cms.urls.views_urls', namespace='cms'), kwargs={'app': 'Cluster Management'}),
     url(r'^terminals/', include('terminals.urls', namespace='terminals'), kwargs={'app': 'Terminal'}),

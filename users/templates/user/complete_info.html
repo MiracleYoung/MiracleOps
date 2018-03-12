@@ -1,0 +1,132 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block html_body %}
+    <body class="nav-md" style="background: #fff;">
+    <div class="container body">
+        <div class="main_container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_content" style="border-bottom: none; margin: 5% auto;">
+
+                            <div id="wizard" class="form_wizard wizard_horizontal">
+                                <ul class="wizard_steps">
+                                    <li>
+                                        <a href="#step-1">
+                                            <span class="step_no">1</span>
+                                            <span class="step_descr">
+                                              Step 1<br/>
+                                              <small>Basic Information</small>
+                                          </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#step-2">
+                                            <span class="step_no">2</span>
+                                            <span class="step_descr">
+                                              Step 2<br/>
+                                              <small>Contact Information</small>
+                                          </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#step-3">
+                                            <span class="step_no">3</span>
+                                            <span class="step_descr">
+                                              Step 3<br/>
+                                              <small>Other Information</small>
+                                          </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#step-4">
+                                            <span class="step_no">4</span>
+                                            <span class="step_descr">
+                                              Step 4<br/>
+                                              <small>Confirmation</small>
+                                          </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div id="step-1" class="form-horizontal form-label-left">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">
+                                            User Name
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="username" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="step-2" class="form-horizontal form-label-left">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="wechat">
+                                            Wechat
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="wechat" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">
+                                            Phone
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="phone" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="step-3" class="form-horizontal form-label-left">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="avatar">
+                                            Avatar
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="avatar" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="jobtitle">
+                                            Job Title
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="jobtitle" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="role">
+                                            Role
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="role" class="form-control col-md-7 col-xs-12">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="step-4">
+                                    <h2 class="StepTitle">Confirm Information</h2>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </body>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/plugins/jQuery-Smart-Wizard/jquery.smartWizard.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+{% endblock html_body %}

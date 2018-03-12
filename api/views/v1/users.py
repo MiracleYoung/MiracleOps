@@ -4,13 +4,13 @@
 # @Author  : Miracle Young
 # @File    : user.py
 
-import datetime
+import datetime, hashlib, os, base64
 
 from rest_framework import generics, views
 from django.shortcuts import reverse, redirect
 
 from users.serializers import UserRegisterSerializer, UserSerializer
-from users.models import User, Role, Token
+from users.models import User, Token, VerifiedCode
 from common.mixins import LoginRequiredMixin, JsonResponseMixin, CookieMixin
 
 
@@ -52,7 +52,7 @@ class UserLogoutApi(generics.RetrieveAPIView):
         return redirect(reverse('users:login'))
 
 
-class UserListApi(JsonResponseMixin, generics.CreateAPIView):
+class UserRegisterApi(JsonResponseMixin, generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
 
     def post(self, request, *args, **kwargs):
@@ -60,7 +60,12 @@ class UserListApi(JsonResponseMixin, generics.CreateAPIView):
             serializer = UserRegisterSerializer(data=request.data)
             serializer.is_valid()
             _user = User.objects.create_user(**serializer.data)
-            return self.json_response(0, {'url': reverse('users:login'), 'data': UserSerializer(_user).data},
+            _s = base64.b64encode(os.urandom(8))
+            _m = hashlib.sha256()
+            _m.update(_s)
+            _code = VerifiedCode.objects.create(user=_user, code=_m.hexdigest(), type=1)
+            return self.json_response(0, {'url': reverse('users:complete-info', kwargs={'code': _code.code}),
+                                          'data': UserSerializer(_user).data},
                                       'Apply success. Please wait for you administrator confirm.')
         except ValueError as e:
             return self.json_response(1004, {}, str(e))

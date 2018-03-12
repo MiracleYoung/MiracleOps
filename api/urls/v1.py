@@ -29,7 +29,7 @@ assets_patterns = [
 users_patterns = [
     url(r'^login/$', users.UserLoginApiView.as_view(), name='login'),
     url(r'^logout/$', users.UserLogoutApi.as_view(), name='logout'),
-    url('^$', users.UserListApi.as_view(), name='list'),
+    url('^$', users.UserRegisterApi.as_view(), name='list'),
     url('^(?P<pk>[0-9a-f-]+)/$', users.UserDetailApi.as_view(), name='detail'),
 ]
 

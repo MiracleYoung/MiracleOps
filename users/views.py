@@ -12,7 +12,5 @@ class UserLoginView(TemplateView):
     template_name = "user/login.html"
 
 
-class UserLogoutView(TemplateView):
-    def get(self, request, *args, **kwargs):
-        self.request.session.flush()
-        return redirect(reverse('user:login'))
+class UserCompleteInfoView(TemplateView):
+    template_name = 'user/complete_info.html'
