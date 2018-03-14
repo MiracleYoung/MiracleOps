@@ -26,6 +26,21 @@ with conn.cursor() as cursor:
     '''.format('Anonymous', datetime.datetime.now(), 'Normal', datetime.datetime.now(), 'Admin',
                datetime.datetime.now(), 'UnVerified', datetime.datetime.now())
     cursor.execute(init_role_sql)
+
+    init_job_sql = '''
+        insert into job (`id`, `name`, `c_time`) values ({}, '{}', now());
+        insert into job (`id`, `name`, `c_time`) values ({}, '{}', now());
+        insert into job (`id`, `name`, `c_time`) values ({}, '{}', now());
+        insert into job (`id`, `name`, `c_time`) values ({}, '{}', now());
+        insert into job (`id`, `name`, `c_time`) values ({}, '{}', now());
+        insert into job (`id`, `name`, `c_time`) values ({}, '{}', now());
+        insert into job (`id`, `name`, `c_time`) values ({}, '{}', now());
+        insert into job (`id`, `name`, `c_time`) values ({}, '{}', now());
+        insert into job (`id`, `name`, `c_time`) values ({}, '{}', now());
+        insert into job (`id`, `name`, `c_time`) values ({}, '{}', now());
+    '''.format(-1, 'Undefined', 1, 'Database Administrator', 2, 'System Administrator', 3, 'Network Administrator', 4,
+               'Help Desk/IT', 5, 'Developer', 6, 'Tester', 101, 'Director', 102, 'Manager', 103, 'Tech Leader')
+    cursor.execute(init_job_sql)
     conn.commit()
     print('role init completed.')
-conn.close()
+    conn.close()

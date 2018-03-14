@@ -10,5 +10,5 @@ from users import views
 
 urlpatterns = [
     url(r'^login/$', views.UserLoginView.as_view(), name='login'),
-    url(r'^complete-info/(?P<code>[0-9a-f]+)$', views.UserCompleteInfoView.as_view(), name='complete-info'),
+    url(r'^complete-info/(?P<code>[0-9a-f]+)/$', views.UserCompleteInfoView.as_view(), name='complete-info'),
 ]

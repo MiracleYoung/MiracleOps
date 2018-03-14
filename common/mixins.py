@@ -13,7 +13,8 @@ from users.models import User, Token
 
 class JsonResponseMixin:
     def json_response(self, code, data, msg):
-        return response.Response(data={'code': code, 'data': data, 'msg': msg}, content_type='application/json')
+        return response.Response(status=code, data={'code': code, 'data': data, 'msg': msg},
+                                 content_type='application/json')
 
 
 class CookieMixin:

@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 import jwt
 
-__all__ = ['User', 'Role', 'Token', 'Group', 'UserGroup']
+__all__ = ['User', 'Role', 'Token', 'Group', 'UserGroup', 'VerifiedCode', 'Job']
 
 
 class Role(models.Model):
@@ -25,6 +25,20 @@ class Role(models.Model):
 
     def __str__(self):
         return 'Role: <{}>'.format(self.name)
+
+    __repr__ = __str__
+
+
+class Job(models.Model):
+    id = models.AutoField(_('ID'), primary_key=True)
+    name = models.CharField(_('Job Name'), max_length=100, default='')
+    c_time = models.DateTimeField(_('Create Time'), auto_now_add=True)
+
+    class Meta:
+        db_table = 'job'
+
+    def __str__(self):
+        return 'Job: <{}>'.format(self.name)
 
     __repr__ = __str__
 
@@ -60,34 +74,19 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    JOB_TITLE_CHOICE = (
-        (0, 'Undefined'),
-        (1, 'Database Administrator'),
-        (2, 'System Administrator'),
-        (3, 'Network Administrator'),
-        (4, 'Help Desk/IT'),
-        (5, 'Developer'),
-        (6, 'Tester'),
-
-        (101, 'Director'),
-        (102, 'Manager'),
-        (103, 'Tech Leader'),
-
-    )
-
     id = models.UUIDField(_('ID'), default=uuid.uuid4, primary_key=True)
     email = models.EmailField(_('Email Address'), max_length=128, unique=True)
     phone = models.CharField(_('Mobile Phone Number'), max_length=20, default='')
     name = models.CharField(_('Name'), max_length=32, default='')
     wechat = models.CharField(_('WeChat Account'), max_length=32, default='')
     avatar = models.ImageField(_('Avatar'), upload_to='avatar', default='avatar/default_avatar.jpeg')
-    job_title = models.SmallIntegerField(_('Job Title'), choices=JOB_TITLE_CHOICE, default=0)
+    job = models.ForeignKey(Job, verbose_name=_('Job Title'), null=True)
 
     is_active = models.BooleanField(_('Is Active'), default=False)
     is_staff = models.BooleanField(_('Is Staff'), default=False)
     is_superuser = models.BooleanField(_('Is SuperUser'), default=False)
 
-    role = models.ForeignKey('Role', verbose_name=_('Role'), null=True)
+    role = models.ForeignKey(Role, verbose_name=_('Role'), null=True)
 
     reg_time = models.DateTimeField(_('Register Time'), auto_now_add=True)
 
@@ -229,7 +228,9 @@ class UserGroup(models.Model):
 class VerifiedCode(models.Model):
     TYPE_CHOICE = (
         (0, 'Undefined'),
-        (1, 'Register Verified Code'),
+        (1, 'Used'),
+        (101, 'Register Verified Code'),
+
     )
 
     id = models.AutoField(_('ID'), primary_key=True)

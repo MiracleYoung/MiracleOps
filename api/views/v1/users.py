@@ -6,11 +6,11 @@
 
 import datetime, hashlib, os, base64
 
-from rest_framework import generics, views
+from rest_framework import generics, views, response
 from django.shortcuts import reverse, redirect
 
-from users.serializers import UserRegisterSerializer, UserSerializer
-from users.models import User, Token, VerifiedCode
+from users.serializers import UserRegisterSerializer, UserSerializer, UserInfoSerializer, RoleSerializer, JobSerializer
+from users.models import User, Token, VerifiedCode, Role, Job
 from common.mixins import LoginRequiredMixin, JsonResponseMixin, CookieMixin
 
 
@@ -21,7 +21,7 @@ class UserLoginApiView(CookieMixin, JsonResponseMixin, views.APIView):
         try:
             _user = User.objects.get(email=_email)
         except User.DoesNotExist:
-            return self.json_response(1001, '', 'User does not exist.')
+            return self.json_response(451, '', 'User does not exist.')
         else:
             if _user.check_password(_password) and _user.is_authenticated:
                 # get token and set token to cookie
@@ -34,9 +34,9 @@ class UserLoginApiView(CookieMixin, JsonResponseMixin, views.APIView):
                 _user.last_login = _now
                 _user.save()
                 _success_url = self.get_success_url()
-                return self.json_response(0, {'url': _success_url, 'token': _t.token}, 'Login success.')
+                return self.json_response(200, {'url': _success_url, 'token': _t.token}, 'Login success.')
             else:
-                return self.json_response(1002, '', 'Incorrect username and password.')
+                return self.json_response(452, '', 'Incorrect username and password.')
 
     def get_success_url(self):
         _referer = self.request.META.get('HTTP_REFERER', '')
@@ -52,7 +52,7 @@ class UserLogoutApi(generics.RetrieveAPIView):
         return redirect(reverse('users:login'))
 
 
-class UserRegisterApi(JsonResponseMixin, generics.CreateAPIView):
+class UserRegisterApi(CookieMixin, JsonResponseMixin, generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
 
     def post(self, request, *args, **kwargs):
@@ -63,13 +63,46 @@ class UserRegisterApi(JsonResponseMixin, generics.CreateAPIView):
             _s = base64.b64encode(os.urandom(8))
             _m = hashlib.sha256()
             _m.update(_s)
-            _code = VerifiedCode.objects.create(user=_user, code=_m.hexdigest(), type=1)
-            return self.json_response(0, {'url': reverse('users:complete-info', kwargs={'code': _code.code}),
+            _code = VerifiedCode.objects.create(user=_user, code=_m.hexdigest(), type=101)
+            self.add_cookie(
+                **{'key': 'uid', 'value': _user.id, 'expires': datetime.datetime.now() + datetime.timedelta(days=1)})
+            return self.json_response(200, {'url': reverse('users:complete-info', kwargs={'code': _code.code}),
                                           'data': UserSerializer(_user).data},
                                       'Apply success. Please wait for you administrator confirm.')
         except ValueError as e:
-            return self.json_response(1004, {}, str(e))
+            return self.json_response(454, {}, str(e))
 
 
-class UserDetailApi(LoginRequiredMixin, generics.RetrieveUpdateAPIView):
-    serializer_class = UserRegisterSerializer
+class UserDetailApi(JsonResponseMixin, generics.UpdateAPIView):
+    serializer_class = UserInfoSerializer
+
+    def get_queryset(self):
+        return User.objects.all()
+
+    def put(self, request, *args, **kwargs):
+        try:
+            _code = VerifiedCode.objects.get(code=request.data.get('code', ''), type=101)
+        except VerifiedCode.DoesNotExist:
+            return self.json_response(455, {}, 'Code error.')
+        else:
+            instance = self.get_object()
+            serializer = self.get_serializer(instance, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            _code.type = 1
+            _code.save()
+            return response.Response(serializer.data)
+
+
+class UserJobTitlesApi(generics.ListAPIView):
+    serializer_class = JobSerializer
+
+    def get_queryset(self):
+        return Job.objects.all()
+
+
+class UserRolesApi(generics.ListAPIView):
+    serializer_class = RoleSerializer
+
+    def get_queryset(self):
+        return Role.objects.all()

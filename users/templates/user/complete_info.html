@@ -89,7 +89,7 @@
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="avatar" class="form-control col-md-7 col-xs-12">
+                                            <input type="file" id="avatar" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -98,7 +98,8 @@
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="jobtitle" class="form-control col-md-7 col-xs-12">
+                                            <select id="jobtitle">
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -107,13 +108,17 @@
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="role" class="form-control col-md-7 col-xs-12">
+                                            <select id="role">
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div id="step-4">
-                                    <h2 class="StepTitle">Confirm Information</h2>
+                                    <div class="form-group col-md-6 col-md-offset-3">
+                                        <h2 class="StepTitle">Confirm Information</h2>
+                                    </div>
+
                                 </div>
 
                             </div>
@@ -127,6 +132,12 @@
     </body>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/plugins/sweetalert/sweetalert2.min.js' %}"></script>
     <script src="{% static 'js/plugins/jQuery-Smart-Wizard/jquery.smartWizard.js' %}"></script>
+    <script src="{% static 'js/js.cookie.min.js' %}"></script>
     <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/mo/config.js' %}"></script>
+    <script src="{% static 'js/mo/user/complete-info.js' %}"></script>
+
+
 {% endblock html_body %}

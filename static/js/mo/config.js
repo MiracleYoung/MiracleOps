@@ -12,7 +12,10 @@ let apiUrl = {
 apiUrl.users.g = apiUrl.prefix + 'users/';
 apiUrl.users.login = apiUrl.users.g + 'login/';
 apiUrl.users.register = apiUrl.users.g;
-apiUrl.users.userDetail = apiUrl.users.g;
+apiUrl.users.userDetail = apiUrl.users.g; // <uid>
+apiUrl.users.completeInfo = apiUrl.users.g; // <uid>
+apiUrl.users.jobTitles = apiUrl.users.g + 'jobtitles/'; // <uid>
+apiUrl.users.roles = apiUrl.users.g + 'roles/'; // <uid>
 
 apiUrl.cms.g = apiUrl.prefix + 'cms/';
 apiUrl.cms.minionRefresh = apiUrl.cms.g + 'minion-refresh/';

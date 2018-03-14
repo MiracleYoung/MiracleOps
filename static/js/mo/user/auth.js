@@ -6,7 +6,7 @@ function login() {
         data: {email: email, password: password},
         method: 'POST'
     }).done(function (data, status, xhr) {
-        if (data.code == 0) {
+        if (xhr.status === 200) {
             swal({
                 title: data.msg,
                 type: 'success',
@@ -15,11 +15,11 @@ function login() {
             }).then((result) => {
                 window.location = data.data.url
             })
-        } else if ([1001, 1002].includes(data.code)) {
-            swal('Login Failed', data.msg, 'error')
         }
     }).fail(function (err) {
-        console.log(err)
+        if ([451, 452].includes(err.status)) {
+            swal('Login Failed', err.responseJSON.msg, 'error')
+        }
     })
 }
 
@@ -27,7 +27,7 @@ function register() {
     let email = $('#mo-register-email').val()
     let password = $('#mo-register-password').val()
     let password2 = $('#mo-register-password2').val()
-    if (password !== password2){
+    if (password !== password2) {
         swal('Password are different. Please confirm.', '', 'error')
         return
     }
@@ -36,7 +36,7 @@ function register() {
         data: {email: email, password: password},
         method: 'POST'
     }).done(function (data, status, xhr) {
-        if (data.code == 0) {
+        if (xhr.status === 200) {
             swal({
                 title: data.msg,
                 type: 'success',
@@ -45,11 +45,11 @@ function register() {
             }).then((result) => {
                 window.location = data.data.url
             })
-        } else if ([1004].includes(data.code)) {
-            swal(data.msg, '', 'error')
         }
     }).fail(function (err) {
-        swal('Oops, something wrong with server.', '', 'error')
+        if ([454].includes(err.status)) {
+            swal(err.responseJSON.msg, '', 'error')
+        }
     })
 }
 

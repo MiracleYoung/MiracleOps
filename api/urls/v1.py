@@ -29,10 +29,11 @@ assets_patterns = [
 users_patterns = [
     url(r'^login/$', users.UserLoginApiView.as_view(), name='login'),
     url(r'^logout/$', users.UserLogoutApi.as_view(), name='logout'),
-    url('^$', users.UserRegisterApi.as_view(), name='list'),
+    url('^$', users.UserRegisterApi.as_view(), name='register'),
     url('^(?P<pk>[0-9a-f-]+)/$', users.UserDetailApi.as_view(), name='detail'),
+    url('^jobtitles/$', users.UserJobTitlesApi.as_view(), name='jobtitles'),
+    url('^roles/$', users.UserRolesApi.as_view(), name='roles'),
 ]
-
 
 urlpatterns = [
     url(r'^cms/', include(cms_patterns, namespace='cms')),
