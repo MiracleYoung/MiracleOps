@@ -4,6 +4,8 @@
 # @Author  : MiracleYoung
 # @File    : serializers.py
 
+import re
+
 from rest_framework import serializers
 
 from .models import User, Role, Job
@@ -17,8 +19,11 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         fields = ('email', 'password',)
 
     def validate_email(self, email):
-        # TODO
-        return email
+        _pattern = re.compile(r'^[-\w.]+@[\w-]+(.[\w_-]+)+$')
+        _match = _pattern.match(email)
+        if _match:
+            return email
+        raise serializers.ValidationError('Email is invalid. Please type legal email format.')
 
 
 class UserInfoSerializer(serializers.ModelSerializer):

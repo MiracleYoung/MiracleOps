@@ -63,7 +63,6 @@ function leaveAStepCallback(obj, context) {
         }
     }
 
-
     if (context.fromStep === 3) {
         if (!avatar) {
             swal('Info Error', 'Avatar is empty.', 'error');

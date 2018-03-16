@@ -6,12 +6,12 @@
 
 import datetime, hashlib, os, base64
 
-from rest_framework import generics, views, response
+from rest_framework import generics, views, response, serializers
 from django.shortcuts import reverse, redirect
 
 from users.serializers import UserRegisterSerializer, UserSerializer, UserInfoSerializer, RoleSerializer, JobSerializer
 from users.models import User, Token, VerifiedCode, Role, Job
-from common.mixins import LoginRequiredMixin, JsonResponseMixin, CookieMixin
+from common.mixins import JsonResponseMixin, CookieMixin
 
 
 class UserLoginApiView(CookieMixin, JsonResponseMixin, views.APIView):
@@ -58,7 +58,7 @@ class UserRegisterApi(CookieMixin, JsonResponseMixin, generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         try:
             serializer = UserRegisterSerializer(data=request.data)
-            serializer.is_valid()
+            serializer.is_valid(raise_exception=True)
             _user = User.objects.create_user(**serializer.data)
             _s = base64.b64encode(os.urandom(8))
             _m = hashlib.sha256()
@@ -69,8 +69,10 @@ class UserRegisterApi(CookieMixin, JsonResponseMixin, generics.CreateAPIView):
             return self.json_response(200, {'url': reverse('users:complete-info', kwargs={'code': _code.code}),
                                           'data': UserSerializer(_user).data},
                                       'Apply success. Please wait for you administrator confirm.')
-        except ValueError as e:
+        except serializers.ValidationError as e:
             return self.json_response(454, {}, str(e))
+        except Exception as e:
+            return self.json_response(400, {}, '')
 
 
 class UserDetailApi(JsonResponseMixin, generics.UpdateAPIView):

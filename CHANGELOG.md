@@ -1,3 +1,6 @@
+## version 1.4.3 (2018.03.16)
+1. Upgrade user register logic.
+
 ## version 1.4.2 (2018.03.07)
 1. Upgrade user auth logic by JWT auth. If using ajax, then return a json message, other way, redirect login view or correct view. 
 

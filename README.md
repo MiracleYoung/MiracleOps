@@ -85,10 +85,8 @@ QQ group and email are in the below [## Author](https://github.com/MiracleYoung/
 - Terminal
     - Web Terminal
     
-## Version 1.4.1
+## Latest Version 1.4.3
 
-
-    
 ## Change Logs
 
 [CHANGELOG.md](https://raw.githubusercontent.com/MiracleYoung/MiracleOps/master/CHANGELOG.md)
